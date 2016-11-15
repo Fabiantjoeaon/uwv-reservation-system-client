@@ -25,6 +25,7 @@ class ReservationClient extends React.Component {
    */
   _fetchData(email, password, resource) {
     const hashedCredentialsString = btoa(`${email}:${password}`);
+    //TODO: On wrong creds maybe show error screen?
     fetch(`${API_URL}${resource}`, {
       method: 'get',
       mode: 'cors',

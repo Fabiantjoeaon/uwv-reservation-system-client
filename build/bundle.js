@@ -103,6 +103,7 @@
 	      var _this2 = this;
 
 	      var hashedCredentialsString = btoa(email + ':' + password);
+	      //TODO: On wrong creds maybe show error screen?
 	      fetch('' + API_URL + resource, {
 	        method: 'get',
 	        mode: 'cors',
