@@ -99,16 +99,16 @@
 
 	  _createClass(ReservationClient, [{
 	    key: '_fetchData',
-	    value: function _fetchData(username, password, resource) {
+	    value: function _fetchData(email, password, resource) {
 	      var _this2 = this;
 
-	      var credentialsString = btoa(username + ':' + password);
+	      var hashedCredentialsString = btoa(email + ':' + password);
 	      fetch('' + API_URL + resource, {
 	        method: 'get',
 	        mode: 'cors',
 	        credentials: 'same-origin',
 	        headers: {
-	          'Authorization': 'Basic ' + credentialsString,
+	          'Authorization': 'Basic ' + hashedCredentialsString,
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
@@ -132,7 +132,8 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(_WrapperStyle2.default, {
-	        gradientRotation: '352deg'
+	        gradientRotation: '352deg',
+	        duration: '10s'
 	      });
 	    }
 	  }]);
@@ -47118,7 +47119,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  background: repeating-linear-gradient(', ', #cc6bbb, #9ab9fe);\n  background-size: 1000% 1000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 20s infinite linear;\n'], ['\n  background: repeating-linear-gradient(', ', #cc6bbb, #9ab9fe);\n  background-size: 1000% 1000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 20s infinite linear;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  background: repeating-linear-gradient(', ', #cc6bbb, #e6b11f);\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n'], ['\n  background: repeating-linear-gradient(', ', #cc6bbb, #e6b11f);\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n']);
 
 	var _styledComponents = __webpack_require__(175);
 
@@ -47134,7 +47135,9 @@
 
 	var Wrapper = _styledComponents2.default.div(_templateObject, function (props) {
 	  return props.gradientRotation;
-	}, _moveGradient2.default);
+	}, _moveGradient2.default, function (props) {
+	  return props.duration;
+	});
 
 	exports.default = Wrapper;
 

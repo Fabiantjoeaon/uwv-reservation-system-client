@@ -23,20 +23,18 @@ class ReservationClient extends React.Component {
   /**
    * Fetch data from Dorsia API
    */
-  _fetchData(username, password, resource) {
-    const credentialsString = btoa(`${username}:${password}`);
+  _fetchData(email, password, resource) {
+    const hashedCredentialsString = btoa(`${email}:${password}`);
     fetch(`${API_URL}${resource}`, {
       method: 'get',
       mode: 'cors',
       credentials: 'same-origin',
       headers: {
-        'Authorization': `Basic ${credentialsString}`,
+        'Authorization': `Basic ${hashedCredentialsString}`,
         'Content-Type': 'application/json'
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then(response => response.json() )
       .then((jsonData) => {
         console.log(jsonData.data);
         this.setState({
@@ -57,6 +55,7 @@ class ReservationClient extends React.Component {
 		return(
       <Wrapper
         gradientRotation='352deg'
+        duration='10s'
         >
       </Wrapper>
 		);
