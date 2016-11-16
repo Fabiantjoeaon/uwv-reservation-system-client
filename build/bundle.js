@@ -159,9 +159,9 @@
 	    }
 	  }, {
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this._fetchData('test@test.com', 'test', 'customers');
-	    }
+	    value: function componentDidMount() {}
+	    // this._fetchData('test@test.com', 'test', 'customers');
+
 	    //render this.props.children??
 
 	  }, {
@@ -30119,6 +30119,10 @@
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _Title = __webpack_require__(240);
+
+	var _Title2 = _interopRequireDefault(_Title);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30186,6 +30190,11 @@
 	      return _react2.default.createElement(
 	        StyledLoginFormWrapper,
 	        null,
+	        _react2.default.createElement(
+	          _Title2.default,
+	          null,
+	          'Log In'
+	        ),
 	        this.state.error,
 	        _react2.default.createElement(
 	          StyledLoginForm,
@@ -47344,6 +47353,42 @@
 	}(_react2.default.Component);
 
 	exports.default = Input;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'Questrial\', sans-serif;\n  font-size: 3em;\n'], ['\n  font-family: \'Questrial\', sans-serif;\n  font-size: 3em;\n']);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _styledComponents = __webpack_require__(172);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var styledTitle = _styledComponents2.default.h1(_templateObject);
+
+	var Title = function Title(props) {
+	  return _react2.default.createElement(
+	    'styledTitle',
+	    null,
+	    props.children
+	  );
+	};
+
+	exports.default = Title;
 
 /***/ }
 /******/ ]);

@@ -73,7 +73,7 @@ class ReservationClient extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchData('test@test.com', 'test', 'customers');
+    // this._fetchData('test@test.com', 'test', 'customers');
   }
   //render this.props.children??
   render() {

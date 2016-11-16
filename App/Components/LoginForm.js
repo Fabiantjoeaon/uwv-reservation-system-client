@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Input from './Input.js';
+import Title from './Title.js';
 const _ = require('lodash');
 
 const StyledLoginFormWrapper = styled.div`
@@ -63,9 +64,9 @@ export default class LoginForm extends React.Component {
   render() {
     return (
       <StyledLoginFormWrapper>
+        <Title>Log In</Title>
         {this.state.error}
         <StyledLoginForm onSubmit={this._handleSubmit}>
-
           <Input name='email' ref='email' type='email' label='E-mail' />
           <Input name='password' ref='password' label='Password' />
           <input name='submit' type='submit' value='Login'/>
