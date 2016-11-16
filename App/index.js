@@ -3,8 +3,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+const TweenMax = require('gsap');
 import TransitionGroup from 'react-addons-transition-group';
+import 'whatwg-fetch';
+
 import LoginForm from './Components/LoginForm.js';
+import LoadingScreen from './Components/LoadingScreen';
 import MoveGradient from './Styles/Keyframes/MoveGradient.js'
 
 const _ = require('lodash');
@@ -12,7 +16,11 @@ const API_URL = 'http://45.55.184.33:8125/api/v1/';
 
 const Wrapper = styled.div`
   position: relative;
-  background: repeating-linear-gradient(${props => props.gradientRotation}, rgb(58, 98, 176), rgb(50, 154, 221), rgb(62, 63, 150));
+  background: repeating-linear-gradient(
+    ${props => props.gradientRotation},
+    ${props => props.primaryColor},
+    ${props => props.secundaryColor},
+    ${props => props.tertaryColor ? props.tertaryColor : null});
   background-size: 3500% 3500%;
   width:100vw;
   height:100vh;
@@ -25,18 +33,24 @@ class ReservationClient extends React.Component {
     super();
 
     this.state = {
-      isLoading: false,
+      isLoading: true,
       data: {},
-      creds: {}
+      creds: {},
+      gradient: {}
     }
 
-    _.bindAll(this, '_fetchData', '_login');
+    _.bindAll(this, '_fetchData', '_login', '_setGradient');
   }
 
   /**
    * Fetch data from Dorsia API
+   * TODO: extract to export function??
+   * TODO: Check screenshot on phone for better error handling
    */
   _fetchData(email, password, resource) {
+    this.setState({
+      isLoading: true
+    });
     const hashedCredentialsString = btoa(`${email}:${password}`);
     //TODO: On wrong creds maybe show error screen?
     fetch(`${API_URL}${resource}`, {
@@ -61,6 +75,12 @@ class ReservationClient extends React.Component {
       });
   }
 
+  _setGradient(gradient) {
+    this.setState({
+      gradient: gradient
+    });
+  }
+
   _login(creds) {
     this.setState({
       creds: {
@@ -73,16 +93,24 @@ class ReservationClient extends React.Component {
   }
 
   componentDidMount() {
-    // this._fetchData('test@test.com', 'test', 'customers');
+    this._fetchData('test@test.com', 'test', 'customers');
   }
-  //render this.props.children??
+
   render() {
 		return(
       <Wrapper
         gradientRotation='352deg'
-        duration='10s'
+        primaryColor={this.state.gradient.primaryColor}
+        secundaryColor={this.state.gradient.secundaryColor}
+        tertaryColor={this.state.gradient.tertaryColor}
+        duration={this.state.gradient.duration}
         >
-        <LoginForm _login={this._login}/>
+        <TransitionGroup component='div'>
+          {this.state.isLoading ?
+            <LoadingScreen setGradient={this._setGradient.bind(this)} key='LoadingScreen'/> :
+            <LoginForm setGradient={this._setGradient.bind(this)} key='LoginForm' _login={this._login}/>
+          }
+        </TransitionGroup>
       </Wrapper>
 		);
 	}

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 import Input from './Input.js';
@@ -9,6 +10,7 @@ import Title from './Title.js';
 import Button from './Button.js';
 import Notice from './Notice.js';
 
+const TweenMax = require('gsap');
 const _ = require('lodash');
 
 const StyledLoginFormWrapper = styled.div`
@@ -19,6 +21,8 @@ const StyledLoginFormWrapper = styled.div`
   width: 50%;
   height: 50%;
   background-color: rgba(255,255,255,1);
+  opacity: 0;
+  transform: translateY(160px);
 `;
 
 const StyledLoginForm = styled.form`
@@ -29,10 +33,7 @@ const StyledLoginForm = styled.form`
 `;
 
 //TODO: Submit data to login
-//TODO: Transitions
 //TODO: For moving state up, create function in parent, maybe bind this to the child???
-//TODO: Validation with handleChange??
-//TODO: Styled button
 export default class LoginForm extends React.Component {
   constructor() {
     super();
@@ -41,6 +42,27 @@ export default class LoginForm extends React.Component {
       error: ''
     }
     _.bindAll(this, '_handleSubmit');
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.setGradient({
+        primaryColor: 'rgb(58, 98, 176)',
+        secundaryColor: 'rgb(50, 154, 221)',
+        tertaryColor: 'rgb(58, 98, 176)',
+        duration: '20s'
+      });
+    }, 2000);
+  }
+
+  componentWillEnter(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 2500);
+  }
+
+  componentWillLeave(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 60}).eventCallback('onComplete', callback);
   }
 
   _handleSubmit(e) {
@@ -60,7 +82,7 @@ export default class LoginForm extends React.Component {
       });
     } else {
       this.setState({
-        error: 'Please fill in all the fields.'
+        error: 'Please fill in all the fields'
       });
     }
   }
@@ -70,7 +92,9 @@ export default class LoginForm extends React.Component {
       <StyledLoginFormWrapper>
         <Title fontWeight='100'>Log In</Title>
         <StyledLoginForm onSubmit={this._handleSubmit}>
-          {this.state.error ? <Notice type='error' notice={this.state.error}/> : null}
+          <TransitionGroup>
+            {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
+          </TransitionGroup>
           <Input name='email' ref='email' type='email' label='E-mail' />
           <Input name='password' ref='password' type='password' label='Password' />
           <Button name='submit' type='submit'>Login</Button>
