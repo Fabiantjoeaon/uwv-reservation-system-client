@@ -6,7 +6,6 @@ const autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('sass', function () {
   return gulp.src([
-      './scss/variables.scss',
       './scss/normalize.scss',
       './scss/style.scss'
     ])

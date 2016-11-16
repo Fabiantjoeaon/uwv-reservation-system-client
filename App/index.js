@@ -2,22 +2,35 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 import TransitionGroup from 'react-addons-transition-group';
-import Wrapper from './WrapperStyle.js';
+import LoginForm from './Components/LoginForm.js';
+import MoveGradient from './Styles/Keyframes/MoveGradient.js'
 
 const _ = require('lodash');
 const API_URL = 'http://45.55.184.33:8125/api/v1/';
+
+const Wrapper = styled.div`
+  position: relative;
+  background: repeating-linear-gradient(${props => props.gradientRotation}, #cc6bbb, #e6b11f);
+  background-size: 3500% 3500%;
+  width:100vw;
+  height:100vh;
+  animation: ${MoveGradient} ${props => props.duration} infinite linear;
+  font-family: 'Lora', sans-serif;
+`;
 
 class ReservationClient extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      isLoading: true,
-      data: {}
+      isLoading: false,
+      data: {},
+      creds: {}
     }
 
-    _.bindAll('_fetchData');
+    _.bindAll(this, '_fetchData', '_login');
   }
 
   /**
@@ -48,16 +61,28 @@ class ReservationClient extends React.Component {
       });
   }
 
+  _login(creds) {
+    this.setState({
+      creds: {
+        email: creds.email,
+        password: creds.password
+      }
+    }, () => {
+      console.log(this.state);
+    });
+  }
+
   componentDidMount() {
     this._fetchData('test@test.com', 'test', 'customers');
   }
-
+  //render this.props.children??
   render() {
 		return(
       <Wrapper
         gradientRotation='352deg'
         duration='10s'
         >
+        <LoginForm _login={this._login}/>
       </Wrapper>
 		);
 	}
