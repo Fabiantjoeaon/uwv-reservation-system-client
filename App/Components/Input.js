@@ -1,10 +1,7 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import styled from 'styled-components';
-const _ = require('lodash');
 
 const StyledInputWrapper = styled.div`
   width: 50%;
@@ -71,7 +68,7 @@ export default class Input extends React.Component {
     return (
       <StyledInputWrapper>
         <StyledLabel htmlFor={name}>{label}</StyledLabel>
-        <StyledInput name={name} type={type} ref={inputRef} />
+        <StyledInput name={name} type={type} />
       </StyledInputWrapper>
     );
   }
