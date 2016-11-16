@@ -406,6 +406,9 @@ template {
   display: none;
   width: 0 !important; }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset; }
+
 body {
   padding: 0px;
   margin: 0px; }

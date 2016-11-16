@@ -20,7 +20,7 @@ let config = {
   },
   entry: {
 
-    bundle: APP_DIR + '/index.js'
+    bundle: ['babel-polyfill', APP_DIR + '/index.js']
   },
   output: {
     path: BUILD_DIR,

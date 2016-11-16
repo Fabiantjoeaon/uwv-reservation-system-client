@@ -35,19 +35,14 @@ export default class LoadingScreen extends React.Component {
     });
   }
 
-  componentWillAppear(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1.5, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
-  }
-
   componentWillEnter(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1.5, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
+    TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
   }
 
   componentWillLeave(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1.5, {ease: Power2.easeOut, opacity: 0}).eventCallback('onComplete', callback);
+    TweenMax.to(node, 0.6, {ease: Power2.easeOut, opacity: 0}).eventCallback('onComplete', callback);
   }
 
   render() {
@@ -60,10 +55,6 @@ export default class LoadingScreen extends React.Component {
             <path fill='#fff' d='M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
               C22.32,8.481,24.301,9.057,26.013,10.047z' transform='rotate(252 20 20)'>
               <animateTransform attributeType='xml' attributeName='transform' type='rotate' from='0 20 20' to='360 20 20' dur='1s' repeatCount='indefinite'></animateTransform>
-            </path>
-            <path fill='#fff' d='M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
-              C22.32,8.481,24.301,9.057,26.013,10.047z' transform='rotate(252 20 20)'>
-              <animateTransform attributeType='xml' attributeName='transform' type='rotate' from='360 20 20' to='0 20 20' dur='1.3s' repeatCount='indefinite'></animateTransform>
             </path>
           </svg>
     </SVGWrapper>

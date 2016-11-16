@@ -45,24 +45,27 @@ export default class LoginForm extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.props.setGradient({
-        primaryColor: 'rgb(58, 98, 176)',
-        secundaryColor: 'rgb(50, 154, 221)',
-        tertaryColor: 'rgb(58, 98, 176)',
-        duration: '20s'
-      });
-    }, 2000);
+    this.props.setGradient({
+      primaryColor: 'rgb(58, 98, 176)',
+      secundaryColor: 'rgb(50, 154, 221)',
+      tertaryColor: 'rgb(58, 98, 176)',
+      duration: '20s'
+    });
+  }
+
+  componentWillAppear(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 1500);
   }
 
   componentWillEnter(callback) {
     const node = ReactDOM.findDOMNode(this);
-    setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 2500);
+    TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1, y: 160}).eventCallback('onComplete', callback);
   }
 
   componentWillLeave(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 60}).eventCallback('onComplete', callback);
+    TweenMax.to(node, 0.4, {ease: Power2.easeOut, opacity: 0, y: 160}).eventCallback('onComplete', callback);
   }
 
   _handleSubmit(e) {
@@ -91,7 +94,7 @@ export default class LoginForm extends React.Component {
     return (
       <StyledLoginFormWrapper>
         <Title fontWeight='100'>Log In</Title>
-        <StyledLoginForm onSubmit={this._handleSubmit}>
+        <StyledLoginForm autoComplete='off' onSubmit={this._handleSubmit}>
           <TransitionGroup>
             {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
           </TransitionGroup>

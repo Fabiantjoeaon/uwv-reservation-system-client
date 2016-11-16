@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 const TweenMax = require('gsap');
 import TransitionGroup from 'react-addons-transition-group';
-import 'whatwg-fetch';
 
+import DataFetcher from './Utils/DataFetcher.js';
 import LoginForm from './Components/LoginForm.js';
 import LoadingScreen from './Components/LoadingScreen';
 import MoveGradient from './Styles/Keyframes/MoveGradient.js'
@@ -28,51 +28,43 @@ const Wrapper = styled.div`
   font-family: 'Lora', sans-serif;
 `;
 
+
+//TODO: How about the wrapper for LoadingScreen??
 class ReservationClient extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      isLoading: true,
+      isLoading: false,
       data: {},
       creds: {},
-      gradient: {}
+      gradient: {},
+      error: ''
     }
 
     _.bindAll(this, '_fetchData', '_login', '_setGradient');
   }
 
-  /**
-   * Fetch data from Dorsia API
-   * TODO: extract to export function??
-   * TODO: Check screenshot on phone for better error handling
-   */
   _fetchData(email, password, resource) {
-    this.setState({
-      isLoading: true
-    });
-    const hashedCredentialsString = btoa(`${email}:${password}`);
-    //TODO: On wrong creds maybe show error screen?
-    fetch(`${API_URL}${resource}`, {
-      method: 'get',
-      mode: 'cors',
-      credentials: 'same-origin',
-      headers: {
-        'Authorization': `Basic ${hashedCredentialsString}`,
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json() )
-      .then((jsonData) => {
-        console.log(jsonData.data);
-        this.setState({
-          isLoading: false,
-          data: jsonData.data
-        })
-      })
-      .catch((exception) => {
-        console.log('There was an error: ', exception);
+    this.setState({ isLoading: true });
+
+    this.fetcher = new DataFetcher(API_URL, email, password, resource);
+    this.fetcher.fetch()
+    .then(response => response.json())
+    .then((data) => {
+      this.setState({
+        isLoading: false,
+        data: data.data
       });
+    })
+    .catch((error) => {
+      console.log(error);
+      this.setState({
+        error: error
+
+      })
+    });
+    console.log(this.state);
   }
 
   _setGradient(gradient) {
@@ -83,17 +75,17 @@ class ReservationClient extends React.Component {
 
   _login(creds) {
     this.setState({
+      isLoading: true,
       creds: {
         email: creds.email,
         password: creds.password
       }
     }, () => {
-      console.log(this.state);
+      this._fetchData(this.state.creds.email, this.state.creds.password, 'me');
     });
   }
 
   componentDidMount() {
-    this._fetchData('test@test.com', 'test', 'customers');
   }
 
   render() {

@@ -33,10 +33,6 @@ class Notice extends React.Component {
       <StyledNotice>{notice}</StyledNotice>
     );
   }
-
-
-
-
 }
 
 export default Notice;
