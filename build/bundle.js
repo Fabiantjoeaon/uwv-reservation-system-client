@@ -48,7 +48,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  background: repeating-linear-gradient(', ', #cc6bbb, #e6b11f);\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n  font-family: \'Lora\', sans-serif;\n'], ['\n  position: relative;\n  background: repeating-linear-gradient(', ', #cc6bbb, #e6b11f);\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n  font-family: \'Lora\', sans-serif;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  background: repeating-linear-gradient(', ', rgb(58, 98, 176), rgb(50, 154, 221), rgb(62, 63, 150));\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n  font-family: \'Lora\', sans-serif;\n'], ['\n  position: relative;\n  background: repeating-linear-gradient(', ', rgb(58, 98, 176), rgb(50, 154, 221), rgb(62, 63, 150));\n  background-size: 3500% 3500%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' ', ' infinite linear;\n  font-family: \'Lora\', sans-serif;\n']);
 
 	var _react = __webpack_require__(1);
 
@@ -70,7 +70,7 @@
 
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
-	var _MoveGradient = __webpack_require__(236);
+	var _MoveGradient = __webpack_require__(240);
 
 	var _MoveGradient2 = _interopRequireDefault(_MoveGradient);
 
@@ -30100,7 +30100,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  top:20%;\n  left:25%;\n  width: 50%;\n  height: 55%;\n  background-color: rgba(255,255,255,0.75);\n'], ['\n  position: absolute;\n  top:20%;\n  left:25%;\n  width: 50%;\n  height: 55%;\n  background-color: rgba(255,255,255,0.75);\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:20%;\n  left:25%;\n  width: 50%;\n  height: 55%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:20%;\n  left:25%;\n  width: 50%;\n  height: 55%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
 	var _react = __webpack_require__(1);
@@ -30115,11 +30115,11 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _Input = __webpack_require__(239);
+	var _Input = __webpack_require__(236);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Title = __webpack_require__(240);
+	var _Title = __webpack_require__(239);
 
 	var _Title2 = _interopRequireDefault(_Title);
 
@@ -30166,8 +30166,8 @@
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
 
-	      var email = _reactDom2.default.findDOMNode(this.refs.email).value;
-	      var password = _reactDom2.default.findDOMNode(this.refs.password).value;
+	      var email = _reactDom2.default.findDOMNode(this.refs.email).children.email.value;
+	      var password = _reactDom2.default.findDOMNode(this.refs.password).children.password.value;
 
 	      if (!(email.length == 0 || password.length == 0)) {
 	        var data = {
@@ -30192,7 +30192,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _Title2.default,
-	          null,
+	          { fontWeight: '100' },
 	          'Log In'
 	        ),
 	        this.state.error,
@@ -30200,7 +30200,7 @@
 	          StyledLoginForm,
 	          { onSubmit: this._handleSubmit },
 	          _react2.default.createElement(_Input2.default, { name: 'email', ref: 'email', type: 'email', label: 'E-mail' }),
-	          _react2.default.createElement(_Input2.default, { name: 'password', ref: 'password', label: 'Password' }),
+	          _react2.default.createElement(_Input2.default, { name: 'password', ref: 'password', type: 'password', label: 'Password' }),
 	          _react2.default.createElement('input', { name: 'submit', type: 'submit', value: 'Login' })
 	        )
 	      );
@@ -30222,15 +30222,78 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  0%{background-position:38% 0%}\n  50%{background-position:63% 100%}\n  100%{background-position:38% 0%}\n'], ['\n  0%{background-position:38% 0%}\n  50%{background-position:63% 100%}\n  100%{background-position:38% 0%}\n']);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1em 0em;\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1em 0em;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: 1em;\n  top: 10%;\n  left: 0%;\n  position: absolute;\n  padding: 0 0.25em;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  text-align: left;\n  pointer-events: none;\n'], ['\n  font-size: 1em;\n  top: 10%;\n  left: 0%;\n  position: absolute;\n  padding: 0 0.25em;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  text-align: left;\n  pointer-events: none;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  border-top:none;\n  border-bottom:1px solid #858585;\n  border-left: none;\n  border-right: none;\n  padding: 20px 0px;\n  box-sizing: border-box;\n\n  &:focus {\n    outline: none;\n  }\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    bottom: 0;\n    left: 0;\n\n    background-color: rgb(97, 153, 194);\n  }\n\n  &:focus + label {\n    font-size: 0.5em;\n    top:0%;\n  }\n\n  &:invalid {\n    border-bottom:3px solid rgb(219, 100, 73);\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  border-top:none;\n  border-bottom:1px solid #858585;\n  border-left: none;\n  border-right: none;\n  padding: 20px 0px;\n  box-sizing: border-box;\n\n  &:focus {\n    outline: none;\n  }\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    bottom: 0;\n    left: 0;\n\n    background-color: rgb(97, 153, 194);\n  }\n\n  &:focus + label {\n    font-size: 0.5em;\n    top:0%;\n  }\n\n  &:invalid {\n    border-bottom:3px solid rgb(219, 100, 73);\n  }\n']);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _styledComponents = __webpack_require__(172);
 
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var MoveGradient = (0, _styledComponents.keyframes)(_templateObject);
+	var _ = __webpack_require__(237);
 
-	exports.default = MoveGradient;
+	var StyledInputWrapper = _styledComponents2.default.div(_templateObject);
+
+	var StyledLabel = _styledComponents2.default.label(_templateObject2);
+
+	var StyledInput = _styledComponents2.default.input(_templateObject3);
+
+	var Input = function (_React$Component) {
+	  _inherits(Input, _React$Component);
+
+	  function Input() {
+	    _classCallCheck(this, Input);
+
+	    return _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
+	  }
+
+	  _createClass(Input, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          name = _props.name,
+	          type = _props.type,
+	          label = _props.label,
+	          inputRef = _props.inputRef;
+
+
+	      return _react2.default.createElement(
+	        StyledInputWrapper,
+	        null,
+	        _react2.default.createElement(
+	          StyledLabel,
+	          { htmlFor: name },
+	          label
+	        ),
+	        _react2.default.createElement(StyledInput, { name: name, type: type, ref: inputRef })
+	      );
+	    }
+	  }]);
+
+	  return Input;
+	}(_react2.default.Component);
+
+	exports.default = Input;
 
 /***/ },
 /* 237 */
@@ -47283,19 +47346,11 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 75%;\n  margin: 0 auto;\n'], ['\n  width: 75%;\n  margin: 0 auto;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: 0.5em;\n  position: absolute;\n  padding: 10px;\n  background-color: rgba(0,0,0,0);\n'], ['\n  font-size: 0.5em;\n  position: absolute;\n  padding: 10px;\n  background-color: rgba(0,0,0,0);\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  border-radius: 15px;\n'], ['\n  width: 100%;\n  border-radius: 15px;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: 2.5em;\n  display: block;\n  width: 50%;\n  margin: 0em auto 1em auto;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n'], ['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: 2.5em;\n  display: block;\n  width: 50%;\n  margin: 0em auto 1em auto;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n']);
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(34);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _styledComponents = __webpack_require__(172);
 
@@ -47303,56 +47358,21 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var _ = __webpack_require__(237);
+	var StyledTitle = _styledComponents2.default.h1(_templateObject, function (props) {
+	  return props.fontWeight;
+	});
 
-	var styledInputWrapper = _styledComponents2.default.div(_templateObject);
+	var Title = function Title(props) {
+	  return _react2.default.createElement(
+	    StyledTitle,
+	    { fontWeight: props.fontWeight },
+	    props.children
+	  );
+	};
 
-	var styledLabel = _styledComponents2.default.label(_templateObject2);
-
-	var styledInput = _styledComponents2.default.input(_templateObject3);
-
-	var Input = function (_React$Component) {
-	  _inherits(Input, _React$Component);
-
-	  function Input() {
-	    _classCallCheck(this, Input);
-
-	    return _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
-	  }
-
-	  _createClass(Input, [{
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props,
-	          name = _props.name,
-	          type = _props.type,
-	          label = _props.label;
-
-	      return _react2.default.createElement(
-	        'styledInputWrapper',
-	        null,
-	        _react2.default.createElement(
-	          'styledLabel',
-	          { htmlFor: name },
-	          label
-	        ),
-	        _react2.default.createElement('styledInput', { name: name, type: type })
-	      );
-	    }
-	  }]);
-
-	  return Input;
-	}(_react2.default.Component);
-
-	exports.default = Input;
+	exports.default = Title;
 
 /***/ },
 /* 240 */
@@ -47364,31 +47384,15 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  font-family: \'Questrial\', sans-serif;\n  font-size: 3em;\n'], ['\n  font-family: \'Questrial\', sans-serif;\n  font-size: 3em;\n']);
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
+	var _templateObject = _taggedTemplateLiteral(['\n  0%{background-position:38% 0%}\n  50%{background-position:63% 100%}\n  100%{background-position:38% 0%}\n'], ['\n  0%{background-position:38% 0%}\n  50%{background-position:63% 100%}\n  100%{background-position:38% 0%}\n']);
 
 	var _styledComponents = __webpack_require__(172);
 
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var styledTitle = _styledComponents2.default.h1(_templateObject);
+	var MoveGradient = (0, _styledComponents.keyframes)(_templateObject);
 
-	var Title = function Title(props) {
-	  return _react2.default.createElement(
-	    'styledTitle',
-	    null,
-	    props.children
-	  );
-	};
-
-	exports.default = Title;
+	exports.default = MoveGradient;
 
 /***/ }
 /******/ ]);

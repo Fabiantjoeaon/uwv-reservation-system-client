@@ -8,12 +8,13 @@ import Title from './Title.js';
 const _ = require('lodash');
 
 const StyledLoginFormWrapper = styled.div`
+  padding-top: 5em;
   position: absolute;
   top:20%;
   left:25%;
   width: 50%;
   height: 55%;
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255,255,255,1);
 `;
 
 const StyledLoginForm = styled.form`
@@ -42,8 +43,8 @@ export default class LoginForm extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
 
-    const email = ReactDOM.findDOMNode(this.refs.email).value;
-    const password = ReactDOM.findDOMNode(this.refs.password).value;
+    const email = ReactDOM.findDOMNode(this.refs.email).children.email.value;
+    const password = ReactDOM.findDOMNode(this.refs.password).children.password.value;
 
     if(!(email.length == 0 || password.length == 0)) {
       const data = {
@@ -64,11 +65,11 @@ export default class LoginForm extends React.Component {
   render() {
     return (
       <StyledLoginFormWrapper>
-        <Title>Log In</Title>
+        <Title fontWeight='100'>Log In</Title>
         {this.state.error}
         <StyledLoginForm onSubmit={this._handleSubmit}>
           <Input name='email' ref='email' type='email' label='E-mail' />
-          <Input name='password' ref='password' label='Password' />
+          <Input name='password' ref='password' type='password' label='Password' />
           <input name='submit' type='submit' value='Login'/>
         </StyledLoginForm>
       </StyledLoginFormWrapper>

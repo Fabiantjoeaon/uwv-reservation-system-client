@@ -12,7 +12,7 @@ const API_URL = 'http://45.55.184.33:8125/api/v1/';
 
 const Wrapper = styled.div`
   position: relative;
-  background: repeating-linear-gradient(${props => props.gradientRotation}, #cc6bbb, #e6b11f);
+  background: repeating-linear-gradient(${props => props.gradientRotation}, rgb(58, 98, 176), rgb(50, 154, 221), rgb(62, 63, 150));
   background-size: 3500% 3500%;
   width:100vw;
   height:100vh;
