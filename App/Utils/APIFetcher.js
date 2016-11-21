@@ -15,6 +15,7 @@ export default class APIFetcher {
     this.token = token;
   }
 
+
   async authenticateAndFetchToken(email, password) {
     try {
       const response = fetch(`${this.apiUrl}/login?email=${email}&password=${password}`, {
@@ -32,8 +33,6 @@ export default class APIFetcher {
   }
 
   async getRequestWithToken(resource) {
-    // const hashedCredentialsString = btoa(`${this.email}:${this.password}`);
-    // const {apiUrl, resource, token} = this;
     try {
       const response = await fetch(`${this.apiUrl}${this.resource}/token=${this.token}`, {
         method: 'GET',
