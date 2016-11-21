@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router'
-import TransitionGroup from 'react-addons-transition-group';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import styled from 'styled-components';
 
 const TweenMax = require('gsap');
@@ -14,15 +14,21 @@ import LoginScreen from './Components/LoginScreen.js';
 import Dashboard from './Components/Dashboard.js';
 import APIFetcher from './Utils/APIFetcher.js';
 
-//TODO: How about the wrapper for LoadingScreen??
-//TODO: gradient just on loginscreen
+const requireAuth = (nextState, replaceState) => {
+  const token = localStorage.getItem('token');
+
+  if(!token) {
+    replaceState({ nextPathname: nextState.location.pathname }, '/login');
+  }
+}
+
+//TODO: Change to CSSTransitiongroup?
 class ReservationClient extends React.Component {
   constructor() {
     super();
 
     this.state = {
       data: {},
-      token: '',
       error: ''
     }
 
@@ -37,11 +43,8 @@ class ReservationClient extends React.Component {
         return res.json();
       })
       .then((data) => {
-        this.setState({
-          token: data.token.token
-        }, () => {
-          console.log(this.props);
-        });
+        localStorage.setItem('token', data.token.token);
+        this.props.router.push('/');
       })
       .catch((error) => {
         this.setState({
@@ -51,14 +54,29 @@ class ReservationClient extends React.Component {
   }
 
   render() {
-		return React.cloneElement(this.props.children, {login: this._login});
+    const children = React.cloneElement(this.props.children, {
+      key: location.pathname,
+      login: this._login
+    });
+		return(
+        <CSSTransitionGroup
+          component='div'
+          transitionName='page'
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnterTimeOut={500}
+          transitionLeaveTimeOut={500}
+          >
+          {children}
+        </CSSTransitionGroup>
+    );
 	}
 }
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={ReservationClient}>
                     <Route name="login" path="/login" component={LoginScreen}/>
-                    <IndexRoute name="dashboard" component={Dashboard}/>
+                    <IndexRoute name="dashboard" onEnter={requireAuth} component={Dashboard}/>
                   </Route>
                 </Router>
                 , document.querySelector('.App'));
