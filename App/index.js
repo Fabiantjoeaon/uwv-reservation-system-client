@@ -14,11 +14,11 @@ import LoginScreen from './Components/LoginScreen.js';
 import Dashboard from './Components/Dashboard.js';
 import APIFetcher from './Utils/APIFetcher.js';
 
-const requireAuth = (nextState, replaceState) => {
-  const token = localStorage.getItem('token');
-
+const handleAuth = () => {
+  const currUrl = window.location;
+  const token = localStorage.getItem('@TOKEN');
   if(!token) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/login');
+    window.location.href = `${currUrl}/login`;
   }
 }
 
@@ -43,7 +43,7 @@ class ReservationClient extends React.Component {
         return res.json();
       })
       .then((data) => {
-        localStorage.setItem('token', data.token.token);
+        localStorage.setItem('@TOKEN', data.token.token);
         this.props.router.push('/');
       })
       .catch((error) => {
@@ -59,16 +59,9 @@ class ReservationClient extends React.Component {
       login: this._login
     });
 		return(
-        <CSSTransitionGroup
-          component='div'
-          transitionName='page'
-          transitionAppear={true}
-          transitionAppearTimeout={500}
-          transitionEnterTimeOut={500}
-          transitionLeaveTimeOut={500}
-          >
-          {children}
-        </CSSTransitionGroup>
+      <div>
+        {children}
+      </div>
     );
 	}
 }
@@ -76,7 +69,7 @@ class ReservationClient extends React.Component {
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={ReservationClient}>
                     <Route name="login" path="/login" component={LoginScreen}/>
-                    <IndexRoute name="dashboard" onEnter={requireAuth} component={Dashboard}/>
+                    <IndexRoute name="dashboard" onEnter={handleAuth} component={Dashboard}/>
                   </Route>
                 </Router>
                 , document.querySelector('.App'));

@@ -8224,11 +8224,11 @@
 	var _ = __webpack_require__(596);
 	var API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
-	var requireAuth = function requireAuth(nextState, replaceState) {
-	  var token = localStorage.getItem('token');
-
+	var handleAuth = function handleAuth() {
+	  var currUrl = window.location;
+	  var token = localStorage.getItem('@TOKEN');
 	  if (!token) {
-	    replaceState({ nextPathname: nextState.location.pathname }, '/login');
+	    window.location.href = currUrl + '/login';
 	  }
 	};
 
@@ -8261,7 +8261,7 @@
 	      this.fetcher.authenticateAndFetchToken(creds.email, creds.password).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
-	        localStorage.setItem('token', data.token.token);
+	        localStorage.setItem('@TOKEN', data.token.token);
 	        _this2.props.router.push('/');
 	      }).catch(function (error) {
 	        _this2.setState({
@@ -8277,15 +8277,8 @@
 	        login: this._login
 	      });
 	      return _react2.default.createElement(
-	        _reactAddonsCssTransitionGroup2.default,
-	        {
-	          component: 'div',
-	          transitionName: 'page',
-	          transitionAppear: true,
-	          transitionAppearTimeout: 500,
-	          transitionEnterTimeOut: 500,
-	          transitionLeaveTimeOut: 500
-	        },
+	        'div',
+	        null,
 	        children
 	      );
 	    }
@@ -8301,7 +8294,7 @@
 	    _reactRouter.Route,
 	    { path: '/', component: ReservationClient },
 	    _react2.default.createElement(_reactRouter.Route, { name: 'login', path: '/login', component: _LoginScreen2.default }),
-	    _react2.default.createElement(_reactRouter.IndexRoute, { name: 'dashboard', onEnter: requireAuth, component: _Dashboard2.default })
+	    _react2.default.createElement(_reactRouter.IndexRoute, { name: 'dashboard', onEnter: handleAuth, component: _Dashboard2.default })
 	  )
 	), document.querySelector('.App'));
 
@@ -68967,11 +68960,6 @@
 	  }
 
 	  _createClass(Dashboard, [{
-	    key: 'componentWillEnter',
-	    value: function componentWillEnter() {
-	      console.log('hey');
-	    }
-	  }, {
 	    key: '_logout',
 	    value: function _logout() {
 	      localStorage.removeItem('token');

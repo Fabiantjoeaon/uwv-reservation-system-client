@@ -7,9 +7,6 @@ export default class Dashboard extends React.Component {
   constructor() {
       super();
   }
-  componentWillEnter() {
-      console.log('hey');
-  }
 
   _logout() {
     localStorage.removeItem('token');
