@@ -6,21 +6,13 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import styled from 'styled-components';
 
-const TweenMax = require('gsap');
 const _ = require('lodash');
 const API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
-import LoginScreen from './Components/LoginScreen.js';
-import Dashboard from './Components/Dashboard.js';
+import LoginScreen from './Components/Views/LoginScreen.js';
+import Dashboard from './Components/Views/Dashboard.js';
 import APIFetcher from './Utils/APIFetcher.js';
-
-const handleAuth = () => {
-  const currUrl = window.location;
-  const token = localStorage.getItem('@TOKEN');
-  if(!token) {
-    window.location.href = `${currUrl}/login`;
-  }
-}
+import {handleAuth, handleUnauth} from './Utils/AuthHandlers.js';
 
 //TODO: Change to CSSTransitiongroup?
 class ReservationClient extends React.Component {
@@ -68,7 +60,7 @@ class ReservationClient extends React.Component {
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={ReservationClient}>
-                    <Route name="login" path="/login" component={LoginScreen}/>
+                    <Route name="login" path="/login" onEnter={handleUnauth} component={LoginScreen}/>
                     <IndexRoute name="dashboard" onEnter={handleAuth} component={Dashboard}/>
                   </Route>
                 </Router>

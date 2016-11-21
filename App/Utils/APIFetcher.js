@@ -6,7 +6,6 @@ export default class APIFetcher {
     _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
 
     this.apiUrl = apiUrl;
-    this.data = {};
   }
 
   async authenticateAndFetchToken(email, password) {
@@ -25,9 +24,9 @@ export default class APIFetcher {
     }
   }
 
-  async getRequestWithToken(resource) {
+  async getRequestWithToken(resource, token) {
     try {
-      const response = await fetch(`${this.apiUrl}${this.resource}/token=${this.token}`, {
+      const response = await fetch(`${this.apiUrl}${resource}/token=${token}`, {
         method: 'GET',
         mode: 'cors',
         headers: {

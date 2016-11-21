@@ -8212,6 +8212,8 @@
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
+	var _AuthHandlers = __webpack_require__(608);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8220,20 +8222,10 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var TweenMax = __webpack_require__(601);
 	var _ = __webpack_require__(596);
 	var API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
-	var handleAuth = function handleAuth() {
-	  var currUrl = window.location;
-	  var token = localStorage.getItem('@TOKEN');
-	  if (!token) {
-	    window.location.href = currUrl + '/login';
-	  }
-	};
-
 	//TODO: Change to CSSTransitiongroup?
-
 	var ReservationClient = function (_React$Component) {
 	  _inherits(ReservationClient, _React$Component);
 
@@ -8293,8 +8285,8 @@
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: ReservationClient },
-	    _react2.default.createElement(_reactRouter.Route, { name: 'login', path: '/login', component: _LoginScreen2.default }),
-	    _react2.default.createElement(_reactRouter.IndexRoute, { name: 'dashboard', onEnter: handleAuth, component: _Dashboard2.default })
+	    _react2.default.createElement(_reactRouter.Route, { name: 'login', path: '/login', onEnter: _AuthHandlers.handleUnauth, component: _LoginScreen2.default }),
+	    _react2.default.createElement(_reactRouter.IndexRoute, { name: 'dashboard', onEnter: _AuthHandlers.handleAuth, component: _Dashboard2.default })
 	  )
 	), document.querySelector('.App'));
 
@@ -69008,7 +69000,6 @@
 	    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
 
 	    this.apiUrl = apiUrl;
-	    this.data = {};
 	  }
 
 	  _createClass(APIFetcher, [{
@@ -69053,7 +69044,7 @@
 	  }, {
 	    key: 'getRequestWithToken',
 	    value: function () {
-	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource) {
+	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource, token) {
 	        var response, responseJson;
 	        return regeneratorRuntime.wrap(function _callee2$(_context2) {
 	          while (1) {
@@ -69061,7 +69052,7 @@
 	              case 0:
 	                _context2.prev = 0;
 	                _context2.next = 3;
-	                return fetch('' + this.apiUrl + this.resource + '/token=' + this.token, {
+	                return fetch('' + this.apiUrl + resource + '/token=' + token, {
 	                  method: 'GET',
 	                  mode: 'cors',
 	                  headers: {
@@ -69092,7 +69083,7 @@
 	        }, _callee2, this, [[0, 10]]);
 	      }));
 
-	      function getRequestWithToken(_x3) {
+	      function getRequestWithToken(_x3, _x4) {
 	        return _ref2.apply(this, arguments);
 	      }
 
@@ -69562,6 +69553,32 @@
 	  self.fetch.polyfill = true
 	})(typeof self !== 'undefined' ? self : this);
 
+
+/***/ },
+/* 608 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.handleAuth = handleAuth;
+	exports.handleUnauth = handleUnauth;
+	function handleAuth() {
+	  var currUrl = window.location;
+	  var token = localStorage.getItem('@TOKEN');
+	  if (!token) {
+	    window.location.href = currUrl + '/login';
+	  }
+	}
+
+	function handleUnauth() {
+	  var token = localStorage.getItem('@TOKEN');
+	  if (token) {
+	    window.location.href = 'http://localhost:8888/reservation-client';
+	  }
+	}
 
 /***/ }
 /******/ ]);

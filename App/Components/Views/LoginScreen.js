@@ -4,9 +4,9 @@ import React from 'react';
 
 import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
-import LoginForm from './LoginForm.js';
+import LoginForm from '../Elements/LoginForm.js';
 import LoadingScreen from './LoadingScreen';
-import MoveGradient from '../Styles/Keyframes/MoveGradient.js'
+import MoveGradient from '../../Styles/Keyframes/MoveGradient.js'
 
 const Wrapper = styled.div`
   position: relative;
