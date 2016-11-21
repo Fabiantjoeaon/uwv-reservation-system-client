@@ -26,17 +26,14 @@ export default class LoadingScreen extends React.Component {
     super();
   }
 
-  componentDidMount() {
-  }
-
   componentWillEnter(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
+    TweenMax.to(node, 0.5, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
   }
 
   componentWillLeave(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.6, {ease: Power2.easeOut, opacity: 0}).eventCallback('onComplete', callback);
+    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 0}).eventCallback('onComplete', callback);
   }
 
   render() {
@@ -51,7 +48,7 @@ export default class LoadingScreen extends React.Component {
               <animateTransform attributeType='xml' attributeName='transform' type='rotate' from='0 20 20' to='360 20 20' dur='1s' repeatCount='indefinite'></animateTransform>
             </path>
           </svg>
-    </SVGWrapper>
+      </SVGWrapper>
     )
   }
 }

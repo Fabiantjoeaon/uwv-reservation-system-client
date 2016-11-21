@@ -1,20 +1,13 @@
 import 'whatwg-fetch';
 const _ = require('lodash');
 
-//TODO: POST & GET different? how about authentication?? JWT! https://www.toptal.com/web/cookie-free-authentication-with-json-web-tokens-an-example-in-laravel-and-angularjs
 export default class APIFetcher {
   constructor(apiUrl) {
-    _.bindAll(this, 'setToken', 'authenticateAndFetchToken', 'getRequestWithToken');
+    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
 
     this.apiUrl = apiUrl;
     this.data = {};
-    this.token = '';
   }
-
-  setToken(token) {
-    this.token = token;
-  }
-
 
   async authenticateAndFetchToken(email, password) {
     try {
@@ -28,7 +21,7 @@ export default class APIFetcher {
       });
       return response;
     } catch(error) {
-        console.log(error);
+        return error;
     }
   }
 
@@ -45,7 +38,7 @@ export default class APIFetcher {
       const responseJson = await response.json();
       return responseJson;
     } catch(error) {
-      console.log(error);
+      return error;
     }
 
   }

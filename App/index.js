@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
@@ -11,6 +11,7 @@ const _ = require('lodash');
 const API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
 import LoginScreen from './Components/LoginScreen.js';
+import Dashboard from './Components/Dashboard.js';
 import APIFetcher from './Utils/APIFetcher.js';
 
 //TODO: How about the wrapper for LoadingScreen??
@@ -20,7 +21,6 @@ class ReservationClient extends React.Component {
     super();
 
     this.state = {
-      isLoading: false,
       data: {},
       token: '',
       error: ''
@@ -28,18 +28,10 @@ class ReservationClient extends React.Component {
 
     this.fetcher = new APIFetcher(API_URL);
 
-    _.bindAll(this, '_fetchData', '_login');
-  }
-
-  _fetchData(resource) {
-    // this.setState({ isLoading: true });
+    _.bindAll(this, '_login');
   }
 
   _login(creds) {
-    this.setState({
-      isLoading: true,
-    });
-
     this.fetcher.authenticateAndFetchToken(creds.email, creds.password)
       .then((res) => {
         return res.json();
@@ -48,7 +40,7 @@ class ReservationClient extends React.Component {
         this.setState({
           token: data.token.token
         }, () => {
-          console.log(this.state);
+          console.log(this.props);
         });
       })
       .catch((error) => {
@@ -59,12 +51,14 @@ class ReservationClient extends React.Component {
   }
 
   render() {
-		return(
-      <Router history={browserHistory}>
-        <Route path="/reservation-client/" component={(props, state, params) => <LoginScreen login={this._login} {...props} />}/>
-      </Router>
-		);
+		return React.cloneElement(this.props.children, {login: this._login});
 	}
 }
 
-ReactDOM.render(<ReservationClient/>, document.querySelector('.App'));
+ReactDOM.render(<Router history={hashHistory}>
+                  <Route path="/" component={ReservationClient}>
+                    <Route name="login" path="/login" component={LoginScreen}/>
+                    <IndexRoute name="dashboard" component={Dashboard}/>
+                  </Route>
+                </Router>
+                , document.querySelector('.App'));

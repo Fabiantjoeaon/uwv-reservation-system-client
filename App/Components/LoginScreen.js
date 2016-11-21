@@ -29,9 +29,8 @@ export default class LoginScreen extends React.Component {
       isLoading: false
     }
   }
-  componentDidMount() {
-    // this.props.login('test@test.com', 'test');
-  }
+
+
   render() {
     return (
       <Wrapper
@@ -40,7 +39,7 @@ export default class LoginScreen extends React.Component {
         <TransitionGroup component='div'>
           {this.state.isLoading ?
             <LoadingScreen key='LoadingScreen'/> :
-            <LoginForm key='LoginForm' _login={this.props.login}/>
+            <LoginForm key='LoginForm' login={this.props.login}/>
           }
         </TransitionGroup>
       </Wrapper>

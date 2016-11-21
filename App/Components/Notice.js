@@ -8,10 +8,11 @@ const TweenMax = require('gsap');
 
 const StyledNotice = styled.span`
   background-color: ${props => props.type = 'error' ? 'rgb(219, 100, 73)' : 'rgb(213, 206, 47)'};
+  display: block;
   padding: 10px 20px;
   text-align: center;
   font-family: 'Questrial', sans-serif;
-  margin: 0.5em 0em;
+  margin: 1em 0em;
   opacity: 0;
   color: #fff;
   transition: opacity 0.3s ease-out;

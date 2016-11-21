@@ -16,10 +16,10 @@ const _ = require('lodash');
 const StyledLoginFormWrapper = styled.div`
   padding-top: 5em;
   position: absolute;
-  top:20%;
-  left:25%;
-  width: 50%;
-  height: 50%;
+  top:15%;
+  left:15%;
+  width: 65%;
+  height: 65%;
   background-color: rgba(255,255,255,1);
   opacity: 0;
   transform: translateY(160px);
@@ -42,9 +42,6 @@ export default class LoginForm extends React.Component {
       error: ''
     }
     _.bindAll(this, '_handleSubmit');
-  }
-
-  componentDidMount() {
   }
 
   componentWillAppear(callback) {
@@ -73,7 +70,7 @@ export default class LoginForm extends React.Component {
         email: email,
         password: password
       }
-      this.props._login(data);
+      this.props.login(data);
       this.setState({
         error: ''
       });
