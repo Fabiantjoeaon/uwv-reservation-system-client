@@ -45,12 +45,6 @@ export default class LoginForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setGradient({
-      primaryColor: 'rgb(58, 98, 176)',
-      secundaryColor: 'rgb(50, 154, 221)',
-      tertaryColor: 'rgb(58, 98, 176)',
-      duration: '20s'
-    });
   }
 
   componentWillAppear(callback) {

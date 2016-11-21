@@ -27,12 +27,6 @@ export default class LoadingScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setGradient({
-      primaryColor: 'rgb(210, 28, 77)',
-      secundaryColor: 'rgb(255, 161, 0)',
-      tertaryColor: 'rgb(210, 28, 77)',
-      duration: '20s'
-    });
   }
 
   componentWillEnter(callback) {
