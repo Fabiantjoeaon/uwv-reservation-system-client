@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-
+import ReactDOM from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 import LoginForm from '../Elements/LoginForm.js';
@@ -19,11 +19,27 @@ const Wrapper = styled.div`
   height:100vh;
   animation: ${MoveGradient} 15s infinite linear;
   font-family: 'Lora', sans-serif;
+  transform: translateY(120vh);
 `;
 
 export default class LoginScreen extends React.Component {
   constructor() {
     super();
+  }
+
+  componentWillEnter(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback);
+  }
+
+  componentWillAppear(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback);
+  }
+
+  componentWillLeave(callback) {
+    const node = ReactDOM.findDOMNode(this);
+    TweenMax.to(node, 0.7, {ease: Power2.easeOut, y: -1000}).eventCallback('onComplete', callback);
   }
 
   render() {

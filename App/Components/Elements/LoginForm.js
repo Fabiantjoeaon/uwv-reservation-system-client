@@ -53,7 +53,6 @@ export default class LoginForm extends React.Component {
 
   componentWillAppear(callback) {
     const node = ReactDOM.findDOMNode(this);
-    console.log('ha')
     setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 1500);
   }
 

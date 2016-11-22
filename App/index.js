@@ -48,7 +48,7 @@ class ReservationClient extends React.Component {
 
   render() {
     const children = React.cloneElement(this.props.children, {
-      key: location.pathname,
+      key: this.props.location.pathname,
       login: this._login,
       credError: this.state.error
     });
