@@ -14,8 +14,6 @@ import Dashboard from './Components/Views/Dashboard.js';
 import APIFetcher from './Utils/APIFetcher.js';
 import {handleAuth, handleUnauth} from './Utils/AuthHandlers.js';
 
-//TODO: Change to CSSTransitiongroup?
-//TODO: Invalid auth error notice
 class ReservationClient extends React.Component {
   constructor() {
     super();
@@ -41,7 +39,7 @@ class ReservationClient extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          error: 'Invalid credentials!'
+          error: 'Your email and password are incorrect!'
         });
       });
   }

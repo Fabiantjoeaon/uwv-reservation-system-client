@@ -9,12 +9,11 @@ import Input from './Input.js';
 import Title from './Title.js';
 import Button from './Button.js';
 import Notice from './Notice.js';
-import shallowCompare from '../../Utils/shouldComponentUpdateHelpers.js';
 
 const TweenMax = require('gsap');
 const _ = require('lodash');
 
-const StyledLoginFormWrapper = styled.div`
+const LoginFormWrapper = styled.div`
   padding-top: 5em;
   position: absolute;
   top:15%;
@@ -24,6 +23,10 @@ const StyledLoginFormWrapper = styled.div`
   background-color: rgba(255,255,255,1);
   opacity: 0;
   transform: translateY(160px);
+`;
+
+const LoginButton = styled(Button)`
+  margin-top: 2.5em;
 `;
 
 const StyledLoginForm = styled.form`
@@ -46,7 +49,7 @@ export default class LoginForm extends React.Component {
 
   componentWillAppear(callback) {
     const node = ReactDOM.findDOMNode(this);
-    setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 1500);
+    TweenMax.to(node, 0.8, {delay: 0.8, ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,17 +80,17 @@ export default class LoginForm extends React.Component {
 
   render() {
     return (
-      <StyledLoginFormWrapper>
-        <Title fontWeight='100'>Log In</Title>
+      <LoginFormWrapper>
+        <Title fontSize='2.5em' fontWeight='100' center>Log In</Title>
         <StyledLoginForm autoComplete='off' onSubmit={this._handleSubmit}>
           <TransitionGroup>
             {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
           </TransitionGroup>
           <Input name='email' ref='email' type='email' label='E-mail' />
           <Input name='password' ref='password' type='password' label='Password' />
-          <Button name='submit' type='submit'>Login</Button>
+          <LoginButton name='submit' type='submit'>Login</LoginButton>
         </StyledLoginForm>
-      </StyledLoginFormWrapper>
+      </LoginFormWrapper>
     )
   }
 }

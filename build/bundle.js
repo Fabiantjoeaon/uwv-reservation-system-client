@@ -8225,8 +8225,6 @@
 	var _ = __webpack_require__(591);
 	var API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
-	//TODO: Change to CSSTransitiongroup?
-	//TODO: Invalid auth error notice
 	var ReservationClient = function (_React$Component) {
 	  _inherits(ReservationClient, _React$Component);
 
@@ -8258,7 +8256,7 @@
 	        _this2.props.router.push('/');
 	      }).catch(function (error) {
 	        _this2.setState({
-	          error: 'Invalid credentials!'
+	          error: 'Your email and password are incorrect!'
 	        });
 	      });
 	    }
@@ -43072,23 +43070,19 @@
 	    key: 'componentWillEnter',
 	    value: function componentWillEnter(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      setTimeout(function () {
-	        TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
-	      }, 500);
+	      TweenMax.to(node, 0.5, { delay: 0.5, ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'componentWillAppear',
 	    value: function componentWillAppear(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      setTimeout(function () {
-	        TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
-	      }, 500);
+	      TweenMax.to(node, 0.5, { delay: 0.5, ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'componentWillLeave',
 	    value: function componentWillLeave(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.7, { ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
+	      TweenMax.to(node, 0.3, { delay: 0.5, ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'render',
@@ -43125,7 +43119,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
+	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n'], ['\n  margin-top: 2.5em;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -43159,10 +43154,6 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
-	var _shouldComponentUpdateHelpers = __webpack_require__(603);
-
-	var _shouldComponentUpdateHelpers2 = _interopRequireDefault(_shouldComponentUpdateHelpers);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43176,9 +43167,11 @@
 	var TweenMax = __webpack_require__(596);
 	var _ = __webpack_require__(591);
 
-	var StyledLoginFormWrapper = _styledComponents2.default.div(_templateObject);
+	var LoginFormWrapper = _styledComponents2.default.div(_templateObject);
 
-	var StyledLoginForm = _styledComponents2.default.form(_templateObject2);
+	var LoginButton = (0, _styledComponents2.default)(_Button2.default)(_templateObject2);
+
+	var StyledLoginForm = _styledComponents2.default.form(_templateObject3);
 
 	var LoginForm = function (_React$Component) {
 	  _inherits(LoginForm, _React$Component);
@@ -43200,9 +43193,7 @@
 	    key: 'componentWillAppear',
 	    value: function componentWillAppear(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      setTimeout(function () {
-	        TweenMax.to(node, 0.8, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
-	      }, 1500);
+	      TweenMax.to(node, 0.8, { delay: 0.8, ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -43237,11 +43228,11 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        StyledLoginFormWrapper,
+	        LoginFormWrapper,
 	        null,
 	        _react2.default.createElement(
 	          _Title2.default,
-	          { fontWeight: '100' },
+	          { fontSize: '2.5em', fontWeight: '100', center: true },
 	          'Log In'
 	        ),
 	        _react2.default.createElement(
@@ -43255,7 +43246,7 @@
 	          _react2.default.createElement(_Input2.default, { name: 'email', ref: 'email', type: 'email', label: 'E-mail' }),
 	          _react2.default.createElement(_Input2.default, { name: 'password', ref: 'password', type: 'password', label: 'Password' }),
 	          _react2.default.createElement(
-	            _Button2.default,
+	            LoginButton,
 	            { name: 'submit', type: 'submit' },
 	            'Login'
 	          )
@@ -60404,7 +60395,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: 2.5em;\n  display: block;\n  width: 50%;\n  margin: 0em auto 1em auto;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n'], ['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: 2.5em;\n  display: block;\n  width: 50%;\n  margin: 0em auto 1em auto;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n'], ['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -60418,17 +60409,13 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var StyledTitle = _styledComponents2.default.h1(_templateObject, function (props) {
+	var Title = _styledComponents2.default.h1(_templateObject, function (props) {
+	  return props.fontSize;
+	}, function (props) {
+	  return props.center ? '0em auto 1em auto' : '0';
+	}, function (props) {
 	  return props.fontWeight;
 	});
-
-	var Title = function Title(props) {
-	  return _react2.default.createElement(
-	    StyledTitle,
-	    { fontWeight: props.fontWeight },
-	    props.children
-	  );
-	};
 
 	exports.default = Title;
 
@@ -60442,7 +60429,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  margin-top: 2.5em;\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68381,7 +68368,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n'], ['\n  width: 100%;\n  height: 100%;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68395,6 +68384,14 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+	var _Title = __webpack_require__(593);
+
+	var _Title2 = _interopRequireDefault(_Title);
+
+	var _Button = __webpack_require__(594);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68406,6 +68403,10 @@
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 	var Wrapper = _styledComponents2.default.div(_templateObject);
+
+	var Top = _styledComponents2.default.div(_templateObject2);
+
+	var DashboardTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject3);
 
 	var Dashboard = function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
@@ -68419,20 +68420,20 @@
 	  _createClass(Dashboard, [{
 	    key: 'componentWillEnter',
 	    value: function componentWillEnter(callback) {
-	      console.log('ds did enter');
-	      callback();
+	      var node = _reactDom2.default.findDOMNode(this);
+	      TweenMax.to(node, 1, { delay: 0.7, ease: Power2.easeOut, y: 0 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'componentWillAppear',
 	    value: function componentWillAppear(callback) {
-	      console.log('ds did appear');
-	      callback();
+	      var node = _reactDom2.default.findDOMNode(this);
+	      TweenMax.to(node, 0.5, { delay: 0.7, ease: Power2.easeOut, y: 0 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'componentWillLeave',
 	    value: function componentWillLeave(callback) {
-	      console.log('ds did leave');
-	      callback();
+	      var node = _reactDom2.default.findDOMNode(this);
+	      TweenMax.to(node, 0.5, { delay: 0.3, ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: '_logout',
@@ -68444,9 +68445,17 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'h1',
+	        Wrapper,
 	        null,
-	        'Dashboard'
+	        _react2.default.createElement(
+	          Top,
+	          null,
+	          _react2.default.createElement(
+	            DashboardTitle,
+	            { fontSize: '2.5em', fontWeight: '900' },
+	            'Dashboard'
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -69056,65 +69065,6 @@
 	  if (token) {
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
-	}
-
-/***/ },
-/* 603 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports.default = shallowCompare;
-	/**
-	 * [shallowEqual description]
-	 * @param  {[type]} objA [description]
-	 * @param  {[type]} objB [description]
-	 * @return {[type]}      [description]
-	 */
-	function shallowEqual(objA, objB) {
-	  // If state or props are the same don't do anything
-	  if (objA === objB) {
-	    return true;
-	  }
-
-	  if ((typeof objA === 'undefined' ? 'undefined' : _typeof(objA)) !== 'object' || objA === null || (typeof objB === 'undefined' ? 'undefined' : _typeof(objB)) !== 'object' || objB === null) {
-	    return false;
-	  }
-
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-
-	  // Test for A's keys different from B.
-	  var bHasOwnProperty = hasOwnProperty.bind(objB);
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-	      return false;
-	    }
-	  }
-
-	  return true;
-	}
-
-	/**
-	 * [shallowCompare description]
-	 * @param  {[type]} instance  [description]
-	 * @param  {[type]} nextProps [description]
-	 * @param  {[type]} nextState [description]
-	 * @return {[type]}           [description]
-	 */
-	function shallowCompare(instance, nextProps, nextState) {
-	  // Return only if shallowequal is false
-	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
 	}
 
 /***/ }

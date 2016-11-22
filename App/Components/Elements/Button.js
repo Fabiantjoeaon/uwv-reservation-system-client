@@ -4,7 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  margin-top: 2.5em;
   width: 9em;
   height: 3em;
   background-color: rgba(0,0,0,0);
