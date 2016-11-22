@@ -10,7 +10,7 @@ export default class Dashboard extends React.Component {
 
   _logout() {
     localStorage.removeItem('token');
-    this.props.router.push('/login');
+    this.props.router.push('login');
   }
 
   render() {

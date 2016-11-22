@@ -32,8 +32,6 @@ const StyledLoginForm = styled.form`
   justify-content: center;
 `;
 
-//TODO: Submit data to login
-//TODO: For moving state up, create function in parent, maybe bind this to the child???
 export default class LoginForm extends React.Component {
   constructor() {
     super();
@@ -44,22 +42,30 @@ export default class LoginForm extends React.Component {
     _.bindAll(this, '_handleSubmit');
   }
 
-  componentWillAppear(callback) {
+  componentDidMount() {
+    this.setState({
+      error: this.props.credError
+    }, () => {
+      console.log(this.state.error);
+    });
 
+  }
+
+  componentWillAppear(callback) {
     const node = ReactDOM.findDOMNode(this);
+    console.log('ha')
     setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 1500);
   }
 
-  componentWillEnter(callback) {
-    console.log('h')
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1, y: 160}).eventCallback('onComplete', callback);
-  }
+  // componentWillEnter(callback) {
+    // const node = ReactDOM.findDOMNode(this);
+    // TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1, y: 160}).eventCallback('onComplete', callback);
+  // }
 
-  componentWillLeave(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.4, {ease: Power2.easeOut, opacity: 0, y: 160}).eventCallback('onComplete', callback);
-  }
+  // componentWillLeave(callback) {
+    // const node = ReactDOM.findDOMNode(this);
+    // TweenMax.to(node, 0.4, {ease: Power2.easeOut, opacity: 0, y: 160}).eventCallback('onComplete', callback);
+  // }
 
   _handleSubmit(e) {
     e.preventDefault();
@@ -73,9 +79,6 @@ export default class LoginForm extends React.Component {
         password: password
       }
       this.props.login(data);
-      this.setState({
-        error: ''
-      });
     } else {
       this.setState({
         error: 'Please fill in all the fields'

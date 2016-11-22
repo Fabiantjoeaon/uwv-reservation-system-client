@@ -20,7 +20,7 @@ export default class APIFetcher {
       });
       return response;
     } catch(error) {
-        return error;
+      return error;
     }
   }
 
@@ -34,8 +34,7 @@ export default class APIFetcher {
           'Content-Type': 'application/json',
         }
       });
-      const responseJson = await response.json();
-      return responseJson;
+      return response;
     } catch(error) {
       return error;
     }

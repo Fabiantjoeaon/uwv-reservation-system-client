@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router'
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 const _ = require('lodash');
@@ -15,6 +15,7 @@ import APIFetcher from './Utils/APIFetcher.js';
 import {handleAuth, handleUnauth} from './Utils/AuthHandlers.js';
 
 //TODO: Change to CSSTransitiongroup?
+//TODO: Invalid auth error notice
 class ReservationClient extends React.Component {
   constructor() {
     super();
@@ -40,19 +41,22 @@ class ReservationClient extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          error: error
-        })
+          error: 'Invalid credentials!'
+        });
       });
   }
 
   render() {
     const children = React.cloneElement(this.props.children, {
       key: location.pathname,
-      login: this._login
+      login: this._login,
+      credError: this.state.error
     });
 		return(
       <div>
-        {children}
+        <TransitionGroup>
+          {children}
+        </TransitionGroup>
       </div>
     );
 	}
@@ -60,8 +64,7 @@ class ReservationClient extends React.Component {
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={ReservationClient}>
-                    <Route name="login" path="/login" onEnter={handleUnauth} component={LoginScreen}/>
+                    <Route name="login" path="login" onEnter={handleUnauth} component={LoginScreen}/>
                     <IndexRoute name="dashboard" onEnter={handleAuth} component={Dashboard}/>
                   </Route>
-                </Router>
-                , document.querySelector('.App'));
+                </Router>, document.querySelector('.App'));

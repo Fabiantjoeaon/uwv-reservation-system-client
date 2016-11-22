@@ -2,7 +2,7 @@ export function handleAuth() {
   const currUrl = window.location;
   const token = localStorage.getItem('@TOKEN');
   if(!token) {
-    window.location.href = `${currUrl}/login`;
+    window.location.href = `${currUrl}login`;
   }
 }
 

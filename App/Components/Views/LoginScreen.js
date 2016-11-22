@@ -5,7 +5,6 @@ import React from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 import LoginForm from '../Elements/LoginForm.js';
-import LoadingScreen from './LoadingScreen';
 import MoveGradient from '../../Styles/Keyframes/MoveGradient.js'
 
 const Wrapper = styled.div`
@@ -25,9 +24,6 @@ const Wrapper = styled.div`
 export default class LoginScreen extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isLoading: false
-    }
   }
 
   render() {
@@ -36,10 +32,7 @@ export default class LoginScreen extends React.Component {
         gradientRotation='352deg'
         >
         <TransitionGroup component='div'>
-          {this.state.isLoading ?
-            <LoadingScreen key='LoadingScreen'/> :
-            <LoginForm key='LoginForm' login={this.props.login}/>
-          }
+          <LoginForm key='LoginForm' error={this.props.credError} login={this.props.login}/>
         </TransitionGroup>
       </Wrapper>
     )
