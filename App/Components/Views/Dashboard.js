@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import Title from '../Elements/Title.js';
 import Button from '../Elements/Button.js';
+import Link from '../Elements/Link.js';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,6 +18,19 @@ const Wrapper = styled.div`
 const Top = styled.div`
   height: 15%;
   width: 100%;
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  width: ${props => props.width};
+  justify-content: space-between;
+  flex-direction: ${props => props.direction};
+`;
+
+const NavFlexWrapper = styled(FlexWrapper)`
+  position: absolute;
+  top: 5%;
+  right: 5%;
 `;
 
 const DashboardTitle = styled(Title)`
@@ -55,7 +69,13 @@ export default class Dashboard extends React.Component {
       <Wrapper>
         <Top>
           <DashboardTitle fontSize='2.5em' fontWeight='900'>Dashboard</DashboardTitle>
+          <NavFlexWrapper direction='row' width='40%'>
+            <Link>My Reservations</Link>
+            <Link>My Clients</Link>
+            <Link>Logout</Link>
+          </NavFlexWrapper>
         </Top>
+        {this.props.children}
       </Wrapper>
     )
   }

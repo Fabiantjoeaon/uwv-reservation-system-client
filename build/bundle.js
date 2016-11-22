@@ -68370,7 +68370,9 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n'], ['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68392,6 +68394,10 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
+	var _Link = __webpack_require__(603);
+
+	var _Link2 = _interopRequireDefault(_Link);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68406,7 +68412,15 @@
 
 	var Top = _styledComponents2.default.div(_templateObject2);
 
-	var DashboardTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject3);
+	var FlexWrapper = _styledComponents2.default.div(_templateObject3, function (props) {
+	  return props.width;
+	}, function (props) {
+	  return props.direction;
+	});
+
+	var NavFlexWrapper = (0, _styledComponents2.default)(FlexWrapper)(_templateObject4);
+
+	var DashboardTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject5);
 
 	var Dashboard = function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
@@ -68454,8 +68468,28 @@
 	            DashboardTitle,
 	            { fontSize: '2.5em', fontWeight: '900' },
 	            'Dashboard'
+	          ),
+	          _react2.default.createElement(
+	            NavFlexWrapper,
+	            { direction: 'row', width: '40%' },
+	            _react2.default.createElement(
+	              _Link2.default,
+	              null,
+	              'My Reservations'
+	            ),
+	            _react2.default.createElement(
+	              _Link2.default,
+	              null,
+	              'My Clients'
+	            ),
+	            _react2.default.createElement(
+	              _Link2.default,
+	              null,
+	              'Logout'
+	            )
 	          )
-	        )
+	        ),
+	        this.props.children
 	      );
 	    }
 	  }]);
@@ -69066,6 +69100,34 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 603 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _templateObject = _taggedTemplateLiteral(['\n\n  font-size: 0.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 900;\n  position: relative;\n  text-transform: uppercase;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: #000;\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 2px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n\n  font-size: 0.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 900;\n  position: relative;\n  text-transform: uppercase;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: #000;\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 2px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var Link = _styledComponents2.default.a(_templateObject);
+
+	exports.default = Link;
 
 /***/ }
 /******/ ]);

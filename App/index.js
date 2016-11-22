@@ -63,6 +63,7 @@ class ReservationClient extends React.Component {
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={ReservationClient}>
                     <Route name="login" path="login" onEnter={handleUnauth} component={LoginScreen}/>
-                    <IndexRoute name="dashboard" onEnter={handleAuth} component={Dashboard}/>
+                    <IndexRoute name="dashboard" onEnter={handleAuth} component={Dashboard}>
+                    </IndexRoute>
                   </Route>
                 </Router>, document.querySelector('.App'));
