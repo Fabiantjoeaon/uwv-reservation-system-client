@@ -9,6 +9,7 @@ import Input from './Input.js';
 import Title from './Title.js';
 import Button from './Button.js';
 import Notice from './Notice.js';
+import shallowCompare from '../../Utils/shouldComponentUpdateHelpers.js';
 
 const TweenMax = require('gsap');
 const _ = require('lodash');
@@ -36,19 +37,11 @@ export default class LoginForm extends React.Component {
   constructor() {
     super();
 
+    _.bindAll(this, '_handleSubmit');
+
     this.state = {
       error: ''
     }
-    _.bindAll(this, '_handleSubmit');
-  }
-
-  componentDidMount() {
-    this.setState({
-      error: this.props.credError
-    }, () => {
-      console.log(this.state.error);
-    });
-
   }
 
   componentWillAppear(callback) {
@@ -56,15 +49,12 @@ export default class LoginForm extends React.Component {
     setTimeout(() => {TweenMax.to(node, 0.8, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 1500);
   }
 
-  // componentWillEnter(callback) {
-    // const node = ReactDOM.findDOMNode(this);
-    // TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1, y: 160}).eventCallback('onComplete', callback);
-  // }
-
-  // componentWillLeave(callback) {
-    // const node = ReactDOM.findDOMNode(this);
-    // TweenMax.to(node, 0.4, {ease: Power2.easeOut, opacity: 0, y: 160}).eventCallback('onComplete', callback);
-  // }
+  componentWillReceiveProps(nextProps) {
+    const {error} = nextProps;
+    this.setState({
+      error: error
+    });
+  }
 
   _handleSubmit(e) {
     e.preventDefault();
@@ -80,7 +70,7 @@ export default class LoginForm extends React.Component {
       this.props.login(data);
     } else {
       this.setState({
-        error: 'Please fill in all the fields'
+        error: 'Please fill in all the fields!'
       });
     }
   }

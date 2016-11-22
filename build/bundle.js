@@ -43072,13 +43072,17 @@
 	    key: 'componentWillEnter',
 	    value: function componentWillEnter(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
+	      setTimeout(function () {
+	        TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
+	      }, 500);
 	    }
 	  }, {
 	    key: 'componentWillAppear',
 	    value: function componentWillAppear(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
+	      setTimeout(function () {
+	        TweenMax.to(node, 0.5, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
+	      }, 500);
 	    }
 	  }, {
 	    key: 'componentWillLeave',
@@ -43155,6 +43159,10 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
+	var _shouldComponentUpdateHelpers = __webpack_require__(603);
+
+	var _shouldComponentUpdateHelpers2 = _interopRequireDefault(_shouldComponentUpdateHelpers);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43180,25 +43188,15 @@
 
 	    var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this));
 
+	    _.bindAll(_this, '_handleSubmit');
+
 	    _this.state = {
 	      error: ''
 	    };
-	    _.bindAll(_this, '_handleSubmit');
 	    return _this;
 	  }
 
 	  _createClass(LoginForm, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      this.setState({
-	        error: this.props.credError
-	      }, function () {
-	        console.log(_this2.state.error);
-	      });
-	    }
-	  }, {
 	    key: 'componentWillAppear',
 	    value: function componentWillAppear(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
@@ -43206,17 +43204,15 @@
 	        TweenMax.to(node, 0.8, { ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
 	      }, 1500);
 	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var error = nextProps.error;
 
-	    // componentWillEnter(callback) {
-	    // const node = ReactDOM.findDOMNode(this);
-	    // TweenMax.to(node, 1, {ease: Power2.easeIn, opacity: 1, y: 160}).eventCallback('onComplete', callback);
-	    // }
-
-	    // componentWillLeave(callback) {
-	    // const node = ReactDOM.findDOMNode(this);
-	    // TweenMax.to(node, 0.4, {ease: Power2.easeOut, opacity: 0, y: 160}).eventCallback('onComplete', callback);
-	    // }
-
+	      this.setState({
+	        error: error
+	      });
+	    }
 	  }, {
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(e) {
@@ -43233,7 +43229,7 @@
 	        this.props.login(data);
 	      } else {
 	        this.setState({
-	          error: 'Please fill in all the fields'
+	          error: 'Please fill in all the fields!'
 	        });
 	      }
 	    }
@@ -68385,6 +68381,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n'], ['\n  width: 100%;\n  height: 100%;\n']);
+
 	var _react = __webpack_require__(299);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -68393,6 +68391,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68400,6 +68402,10 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var Wrapper = _styledComponents2.default.div(_templateObject);
 
 	var Dashboard = function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
@@ -69050,6 +69056,65 @@
 	  if (token) {
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
+	}
+
+/***/ },
+/* 603 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports.default = shallowCompare;
+	/**
+	 * [shallowEqual description]
+	 * @param  {[type]} objA [description]
+	 * @param  {[type]} objB [description]
+	 * @return {[type]}      [description]
+	 */
+	function shallowEqual(objA, objB) {
+	  // If state or props are the same don't do anything
+	  if (objA === objB) {
+	    return true;
+	  }
+
+	  if ((typeof objA === 'undefined' ? 'undefined' : _typeof(objA)) !== 'object' || objA === null || (typeof objB === 'undefined' ? 'undefined' : _typeof(objB)) !== 'object' || objB === null) {
+	    return false;
+	  }
+
+	  var keysA = Object.keys(objA);
+	  var keysB = Object.keys(objB);
+
+	  if (keysA.length !== keysB.length) {
+	    return false;
+	  }
+
+	  // Test for A's keys different from B.
+	  var bHasOwnProperty = hasOwnProperty.bind(objB);
+	  for (var i = 0; i < keysA.length; i++) {
+	    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * [shallowCompare description]
+	 * @param  {[type]} instance  [description]
+	 * @param  {[type]} nextProps [description]
+	 * @param  {[type]} nextState [description]
+	 * @return {[type]}           [description]
+	 */
+	function shallowCompare(instance, nextProps, nextState) {
+	  // Return only if shallowequal is false
+	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
 	}
 
 /***/ }

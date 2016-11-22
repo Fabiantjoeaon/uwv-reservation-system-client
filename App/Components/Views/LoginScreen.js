@@ -29,12 +29,12 @@ export default class LoginScreen extends React.Component {
 
   componentWillEnter(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback);
+    setTimeout(() => { TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 500);
   }
 
   componentWillAppear(callback) {
     const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback);
+    setTimeout(() => { TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 1, y: 0}).eventCallback('onComplete', callback)}, 500);
   }
 
   componentWillLeave(callback) {
