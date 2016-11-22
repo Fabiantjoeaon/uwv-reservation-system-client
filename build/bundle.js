@@ -8208,6 +8208,10 @@
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
+	var _ReservationsOverview = __webpack_require__(604);
+
+	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
+
 	var _APIFetcher = __webpack_require__(600);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
@@ -8225,6 +8229,8 @@
 	var _ = __webpack_require__(591);
 	var API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
+	//TODO: React proptypes!!!
+	//TODO: Docblocker!!!
 	var ReservationClient = function (_React$Component) {
 	  _inherits(ReservationClient, _React$Component);
 
@@ -8235,24 +8241,33 @@
 
 	    _this.state = {
 	      data: {},
-	      error: ''
+	      error: '',
+	      fetcher: new _APIFetcher2.default(API_URL)
 	    };
 
-	    _this.fetcher = new _APIFetcher2.default(API_URL);
-
-	    _.bindAll(_this, '_login');
+	    _.bindAll(_this, '_login', '_logout', '_retrieveFromLocalStorage');
 	    return _this;
 	  }
 
 	  _createClass(ReservationClient, [{
+	    key: '_retrieveFromLocalStorage',
+	    value: function _retrieveFromLocalStorage(item) {
+	      var data = localStorage.getItem(item);
+	      return data;
+	    }
+	  }, {
 	    key: '_login',
 	    value: function _login(creds) {
 	      var _this2 = this;
 
-	      this.fetcher.authenticateAndFetchToken(creds.email, creds.password).then(function (res) {
+	      this.state.fetcher.authenticateAndFetchToken(creds.email, creds.password).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
-	        localStorage.setItem('@TOKEN', data.token.token);
+	        var user = data.user,
+	            token = data.token;
+
+	        localStorage.setItem('@TOKEN', token.token);
+	        localStorage.setItem('@USERNAME', user.name);
 	        _this2.props.router.push('/');
 	      }).catch(function (error) {
 	        _this2.setState({
@@ -8261,12 +8276,23 @@
 	      });
 	    }
 	  }, {
+	    key: '_logout',
+	    value: function _logout() {
+	      localStorage.removeItem('@TOKEN');
+	      localStorage.removeItem('@USERNAME');
+	      this.props.router.push('login');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      // TODO: Check if props could be passed to just one child (login)
 	      var children = _react2.default.cloneElement(this.props.children, {
 	        key: this.props.location.pathname,
 	        login: this._login,
-	        credError: this.state.error
+	        logout: this._logout,
+	        credError: this.state.error,
+	        fetcher: this.state.fetcher,
+	        retrieveFromLocalStorage: this._retrieveFromLocalStorage
 	      });
 	      return _react2.default.createElement(
 	        'div',
@@ -8282,15 +8308,23 @@
 
 	  return ReservationClient;
 	}(_react2.default.Component);
+	// FIXME: Router 'middleware', maybe ask StackOverflow
+	// TODO: Routes as child from dashboard??
+	// TODO: Active route ??
+
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
-	    { path: '/', component: ReservationClient },
+	    { component: ReservationClient },
 	    _react2.default.createElement(_reactRouter.Route, { name: 'login', path: 'login', onEnter: _AuthHandlers.handleUnauth, component: _LoginScreen2.default }),
-	    _react2.default.createElement(_reactRouter.IndexRoute, { name: 'dashboard', onEnter: _AuthHandlers.handleAuth, component: _Dashboard2.default })
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/', name: 'dashboard', onEnter: _AuthHandlers.handleAuth, component: _Dashboard2.default },
+	      _react2.default.createElement(_reactRouter.Route, { name: 'reservations', path: 'reservations', component: _ReservationsOverview2.default })
+	    )
 	  )
 	), document.querySelector('.App'));
 
@@ -43055,6 +43089,7 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+	var TweenMax = __webpack_require__(596);
 	var Wrapper = _styledComponents2.default.div(_templateObject, _MoveGradient2.default);
 
 	var LoginScreen = function (_React$Component) {
@@ -43232,7 +43267,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _Title2.default,
-	          { fontSize: '2.5em', fontWeight: '100', center: true },
+	          { fontSize: '3.7em', fontWeight: '100', center: true },
 	          'Log In'
 	        ),
 	        _react2.default.createElement(
@@ -43273,8 +43308,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 0.9em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 0.9em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.4em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.4em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.4em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.4em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -60412,7 +60447,7 @@
 	var Title = _styledComponents2.default.h1(_templateObject, function (props) {
 	  return props.fontSize;
 	}, function (props) {
-	  return props.center ? '0em auto 1em auto' : '0';
+	  return props.center ? '2em auto 1em auto' : '0';
 	}, function (props) {
 	  return props.fontWeight;
 	});
@@ -60429,7 +60464,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  font-size: 1.7em;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  font-size: 1.7em;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68408,6 +68443,8 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+	var _ = __webpack_require__(591);
+
 	var Wrapper = _styledComponents2.default.div(_templateObject);
 
 	var Top = _styledComponents2.default.div(_templateObject2);
@@ -68428,10 +68465,18 @@
 	  function Dashboard() {
 	    _classCallCheck(this, Dashboard);
 
-	    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
+
+	    _.bindAll(_this, '_logout');
+	    return _this;
 	  }
 
 	  _createClass(Dashboard, [{
+	    key: '_logout',
+	    value: function _logout() {
+	      this.props.logout();
+	    }
+	  }, {
 	    key: 'componentWillEnter',
 	    value: function componentWillEnter(callback) {
 	      var node = _reactDom2.default.findDOMNode(this);
@@ -68450,14 +68495,9 @@
 	      TweenMax.to(node, 0.5, { delay: 0.3, ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
-	    key: '_logout',
-	    value: function _logout() {
-	      localStorage.removeItem('token');
-	      this.props.router.push('login');
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var username = this.props.retrieveFromLocalStorage('@USERNAME');
 	      return _react2.default.createElement(
 	        Wrapper,
 	        null,
@@ -68466,15 +68506,31 @@
 	          null,
 	          _react2.default.createElement(
 	            DashboardTitle,
-	            { fontSize: '2.5em', fontWeight: '900' },
+	            { fontSize: '4em', fontWeight: '900' },
 	            'Dashboard'
+	          ),
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'dashboard__sub-title' },
+	            '- Logged in as ',
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'dashboard__username' },
+	              username
+	            ),
+	            ' -'
 	          ),
 	          _react2.default.createElement(
 	            NavFlexWrapper,
 	            { direction: 'row', width: '40%' },
 	            _react2.default.createElement(
 	              _Link2.default,
-	              null,
+	              { href: '#/' },
+	              'Rooms'
+	            ),
+	            _react2.default.createElement(
+	              _Link2.default,
+	              { href: '#/reservations' },
 	              'My Reservations'
 	            ),
 	            _react2.default.createElement(
@@ -68484,7 +68540,7 @@
 	            ),
 	            _react2.default.createElement(
 	              _Link2.default,
-	              null,
+	              { onClick: this._logout },
 	              'Logout'
 	            )
 	          )
@@ -68538,6 +68594,8 @@
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                _context.prev = 0;
+
+	                //TODO Put creds in post body/header, not in URL
 	                response = fetch(this.apiUrl + '/login?email=' + email + '&password=' + password, {
 	                  method: 'POST',
 	                  mode: 'cors',
@@ -69111,7 +69169,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n\n  font-size: 0.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 900;\n  position: relative;\n  text-transform: uppercase;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: #000;\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 2px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n\n  font-size: 0.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 900;\n  position: relative;\n  text-transform: uppercase;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: #000;\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 2px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -69128,6 +69186,67 @@
 	var Link = _styledComponents2.default.a(_templateObject);
 
 	exports.default = Link;
+
+/***/ },
+/* 604 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactAddonsTransitionGroup = __webpack_require__(525);
+
+	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReservationsOverview = function (_React$Component) {
+	  _inherits(ReservationsOverview, _React$Component);
+
+	  function ReservationsOverview() {
+	    _classCallCheck(this, ReservationsOverview);
+
+	    return _possibleConstructorReturn(this, (ReservationsOverview.__proto__ || Object.getPrototypeOf(ReservationsOverview)).call(this));
+	  }
+
+	  _createClass(ReservationsOverview, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Overview'
+	      );
+	    }
+	  }]);
+
+	  return ReservationsOverview;
+	}(_react2.default.Component);
+
+	exports.default = ReservationsOverview;
 
 /***/ }
 /******/ ]);

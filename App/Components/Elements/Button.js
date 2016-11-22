@@ -8,6 +8,7 @@ const Button = styled.button`
   height: 3em;
   background-color: rgba(0,0,0,0);
   border: 2px solid #000;
+  font-size: 1.7em;
   cursor: pointer;
   font-family: 'Questrial', sans-serif;
   text-transform: uppercase;

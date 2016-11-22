@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import LoginForm from '../Elements/LoginForm.js';
 import MoveGradient from '../../Styles/Keyframes/MoveGradient.js'
 
+const TweenMax = require('gsap');
 const Wrapper = styled.div`
   position: relative;
   background: repeating-linear-gradient(

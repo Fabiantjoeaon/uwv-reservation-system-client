@@ -81,7 +81,7 @@ export default class LoginForm extends React.Component {
   render() {
     return (
       <LoginFormWrapper>
-        <Title fontSize='2.5em' fontWeight='100' center>Log In</Title>
+        <Title fontSize='3.7em' fontWeight='100' center>Log In</Title>
         <StyledLoginForm autoComplete='off' onSubmit={this._handleSubmit}>
           <TransitionGroup>
             {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}

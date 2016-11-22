@@ -3,6 +3,11 @@
   font-family: 'Crimson Text', serif;
 }
 
+@font-face {
+  src: url('../assets/fonts/CrimsonText-Italic.ttf');
+  font-family: 'Crimson Text Italic', serif;
+}
+
 ::-webkit-scrollbar {
   display: none;
   width: 0 !important;
@@ -11,10 +16,27 @@
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
 }
-
+html {
+  font-size: 62.5%;
+}
 body {
   padding: 0px;
   margin: 0px;
+}
+
+.dashboard__sub-title {
+  font-family: 'Crimson Text';
+  font-style: italic;
+  font-weight: 100;
+  color: rgb(136, 136, 136);
+  font-size: 2em;
+  position: absolute;
+  top: 11.5%;
+  left: 5%;
+
+  .dashboard__username {
+    color: #000;
+  }
 }
 
 .page-enter {

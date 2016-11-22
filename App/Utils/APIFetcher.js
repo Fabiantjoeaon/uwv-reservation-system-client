@@ -10,6 +10,7 @@ export default class APIFetcher {
 
   async authenticateAndFetchToken(email, password) {
     try {
+      //TODO Put creds in post body/header, not in URL
       const response = fetch(`${this.apiUrl}/login?email=${email}&password=${password}`, {
         method: 'POST',
         mode: 'cors',

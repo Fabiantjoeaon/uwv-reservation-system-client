@@ -8,6 +8,8 @@ import Title from '../Elements/Title.js';
 import Button from '../Elements/Button.js';
 import Link from '../Elements/Link.js';
 
+const _ = require('lodash');
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -41,7 +43,13 @@ const DashboardTitle = styled(Title)`
 
 export default class Dashboard extends React.Component {
   constructor() {
-      super();
+    super();
+
+    _.bindAll(this, '_logout');
+  }
+
+  _logout() {
+    this.props.logout();
   }
 
   componentWillEnter(callback) {
@@ -59,20 +67,18 @@ export default class Dashboard extends React.Component {
     TweenMax.to(node, 0.5, {delay: 0.3, ease: Power2.easeOut, y: -1000}).eventCallback('onComplete', callback);
   }
 
-  _logout() {
-    localStorage.removeItem('token');
-    this.props.router.push('login');
-  }
-
   render() {
+    const username = this.props.retrieveFromLocalStorage('@USERNAME');
     return(
       <Wrapper>
         <Top>
-          <DashboardTitle fontSize='2.5em' fontWeight='900'>Dashboard</DashboardTitle>
+          <DashboardTitle fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
+          <h2 className='dashboard__sub-title'>- Logged in as <span className='dashboard__username'>{username}</span> -</h2>
           <NavFlexWrapper direction='row' width='40%'>
-            <Link>My Reservations</Link>
+            <Link href='#/'>Rooms</Link>
+            <Link href='#/reservations'>My Reservations</Link>
             <Link>My Clients</Link>
-            <Link>Logout</Link>
+            <Link onClick={this._logout}>Logout</Link>
           </NavFlexWrapper>
         </Top>
         {this.props.children}

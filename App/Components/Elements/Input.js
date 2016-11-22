@@ -29,7 +29,7 @@ const StyledLabel = styled.label`
   top: -40%;
   left: -0.5%;
   position: absolute;
-  font-size: 0.9em;
+  font-size: 1.4em;
   padding: 2px 3px 1px 2px;
   background-color: rgba(0,0,0,0);
   font-family: 'Lora', sans-serif;
@@ -59,6 +59,7 @@ const StyledInput = styled.input`
   position: relative;
   background-color: rgba(0,0,0,0);
   font-family: 'Lora', serif;
+  font-size: 1.4em;
   border: none;
   padding: 20px 0px;
   transition: all 0.3s ease-out;
