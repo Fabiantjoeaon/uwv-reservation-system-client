@@ -10,7 +10,7 @@ const Link = styled.a`
   text-align: center;
   font-weight: 100;
   position: relative;
-  font-family: 'Questrial', sans-serif;
+  
   transition: all 0.3s ease-out;
   color: rgb(144, 144, 144);
 

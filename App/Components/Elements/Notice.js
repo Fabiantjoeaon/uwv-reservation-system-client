@@ -11,6 +11,7 @@ const StyledNotice = styled.span`
   display: block;
   padding: 10px 20px;
   text-align: center;
+  font-size: 1.5em;
   font-family: 'Questrial', sans-serif;
   margin: 1em 0em;
   opacity: 0;

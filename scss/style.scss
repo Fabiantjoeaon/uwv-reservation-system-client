@@ -25,27 +25,80 @@ body {
 }
 
 .onderzoekkamer, .spreekkamer {
-  transition: all 0.2s ease-in;
+  background-size: 1px 300px;
+
+  &::before {
+    content: '';
+    width: 100%;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.2);
+    opacity: 0;
+    transition: 0.2s ease-out;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
 }
+
 .onderzoekkamer {
-  background-color: #b5d0ff;
+  background: linear-gradient(45deg, #b5d0ff, darken(#b5d0ff, 5%));
+}
 
-  &:hover {
-    background-color: #89B5FF;
+.spreekkamer {
+  background: linear-gradient(45deg, #C4B7FF, darken(#C4B7FF, 5%));
+}
+
+.room__reserved {
+  pointer-events: none;
+  cursor: default;
+  background: linear-gradient(45deg, #C6C6C6, darken(#C6C6C6, 5%));
+
+  .room__name, .room__meta {
+    color: rgb(120, 120, 120);
   }
 }
-.spreekkamer {
-  background-color: #FFE2AD;
 
-  &:hover {
-    background-color: #FFD07C;
-  }
+.oranje {
+  background-color: rgb(230, 133, 20);
+}
+
+.groen {
+  background-color: rgb(76, 235, 28);
+}
+
+.paars {
+  background-color: rgb(238, 69, 241);
 }
 
 .room__name {
   font-family: 'Crimson Text', sans-serif;
+  font-size: 2em;
+  margin-top: 1.5em;
   font-weight: 100;
-  margin-left: 1.25em;
+  margin-left: 10%;
+}
+
+.room__meta:first-of-type {
+  margin-top: 1em;
+}
+.room__meta {
+  font-family: 'Questrial', serif;
+  font-size: 1.5em;
+  font-weight: 100;
+  color: #fff;
+  margin-left: 10%;
+}
+
+.room__color-box {
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
 }
 
 .dashboard__sub-title {
@@ -55,7 +108,7 @@ body {
   color: rgb(136, 136, 136);
   font-size: 2em;
   position: absolute;
-  padding-top: 1.5%;
+  padding-top: 2.5%;
   margin-left: 5%;
 
   .dashboard__username {

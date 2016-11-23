@@ -25,7 +25,7 @@ const Top = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  margin: 6em auto;
+  margin: 15em auto 6em auto;
   width: calc(90% - 6em);
   min-height: 100%;
   padding: 3em;
@@ -36,10 +36,28 @@ const NavFlexWrapper = styled(FlexWrapper)`
   position: absolute;
   top: 5%;
   right: 5%;
+
+  @media(max-width: 950px) {
+    top: 3%;
+    flex-direction: column;
+  }
+`;
+
+const NavLink = styled(Link)`
+  @media(max-width: 950px) {
+    display: inline;
+    flex-direction: column;
+    text-align: right;
+    padding: 0.3em 0em;
+  }
+
+  &::before {
+    display: none;
+  }
 `;
 
 const DashboardTitle = styled(Title)`
-  padding-top: 2%;
+  padding-top: 5%;
   margin-left: 5%;
 `;
 
@@ -70,6 +88,7 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const token = this.props.retrieveFromLocalStorage('@TOKEN');
     const username = this.props.retrieveFromLocalStorage('@USERNAME');
     const children = React.cloneElement(this.props.children, {
@@ -83,10 +102,10 @@ export default class Dashboard extends React.Component {
           <DashboardTitle fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
           <h2 className='dashboard__sub-title'>- Logged in as <span className='dashboard__username'>{username}</span> -</h2>
           <NavFlexWrapper direction='row' width='40%'>
-            <Link href='#/'>Rooms</Link>
-            <Link href='#/reservations'>My Reservations</Link>
-            <Link>My Clients</Link>
-            <Link onClick={this._logout}>Logout</Link>
+            <NavLink href='#/'>Rooms</NavLink>
+            <NavLink href='#/reservations'>My Reservations</NavLink>
+            <NavLink>My Clients</NavLink>
+            <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
         </Top>
         <TransitionGroup>
