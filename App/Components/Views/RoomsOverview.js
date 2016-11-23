@@ -6,21 +6,32 @@ import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 import FlexWrapper from '../Elements/FlexWrapper';
+import Room from '../Elements/Room';
 
 const _ = require('lodash');
 
 const RoomsContainer = styled(FlexWrapper)`
-  height: 100%;
+  flex-wrap: wrap;
 `;
 
+
+//TODO: First animate, then load rooms
 export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
     _.bindAll(this, '_getAllRooms');
+
+    this.state = {
+      isLoading: false,
+      rooms: []
+    }
   }
 
   componentDidMount() {
+    this.setState({
+      isLoading: true
+    });
     this._getAllRooms();
   }
 
@@ -28,7 +39,17 @@ export default class RoomsOverview extends React.Component {
     this.props.fetcher.getRequestWithToken('/rooms', this.props.token)
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
+        const rooms = [];
+
+        Object.keys(data).map((room) => {
+          console.log(data[room]);
+          rooms.push(data[room]);
+        });
+
+        this.setState({
+          rooms: [].concat(...rooms),
+          isLoading: false
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -36,9 +57,13 @@ export default class RoomsOverview extends React.Component {
   }
 
   render() {
+    const roomsList = this.state.rooms.map((room, i) => {
+            const type = room.type.toLowerCase();
+            return <Room key={i} type={room.type} room={room} />
+          });
     return (
-      <RoomsContainer width='100%'>
-        <p>Rooms</p>
+      <RoomsContainer direction='row' width='100%'>
+        {this.state.isLoading ? <h1>Loading</h1> : roomsList}
       </RoomsContainer>
     )
   }

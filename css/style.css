@@ -424,6 +424,24 @@ body {
   padding: 0px;
   margin: 0px; }
 
+.onderzoekkamer, .spreekkamer {
+  transition: all 0.2s ease-in; }
+
+.onderzoekkamer {
+  background-color: #b5d0ff; }
+  .onderzoekkamer:hover {
+    background-color: #89B5FF; }
+
+.spreekkamer {
+  background-color: #FFE2AD; }
+  .spreekkamer:hover {
+    background-color: #FFD07C; }
+
+.room__name {
+  font-family: 'Crimson Text', sans-serif;
+  font-weight: 100;
+  margin-left: 1.25em; }
+
 .dashboard__sub-title {
   font-family: 'Crimson Text';
   font-style: italic;
