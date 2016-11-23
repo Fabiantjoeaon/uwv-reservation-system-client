@@ -8208,6 +8208,10 @@
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
+	var _RoomsOverview = __webpack_require__(605);
+
+	var _RoomsOverview2 = _interopRequireDefault(_RoomsOverview);
+
 	var _ReservationsOverview = __webpack_require__(604);
 
 	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
@@ -8280,6 +8284,9 @@
 	    value: function _logout() {
 	      localStorage.removeItem('@TOKEN');
 	      localStorage.removeItem('@USERNAME');
+	      this.setState({
+	        error: ''
+	      });
 	      this.props.router.push('login');
 	    }
 	  }, {
@@ -8323,6 +8330,7 @@
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/', name: 'dashboard', onEnter: _AuthHandlers.handleAuth, component: _Dashboard2.default },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { name: 'rooms', component: _RoomsOverview2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { name: 'reservations', path: 'reservations', component: _ReservationsOverview2.default })
 	    )
 	  )
@@ -68405,9 +68413,9 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n'], ['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 6em auto;\n  width: calc(90% - 6em);\n  height: 90%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 6em auto;\n  width: calc(90% - 6em);\n  height: 90%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n'], ['\n  position: absolute;\n  top: 5%;\n  left: 5%;\n']);
+	    _templateObject5 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68416,6 +68424,10 @@
 	var _reactDom = __webpack_require__(331);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactAddonsTransitionGroup = __webpack_require__(525);
+
+	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
 
 	var _styledComponents = __webpack_require__(528);
 
@@ -68433,6 +68445,10 @@
 
 	var _Link2 = _interopRequireDefault(_Link);
 
+	var _FlexWrapper = __webpack_require__(606);
+
+	var _FlexWrapper2 = _interopRequireDefault(_FlexWrapper);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68449,13 +68465,9 @@
 
 	var Top = _styledComponents2.default.div(_templateObject2);
 
-	var FlexWrapper = _styledComponents2.default.div(_templateObject3, function (props) {
-	  return props.width;
-	}, function (props) {
-	  return props.direction;
-	});
+	var ContentContainer = _styledComponents2.default.div(_templateObject3);
 
-	var NavFlexWrapper = (0, _styledComponents2.default)(FlexWrapper)(_templateObject4);
+	var NavFlexWrapper = (0, _styledComponents2.default)(_FlexWrapper2.default)(_templateObject4);
 
 	var DashboardTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject5);
 
@@ -68497,7 +68509,13 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var token = this.props.retrieveFromLocalStorage('@TOKEN');
 	      var username = this.props.retrieveFromLocalStorage('@USERNAME');
+	      var children = _react2.default.cloneElement(this.props.children, {
+	        key: this.props.location.pathname,
+	        fetcher: this.props.fetcher,
+	        token: token
+	      });
 	      return _react2.default.createElement(
 	        Wrapper,
 	        null,
@@ -68545,7 +68563,15 @@
 	            )
 	          )
 	        ),
-	        this.props.children
+	        _react2.default.createElement(
+	          _reactAddonsTransitionGroup2.default,
+	          null,
+	          _react2.default.createElement(
+	            ContentContainer,
+	            null,
+	            children
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -68636,7 +68662,7 @@
 	              case 0:
 	                _context2.prev = 0;
 	                _context2.next = 3;
-	                return fetch('' + this.apiUrl + resource + '/token=' + token, {
+	                return fetch('' + this.apiUrl + resource + '?token=' + token, {
 	                  method: 'GET',
 	                  mode: 'cors',
 	                  headers: {
@@ -69238,7 +69264,7 @@
 	      return _react2.default.createElement(
 	        'h1',
 	        null,
-	        'Overview'
+	        'My Reservations'
 	      );
 	    }
 	  }]);
@@ -69247,6 +69273,130 @@
 	}(_react2.default.Component);
 
 	exports.default = ReservationsOverview;
+
+/***/ },
+/* 605 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  height: 100%;\n'], ['\n  height: 100%;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactAddonsTransitionGroup = __webpack_require__(525);
+
+	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _FlexWrapper = __webpack_require__(606);
+
+	var _FlexWrapper2 = _interopRequireDefault(_FlexWrapper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var _ = __webpack_require__(591);
+
+	var RoomsContainer = (0, _styledComponents2.default)(_FlexWrapper2.default)(_templateObject);
+
+	var RoomsOverview = function (_React$Component) {
+	  _inherits(RoomsOverview, _React$Component);
+
+	  function RoomsOverview() {
+	    _classCallCheck(this, RoomsOverview);
+
+	    var _this = _possibleConstructorReturn(this, (RoomsOverview.__proto__ || Object.getPrototypeOf(RoomsOverview)).call(this));
+
+	    _.bindAll(_this, '_getAllRooms');
+	    return _this;
+	  }
+
+	  _createClass(RoomsOverview, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this._getAllRooms();
+	    }
+	  }, {
+	    key: '_getAllRooms',
+	    value: function _getAllRooms() {
+	      this.props.fetcher.getRequestWithToken('/rooms', this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        console.log(data);
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        RoomsContainer,
+	        { width: '100%' },
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Rooms'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return RoomsOverview;
+	}(_react2.default.Component);
+
+	exports.default = RoomsOverview;
+
+/***/ },
+/* 606 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _templateObject = _taggedTemplateLiteral(['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n'], ['\n  display: flex;\n  width: ', ';\n  justify-content: space-between;\n  flex-direction: ', ';\n']);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var FlexWrapper = _styledComponents2.default.div(_templateObject, function (props) {
+	  return props.width;
+	}, function (props) {
+	  return props.direction;
+	});
+
+	exports.default = FlexWrapper;
 
 /***/ }
 /******/ ]);

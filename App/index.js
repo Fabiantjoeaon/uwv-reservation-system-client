@@ -9,8 +9,9 @@ import styled from 'styled-components';
 const _ = require('lodash');
 const API_URL = 'https://dorsia.fabiantjoeaon.com/api/v1';
 
-import LoginScreen from './Components/Views/LoginScreen.js';
-import Dashboard from './Components/Views/Dashboard.js';
+import LoginScreen from './Components/Views/LoginScreen';
+import Dashboard from './Components/Views/Dashboard';
+import RoomsOverview from './Components/Views/RoomsOverview';
 import ReservationsOverview from './Components/Views/ReservationsOverview';
 
 import APIFetcher from './Utils/APIFetcher.js';
@@ -38,9 +39,7 @@ class ReservationClient extends React.Component {
 
   _login(creds) {
     this.state.fetcher.authenticateAndFetchToken(creds.email, creds.password)
-      .then((res) => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then((data) => {
         const {user, token} = data;
         localStorage.setItem('@TOKEN', token.token);
@@ -57,6 +56,9 @@ class ReservationClient extends React.Component {
   _logout() {
     localStorage.removeItem('@TOKEN');
     localStorage.removeItem('@USERNAME');
+    this.setState({
+      error: ''
+    });
     this.props.router.push('login');
   }
 
@@ -86,6 +88,7 @@ ReactDOM.render(<Router history={hashHistory}>
                   <Route component={ReservationClient}>
                     <Route name='login' path='login' onEnter={handleUnauth} component={LoginScreen}/>
                     <Route path='/' name='dashboard' onEnter={handleAuth} component={Dashboard}>
+                      <IndexRoute name='rooms' component={RoomsOverview}/>
                       <Route name='reservations' path='reservations' component={ReservationsOverview}/>
                     </Route>
                   </Route>

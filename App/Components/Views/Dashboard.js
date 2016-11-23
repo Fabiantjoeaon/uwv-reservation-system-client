@@ -2,11 +2,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
-import Title from '../Elements/Title.js';
-import Button from '../Elements/Button.js';
-import Link from '../Elements/Link.js';
+import Title from '../Elements/Title';
+import Button from '../Elements/Button';
+import Link from '../Elements/Link';
+import FlexWrapper from '../Elements/FlexWrapper';
 
 const _ = require('lodash');
 
@@ -22,11 +24,12 @@ const Top = styled.div`
   width: 100%;
 `;
 
-const FlexWrapper = styled.div`
-  display: flex;
-  width: ${props => props.width};
-  justify-content: space-between;
-  flex-direction: ${props => props.direction};
+const ContentContainer = styled.div`
+  margin: 6em auto;
+  width: calc(90% - 6em);
+  height: 90%;
+  padding: 3em;
+  background-color: rgb(240, 240, 240);
 `;
 
 const NavFlexWrapper = styled(FlexWrapper)`
@@ -36,9 +39,8 @@ const NavFlexWrapper = styled(FlexWrapper)`
 `;
 
 const DashboardTitle = styled(Title)`
-  position: absolute;
-  top: 5%;
-  left: 5%;
+  padding-top: 2%;
+  margin-left: 5%;
 `;
 
 export default class Dashboard extends React.Component {
@@ -68,7 +70,13 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
+    const token = this.props.retrieveFromLocalStorage('@TOKEN');
     const username = this.props.retrieveFromLocalStorage('@USERNAME');
+    const children = React.cloneElement(this.props.children, {
+      key: this.props.location.pathname,
+      fetcher: this.props.fetcher,
+      token: token
+    });
     return(
       <Wrapper>
         <Top>
@@ -81,7 +89,11 @@ export default class Dashboard extends React.Component {
             <Link onClick={this._logout}>Logout</Link>
           </NavFlexWrapper>
         </Top>
-        {this.props.children}
+        <TransitionGroup>
+          <ContentContainer>
+            {children}
+          </ContentContainer>
+        </TransitionGroup>
       </Wrapper>
     )
   }

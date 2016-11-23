@@ -12,7 +12,7 @@ export default class ReservationsOverview extends React.Component {
 
   render() {
     return (
-      <h1>Overview</h1>
+      <h1>My Reservations</h1>
     )
   }
 }

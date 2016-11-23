@@ -27,7 +27,7 @@ export default class APIFetcher {
 
   async getRequestWithToken(resource, token) {
     try {
-      const response = await fetch(`${this.apiUrl}${resource}/token=${token}`, {
+      const response = await fetch(`${this.apiUrl}${resource}?token=${token}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -39,6 +39,5 @@ export default class APIFetcher {
     } catch(error) {
       return error;
     }
-
   }
 }
