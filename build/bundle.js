@@ -43061,7 +43061,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  background: repeating-linear-gradient(\n    rgb(58, 98, 176),\n    rgb(50, 154, 221),\n    rgb(230, 80, 224)\n  );\n  background-size: 4000% 4000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 15s infinite linear;\n  font-family: \'Lora\', sans-serif;\n  transform: translateY(120vh);\n'], ['\n  position: relative;\n  background: repeating-linear-gradient(\n    rgb(58, 98, 176),\n    rgb(50, 154, 221),\n    rgb(230, 80, 224)\n  );\n  background-size: 4000% 4000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 15s infinite linear;\n  font-family: \'Lora\', sans-serif;\n  transform: translateY(120vh);\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  background: repeating-linear-gradient(\n    rgb(58, 98, 176),\n    rgb(50, 154, 221),\n    rgb(230, 80, 224)\n  );\n  background-size: 4000% 4000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 15s infinite linear;\n  font-family: \'Lora\', sans-serif;\n'], ['\n  position: relative;\n  background: repeating-linear-gradient(\n    rgb(58, 98, 176),\n    rgb(50, 154, 221),\n    rgb(230, 80, 224)\n  );\n  background-size: 4000% 4000%;\n  width:100vw;\n  height:100vh;\n  animation: ', ' 15s infinite linear;\n  font-family: \'Lora\', sans-serif;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -43110,24 +43110,6 @@
 	  }
 
 	  _createClass(LoginScreen, [{
-	    key: 'componentWillEnter',
-	    value: function componentWillEnter(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { delay: 0.5, ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
-	    }
-	  }, {
-	    key: 'componentWillAppear',
-	    value: function componentWillAppear(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { delay: 0.5, ease: Power2.easeOut, opacity: 1, y: 0 }).eventCallback('onComplete', callback);
-	    }
-	  }, {
-	    key: 'componentWillLeave',
-	    value: function componentWillLeave(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.3, { delay: 0.5, ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -68411,7 +68393,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n  transform: translateY(-120vh);\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
@@ -68441,6 +68423,10 @@
 	var _Button = __webpack_require__(594);
 
 	var _Button2 = _interopRequireDefault(_Button);
+
+	var _DashboardPageTitle = __webpack_require__(604);
+
+	var _DashboardPageTitle2 = _interopRequireDefault(_DashboardPageTitle);
 
 	var _Link = __webpack_require__(600);
 
@@ -68490,24 +68476,6 @@
 	    key: '_logout',
 	    value: function _logout() {
 	      this.props.logout();
-	    }
-	  }, {
-	    key: 'componentWillEnter',
-	    value: function componentWillEnter(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 1, { delay: 0.7, ease: Power2.easeOut, y: 0 }).eventCallback('onComplete', callback);
-	    }
-	  }, {
-	    key: 'componentWillAppear',
-	    value: function componentWillAppear(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { delay: 0.7, ease: Power2.easeOut, y: 0 }).eventCallback('onComplete', callback);
-	    }
-	  }, {
-	    key: 'componentWillLeave',
-	    value: function componentWillLeave(callback) {
-	      var node = _reactDom2.default.findDOMNode(this);
-	      TweenMax.to(node, 0.5, { delay: 0.3, ease: Power2.easeOut, y: -1000 }).eventCallback('onComplete', callback);
 	    }
 	  }, {
 	    key: 'render',
@@ -68569,13 +68537,14 @@
 	          )
 	        ),
 	        _react2.default.createElement(
-	          _reactAddonsTransitionGroup2.default,
+	          _DashboardPageTitle2.default,
 	          null,
-	          _react2.default.createElement(
-	            ContentContainer,
-	            null,
-	            children
-	          )
+	          'Rooms'
+	        ),
+	        _react2.default.createElement(
+	          ContentContainer,
+	          null,
+	          children
 	        )
 	      );
 	    }
@@ -68680,10 +68649,6 @@
 
 	var _Room2 = _interopRequireDefault(_Room);
 
-	var _DashboardPageTitle = __webpack_require__(604);
-
-	var _DashboardPageTitle2 = _interopRequireDefault(_DashboardPageTitle);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68738,12 +68703,9 @@
 	        var _ref;
 
 	        var rooms = [];
-
 	        Object.keys(data).map(function (room) {
-	          console.log(data[room]);
 	          rooms.push(data[room]);
 	        });
-
 	        _this2.setState({
 	          rooms: (_ref = []).concat.apply(_ref, rooms)
 	        }, function () {
@@ -68793,11 +68755,6 @@
 	      return _react2.default.createElement(
 	        PageWrapper,
 	        null,
-	        _react2.default.createElement(
-	          _DashboardPageTitle2.default,
-	          null,
-	          'Rooms'
-	        ),
 	        _react2.default.createElement(
 	          _FlexWrapper2.default,
 	          { direction: 'row', width: '100%' },
@@ -68876,6 +68833,9 @@
 	    return _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this));
 	  }
 
+	  // TODO: Fetch user and reservation when occupied??
+	  // Only on shouldComponentUpdate (because next state should be different)
+
 	  _createClass(Room, [{
 	    key: 'render',
 	    value: function render() {
@@ -68883,14 +68843,14 @@
 	          id = _props$room.id,
 	          name = _props$room.name,
 	          type = _props$room.type,
-	          is_reserved = _props$room.is_reserved,
+	          is_reserved_now = _props$room.is_reserved_now,
 	          capacity = _props$room.capacity,
 	          has_pc = _props$room.has_pc,
 	          color = _props$room.color,
 	          invalid = _props$room.invalid;
 
 
-	      var className = is_reserved ? this.props.type + ' room__reserved' : '' + this.props.type;
+	      var className = is_reserved_now ? this.props.type + ' occupied' : '' + this.props.type;
 	      var url = 'room/' + id;
 	      var boxClassName = 'room__color-box ' + color;
 
@@ -68928,6 +68888,11 @@
 	          'h3',
 	          { className: 'room__meta' },
 	          'Invalid'
+	        ) : null,
+	        is_reserved_now ? _react2.default.createElement(
+	          'h3',
+	          { className: 'room__meta' },
+	          'CURRENTLY OCCUPIED'
 	        ) : null
 	      );
 	    }
@@ -68948,7 +68913,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n'], ['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  font-size: 4em;\n  right: 4.8%;\n  top: 22.5%;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n'], ['\n  position: absolute;\n  font-size: 4em;\n  right: 4.8%;\n  top: 22.5%;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n']);
 
 	var _styledComponents = __webpack_require__(528);
 

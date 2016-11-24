@@ -443,13 +443,19 @@ body {
 
 .onderzoekkamer {
   background: linear-gradient(45deg, #b5d0ff, #9cc0ff); }
+  .onderzoekkamer.occupied {
+    background: linear-gradient(45deg, #d3d8e1, #c0d3f4) !important; }
 
 .spreekkamer {
   background: linear-gradient(45deg, #C4B7FF, #af9eff); }
+  .spreekkamer.occupied {
+    background: linear-gradient(45deg, #d6d4e2, #cbc2f4) !important; }
 
-.room__reserved {
-  background: linear-gradient(45deg, #C6C6C6, #b9b9b9); }
-  .room__reserved .room__name, .room__reserved .room__meta {
+.room__unavailable {
+  background: linear-gradient(45deg, #C6C6C6, #b9b9b9);
+  pointer-events: none;
+  cursor: default; }
+  .room__unavailable .room__name, .room__unavailable .room__meta {
     color: #787878; }
 
 .oranje {
@@ -485,7 +491,6 @@ body {
 
 .dashboard__sub-title {
   font-family: 'Crimson Text';
-  font-style: italic;
   font-weight: 100;
   color: #888888;
   font-size: 2em;

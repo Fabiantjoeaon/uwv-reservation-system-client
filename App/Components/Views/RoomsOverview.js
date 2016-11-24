@@ -7,7 +7,6 @@ import styled from 'styled-components';
 
 import FlexWrapper from '../Elements/FlexWrapper';
 import Room from '../Elements/Room';
-import DashboardPageTitle from '../Elements/DashboardPageTitle';
 
 const _ = require('lodash');
 
@@ -42,12 +41,9 @@ export default class RoomsOverview extends React.Component {
       .then(res => res.json())
       .then((data) => {
         const rooms = [];
-
         Object.keys(data).map((room) => {
-          console.log(data[room]);
           rooms.push(data[room]);
         });
-
         this.setState({
           rooms: [].concat(...rooms)
         }, () => {
@@ -92,7 +88,6 @@ export default class RoomsOverview extends React.Component {
           });
     return (
       <PageWrapper>
-        <DashboardPageTitle>Rooms</DashboardPageTitle>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <h1>Loading</h1> : roomsList}
         </FlexWrapper>

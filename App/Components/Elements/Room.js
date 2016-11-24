@@ -35,19 +35,22 @@ export default class Room extends React.Component {
     super();
   }
 
+  // TODO: Fetch user and reservation when occupied??
+  // Only on shouldComponentUpdate (because next state should be different)
+
   render() {
     const {
       id,
       name,
       type,
-      is_reserved,
+      is_reserved_now,
       capacity,
       has_pc,
       color,
       invalid
     } = this.props.room;
 
-    const className = is_reserved ? `${this.props.type} room__reserved` : `${this.props.type}`;
+    const className = is_reserved_now ? `${this.props.type} occupied` : `${this.props.type}`;
     const url = `room/${id}`;
     const boxClassName = `room__color-box ${color}`;
 
@@ -59,6 +62,7 @@ export default class Room extends React.Component {
         <h3 className='room__meta'>{color}</h3>
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
+        {is_reserved_now ? <h3 className='room__meta'>CURRENTLY OCCUPIED</h3> : null}
       </StyledRoom>
     );
   }

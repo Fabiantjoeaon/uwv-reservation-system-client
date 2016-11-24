@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import Title from '../Elements/Title';
 import Button from '../Elements/Button';
+import DashboardPageTitle from '../Elements/DashboardPageTitle';
 import Link from '../Elements/Link';
 import FlexWrapper from '../Elements/FlexWrapper';
 
@@ -16,7 +17,6 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(255,255,255,1);
-  transform: translateY(-120vh);
 `;
 
 const Navigation = styled.div`
@@ -72,21 +72,6 @@ export default class Dashboard extends React.Component {
     this.props.logout();
   }
 
-  componentWillEnter(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 1, {delay: 0.7, ease: Power2.easeOut, y: 0}).eventCallback('onComplete', callback);
-  }
-
-  componentWillAppear(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {delay: 0.7, ease: Power2.easeOut, y: 0}).eventCallback('onComplete', callback);
-  }
-
-  componentWillLeave(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {delay: 0.3, ease: Power2.easeOut, y: -1000}).eventCallback('onComplete', callback);
-  }
-
   render() {
     const token = this.props.retrieveFromLocalStorage('@TOKEN');
     const username = this.props.retrieveFromLocalStorage('@USERNAME');
@@ -109,11 +94,11 @@ export default class Dashboard extends React.Component {
             <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
         </Navigation>
-        <TransitionGroup>
-          <ContentContainer>
-            {children}
-          </ContentContainer>
-        </TransitionGroup>
+
+        <DashboardPageTitle>Rooms</DashboardPageTitle>
+        <ContentContainer>
+          {children}
+        </ContentContainer>
       </Wrapper>
     )
   }
