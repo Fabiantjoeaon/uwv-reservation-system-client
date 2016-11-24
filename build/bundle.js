@@ -8212,15 +8212,15 @@
 
 	var _RoomsOverview2 = _interopRequireDefault(_RoomsOverview);
 
-	var _ReservationsOverview = __webpack_require__(604);
+	var _ReservationsOverview = __webpack_require__(605);
 
 	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
 
-	var _APIFetcher = __webpack_require__(605);
+	var _APIFetcher = __webpack_require__(606);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
-	var _AuthHandlers = __webpack_require__(607);
+	var _AuthHandlers = __webpack_require__(608);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68415,8 +68415,8 @@
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n  }\n\n  &::before {\n    display: none;\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n  }\n\n  &::before {\n    display: none;\n  }\n']),
-	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 5%;\n  margin-left: 5%;\n'], ['\n  padding-top: 5%;\n  margin-left: 5%;\n']);
+	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
+	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 3%;\n  margin-left: 5%;\n'], ['\n  padding-top: 3%;\n  margin-left: 5%;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68464,7 +68464,7 @@
 
 	var Wrapper = _styledComponents2.default.div(_templateObject);
 
-	var Top = _styledComponents2.default.div(_templateObject2);
+	var Navigation = _styledComponents2.default.div(_templateObject2);
 
 	var ContentContainer = _styledComponents2.default.div(_templateObject3);
 
@@ -68512,19 +68512,20 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      var token = this.props.retrieveFromLocalStorage('@TOKEN');
 	      var username = this.props.retrieveFromLocalStorage('@USERNAME');
 	      var children = _react2.default.cloneElement(this.props.children, {
 	        key: this.props.location.pathname,
 	        fetcher: this.props.fetcher,
-	        token: token
+	        token: token,
+	        logout: this.props.logout
 	      });
+
 	      return _react2.default.createElement(
 	        Wrapper,
 	        null,
 	        _react2.default.createElement(
-	          Top,
+	          Navigation,
 	          null,
 	          _react2.default.createElement(
 	            DashboardTitle,
@@ -68679,7 +68680,7 @@
 
 	var _Room2 = _interopRequireDefault(_Room);
 
-	var _DashboardPageTitle = __webpack_require__(608);
+	var _DashboardPageTitle = __webpack_require__(604);
 
 	var _DashboardPageTitle2 = _interopRequireDefault(_DashboardPageTitle);
 
@@ -68723,6 +68724,7 @@
 	      this.setState({
 	        isLoading: true
 	      });
+
 	      this._getAllRooms();
 	    }
 	  }, {
@@ -68749,6 +68751,8 @@
 	        });
 	      }).catch(function (error) {
 	        console.log(error);
+	        _this2.props.logout();
+	        _this2.props.router.push('/login');
 	      });
 	    }
 	  }, {
@@ -68775,6 +68779,8 @@
 	        });
 	      }).catch(function (error) {
 	        console.log(error);
+	        _this3.props.logout();
+	        _this3.props.router.push('/login');
 	      });
 	    }
 	  }, {
@@ -68782,7 +68788,7 @@
 	    value: function render() {
 	      var roomsList = this.state.rooms.map(function (room, i) {
 	        var type = room.type.toLowerCase();
-	        return _react2.default.createElement(_Room2.default, { key: i, type: room.type, room: room });
+	        return _react2.default.createElement(_Room2.default, { key: i, type: type, room: room });
 	      });
 	      return _react2.default.createElement(
 	        PageWrapper,
@@ -68885,7 +68891,7 @@
 
 
 	      var className = is_reserved ? this.props.type + ' room__reserved' : '' + this.props.type;
-	      var url = is_reserved ? '#' : 'room/' + id;
+	      var url = 'room/' + id;
 	      var boxClassName = 'room__color-box ' + color;
 
 	      return _react2.default.createElement(
@@ -68934,6 +68940,30 @@
 
 /***/ },
 /* 604 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n'], ['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n']);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var DashboardPageTitle = _styledComponents2.default.h2(_templateObject);
+
+	exports.default = DashboardPageTitle;
+
+/***/ },
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68994,7 +69024,7 @@
 	exports.default = ReservationsOverview;
 
 /***/ },
-/* 605 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69005,7 +69035,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(606);
+	__webpack_require__(607);
 
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -69114,7 +69144,7 @@
 	exports.default = APIFetcher;
 
 /***/ },
-/* 606 */
+/* 607 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -69572,7 +69602,7 @@
 
 
 /***/ },
-/* 607 */
+/* 608 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -69596,30 +69626,6 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
-
-/***/ },
-/* 608 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #C6C6C6;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n'], ['\n  position: absolute;\n  top: -8%;\n  right: -0.8em;\n  font-size: 4em;\n  font-weight: 100;\n  color: #C6C6C6;\n  font-family: \'Crimson Text Italic\', sans-serif;\n\n  @media(max-width: 1020px) {\n    top: -4.5%;\n  }\n\n  @media(max-width: 720px) {\n    top: -2.25%;\n  }\n']);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var DashboardPageTitle = _styledComponents2.default.h2(_templateObject);
-
-	exports.default = DashboardPageTitle;
 
 /***/ }
 /******/ ]);

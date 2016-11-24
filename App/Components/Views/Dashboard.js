@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   transform: translateY(-120vh);
 `;
 
-const Top = styled.div`
+const Navigation = styled.div`
   height: 15%;
   width: 100%;
 `;
@@ -49,15 +49,15 @@ const NavLink = styled(Link)`
     flex-direction: column;
     text-align: right;
     padding: 0.3em 0em;
-  }
 
-  &::before {
-    display: none;
+    &::before {
+      display: none;
+    }
   }
 `;
 
 const DashboardTitle = styled(Title)`
-  padding-top: 5%;
+  padding-top: 3%;
   margin-left: 5%;
 `;
 
@@ -88,17 +88,18 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const token = this.props.retrieveFromLocalStorage('@TOKEN');
     const username = this.props.retrieveFromLocalStorage('@USERNAME');
     const children = React.cloneElement(this.props.children, {
       key: this.props.location.pathname,
       fetcher: this.props.fetcher,
-      token: token
+      token: token,
+      logout: this.props.logout
     });
+
     return(
       <Wrapper>
-        <Top>
+        <Navigation>
           <DashboardTitle fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
           <h2 className='dashboard__sub-title'>- Logged in as <span className='dashboard__username'>{username}</span> -</h2>
           <NavFlexWrapper direction='row' width='40%'>
@@ -107,7 +108,7 @@ export default class Dashboard extends React.Component {
             <NavLink>My Clients</NavLink>
             <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
-        </Top>
+        </Navigation>
         <TransitionGroup>
           <ContentContainer>
             {children}

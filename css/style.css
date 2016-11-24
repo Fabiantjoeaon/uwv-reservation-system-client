@@ -448,8 +448,6 @@ body {
   background: linear-gradient(45deg, #C4B7FF, #af9eff); }
 
 .room__reserved {
-  pointer-events: none;
-  cursor: default;
   background: linear-gradient(45deg, #C6C6C6, #b9b9b9); }
   .room__reserved .room__name, .room__reserved .room__meta {
     color: #787878; }
@@ -474,7 +472,7 @@ body {
   margin-top: 1em; }
 
 .room__meta {
-  font-family: 'Questrial', serif;
+  font-family: sans-serif;
   font-size: 1.5em;
   font-weight: 100;
   color: #fff;

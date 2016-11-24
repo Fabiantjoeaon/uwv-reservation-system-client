@@ -33,6 +33,7 @@ export default class RoomsOverview extends React.Component {
     this.setState({
       isLoading: true
     });
+
     this._getAllRooms();
   }
 
@@ -55,6 +56,8 @@ export default class RoomsOverview extends React.Component {
       })
       .catch((error) => {
         console.log(error);
+        this.props.logout();
+        this.props.router.push('/login');
       });
   }
 
@@ -77,13 +80,15 @@ export default class RoomsOverview extends React.Component {
       })
       .catch((error) => {
         console.log(error);
+        this.props.logout();
+        this.props.router.push('/login');
       });
   }
 
   render() {
     const roomsList = this.state.rooms.map((room, i) => {
             const type = room.type.toLowerCase();
-            return <Room key={i} type={room.type} room={room} />
+            return <Room key={i} type={type} room={room} />
           });
     return (
       <PageWrapper>

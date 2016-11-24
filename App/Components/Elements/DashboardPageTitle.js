@@ -6,7 +6,7 @@ const DashboardPageTitle = styled.h2`
   right: -0.8em;
   font-size: 4em;
   font-weight: 100;
-  color: #C6C6C6;
+  color: #787878;
   font-family: 'Crimson Text Italic', sans-serif;
 
   @media(max-width: 1020px) {

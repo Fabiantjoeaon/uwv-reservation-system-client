@@ -48,7 +48,7 @@ export default class Room extends React.Component {
     } = this.props.room;
 
     const className = is_reserved ? `${this.props.type} room__reserved` : `${this.props.type}`;
-    const url = is_reserved ? '#' : `room/${id}`;
+    const url = `room/${id}`;
     const boxClassName = `room__color-box ${color}`;
 
     return (
