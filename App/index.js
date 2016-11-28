@@ -50,6 +50,8 @@ class ReservationClient extends React.Component {
         this.setState({
           error: 'Your email and password are incorrect!'
         });
+        //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
+
       });
   }
 

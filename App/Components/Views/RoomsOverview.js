@@ -21,12 +21,11 @@ export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getAllRooms', '_getAllReservations');
+    _.bindAll(this, '_getAllRooms');
 
     this.state = {
       isLoading: false,
-      rooms: [],
-      reservations: []
+      rooms: []
     }
   }
 
@@ -34,12 +33,10 @@ export default class RoomsOverview extends React.Component {
     this._getAllRooms();
     this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
 
-    this.socket.on('connect', (socket) => {
-        console.log('connected to node server', socket);
-    });
-
     this.socket.on('room-channel:roomHasUpdated', (data) => {
-      console.log('room has updated', data);
+      const roomId = data.id;
+      //TODO: only rerender one room per id (set new state?, fetch single room in room.js? )
+      this._getAllRooms();
     });
   }
 
@@ -55,33 +52,8 @@ export default class RoomsOverview extends React.Component {
           rooms.push(data[room]);
         });
         this.setState({
-          rooms: [].concat(...rooms)
-        }, () => {
-          this._getAllReservations();
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        this.props.logout();
-        this.props.router.push('/login');
-      });
-  }
-
-  _getAllReservations() {
-    this.props.fetcher.getRequestWithToken('/reservations', this.props.token)
-      .then(res => res.json())
-      .then((data) => {
-        const reservations = [];
-
-        Object.keys(data).map((reservation) => {
-          reservations.push(data[reservation]);
-        });
-
-        this.setState({
-          reservations: [].concat(...reservations),
+          rooms: [].concat(...rooms),
           isLoading: false
-        }, () => {
-          console.log(this.state);
         });
       })
       .catch((error) => {
@@ -93,7 +65,7 @@ export default class RoomsOverview extends React.Component {
 
   render() {
     const roomsList = this.state.rooms.map((room, i) => {
-            return <Room key={i} room={room} />
+            return <Room key={i} fetcher={this.props.fetcher} token={this.props.token} room={room} />
           });
     return (
       <PageWrapper>

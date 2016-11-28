@@ -8212,15 +8212,15 @@
 
 	var _RoomsOverview2 = _interopRequireDefault(_RoomsOverview);
 
-	var _ReservationsOverview = __webpack_require__(655);
+	var _ReservationsOverview = __webpack_require__(691);
 
 	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
 
-	var _APIFetcher = __webpack_require__(656);
+	var _APIFetcher = __webpack_require__(692);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
-	var _AuthHandlers = __webpack_require__(658);
+	var _AuthHandlers = __webpack_require__(694);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8277,6 +8277,7 @@
 	        _this2.setState({
 	          error: 'Your email and password are incorrect!'
 	        });
+	        //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
 	      });
 	    }
 	  }, {
@@ -68685,9 +68686,7 @@
 
 	var _ = __webpack_require__(591);
 	var io = __webpack_require__(605);
-	var https = __webpack_require__(659);
-	console.log(https);
-	// https.Agent.options.rejectUnauthorized = false;
+	var https = __webpack_require__(655);
 
 	var PageWrapper = _styledComponents2.default.div(_templateObject);
 
@@ -68701,12 +68700,11 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomsOverview.__proto__ || Object.getPrototypeOf(RoomsOverview)).call(this));
 
-	    _.bindAll(_this, '_getAllRooms', '_getAllReservations');
+	    _.bindAll(_this, '_getAllRooms');
 
 	    _this.state = {
 	      isLoading: false,
-	      rooms: [],
-	      reservations: []
+	      rooms: []
 	    };
 	    return _this;
 	  }
@@ -68714,21 +68712,21 @@
 	  _createClass(RoomsOverview, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+
 	      this._getAllRooms();
 	      this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', { secure: true });
 
-	      this.socket.on('connect', function (socket) {
-	        console.log('connected to node server', socket);
-	      });
-
 	      this.socket.on('room-channel:roomHasUpdated', function (data) {
-	        console.log('room has updated', data);
+	        var roomId = data.id;
+	        //TODO: only rerender one room per id (set new state?, fetch single room in room.js? )
+	        _this2._getAllRooms();
 	      });
 	    }
 	  }, {
 	    key: '_getAllRooms',
 	    value: function _getAllRooms() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      this.setState({
 	        isLoading: true
@@ -68742,38 +68740,9 @@
 	        Object.keys(data).map(function (room) {
 	          rooms.push(data[room]);
 	        });
-	        _this2.setState({
-	          rooms: (_ref = []).concat.apply(_ref, rooms)
-	        }, function () {
-	          _this2._getAllReservations();
-	        });
-	      }).catch(function (error) {
-	        console.log(error);
-	        _this2.props.logout();
-	        _this2.props.router.push('/login');
-	      });
-	    }
-	  }, {
-	    key: '_getAllReservations',
-	    value: function _getAllReservations() {
-	      var _this3 = this;
-
-	      this.props.fetcher.getRequestWithToken('/reservations', this.props.token).then(function (res) {
-	        return res.json();
-	      }).then(function (data) {
-	        var _ref2;
-
-	        var reservations = [];
-
-	        Object.keys(data).map(function (reservation) {
-	          reservations.push(data[reservation]);
-	        });
-
 	        _this3.setState({
-	          reservations: (_ref2 = []).concat.apply(_ref2, reservations),
+	          rooms: (_ref = []).concat.apply(_ref, rooms),
 	          isLoading: false
-	        }, function () {
-	          console.log(_this3.state);
 	        });
 	      }).catch(function (error) {
 	        console.log(error);
@@ -68784,8 +68753,10 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
 	      var roomsList = this.state.rooms.map(function (room, i) {
-	        return _react2.default.createElement(_Room2.default, { key: i, room: room });
+	        return _react2.default.createElement(_Room2.default, { key: i, fetcher: _this4.props.fetcher, token: _this4.props.token, room: room });
 	      });
 	      return _react2.default.createElement(
 	        PageWrapper,
@@ -68820,7 +68791,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 5em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 5em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 2em;\n  height: 2em;\n'], ['\n  width: 2em;\n  height: 2em;\n']);
 
 	var _react = __webpack_require__(299);
@@ -68849,6 +68820,8 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+	var _ = __webpack_require__(591);
+
 	var StyledRoom = _styledComponents2.default.a(_templateObject, function (props) {
 	  return props.width;
 	}, function (props) {
@@ -68865,13 +68838,57 @@
 	  function Room() {
 	    _classCallCheck(this, Room);
 
-	    return _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this));
+
+	    _.bindAll(_this, '_getReservedRoomData', '_returnActivityMeterPercentage');
+
+	    _this.state = {
+	      reservation: {}
+	    };
+	    return _this;
 	  }
 
-	  // TODO: Fetch user and reservation when occupied??
-	  // Only on shouldComponentUpdate (because next state should be different)
-
 	  _createClass(Room, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
+	    }
+	  }, {
+	    key: '_getReservedRoomData',
+	    value: function _getReservedRoomData(id) {
+	      var _this2 = this;
+
+	      this.props.fetcher.getRequestWithToken('/rooms/' + id + '/active-reservation', this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        _this2.setState({
+	          reservation: data.data[0]
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+
+	    //TODO: Make styled component of meter
+
+	  }, {
+	    key: '_returnActivityMeterPercentage',
+	    value: function _returnActivityMeterPercentage(startTime, endTime) {
+	      var startTimeEpoch = new Date(startTime).getTime();
+	      var endTimeEpoch = new Date(endTime).getTime();
+	      var now = new Date();
+	      var nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
+	      var nowEpoch = nowWithoutUTC.getTime();
+
+	      var percentage = (nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch) * 100;
+	      console.log(startTime, nowWithoutUTC, endTime, percentage);
+
+	      return percentage;
+	    }
+
+	    // TODO: Only on shouldComponentUpdate (because next state should be different)
+
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props$room = this.props.room,
@@ -68888,6 +68905,10 @@
 	      var className = is_reserved_now ? typeLowerCase + ' occupied' : '' + typeLowerCase;
 	      var url = 'room/' + id;
 	      var boxClassName = 'room__color-box ' + color;
+
+	      if (this.state.reservation.activity) {
+	        this._returnActivityMeterPercentage(this.state.reservation.start_date_time, this.state.reservation.end_date_time);
+	      }
 
 	      return _react2.default.createElement(
 	        StyledRoom,
@@ -68927,8 +68948,10 @@
 	        is_reserved_now ? _react2.default.createElement(
 	          'h3',
 	          { className: 'room__meta' },
-	          'CURRENTLY OCCUPIED'
-	        ) : null
+	          'Now: ',
+	          this.state.reservation.activity
+	        ) : null,
+	        is_reserved_now ? _react2.default.createElement('div', { className: 'room__activity-meter' }) : null
 	      );
 	    }
 	  }]);
@@ -76965,672 +76988,7 @@
 /* 655 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(299);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(331);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactAddonsTransitionGroup = __webpack_require__(525);
-
-	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ReservationsOverview = function (_React$Component) {
-	  _inherits(ReservationsOverview, _React$Component);
-
-	  function ReservationsOverview() {
-	    _classCallCheck(this, ReservationsOverview);
-
-	    return _possibleConstructorReturn(this, (ReservationsOverview.__proto__ || Object.getPrototypeOf(ReservationsOverview)).call(this));
-	  }
-
-	  _createClass(ReservationsOverview, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'h1',
-	        null,
-	        'My Reservations'
-	      );
-	    }
-	  }]);
-
-	  return ReservationsOverview;
-	}(_react2.default.Component);
-
-	exports.default = ReservationsOverview;
-
-/***/ },
-/* 656 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(657);
-
-	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var _ = __webpack_require__(591);
-
-	var APIFetcher = function () {
-	  function APIFetcher(apiUrl) {
-	    _classCallCheck(this, APIFetcher);
-
-	    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
-
-	    this.apiUrl = apiUrl;
-	  }
-
-	  _createClass(APIFetcher, [{
-	    key: 'authenticateAndFetchToken',
-	    value: function () {
-	      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(email, password) {
-	        var response;
-	        return regeneratorRuntime.wrap(function _callee$(_context) {
-	          while (1) {
-	            switch (_context.prev = _context.next) {
-	              case 0:
-	                _context.prev = 0;
-
-	                //TODO Put creds in post body/header, not in URL
-	                response = fetch(this.apiUrl + '/login?email=' + email + '&password=' + password, {
-	                  method: 'POST',
-	                  mode: 'cors',
-	                  headers: {
-	                    'Accept': 'application/json',
-	                    'Content-Type': 'application/json'
-	                  }
-	                });
-	                return _context.abrupt('return', response);
-
-	              case 5:
-	                _context.prev = 5;
-	                _context.t0 = _context['catch'](0);
-	                return _context.abrupt('return', _context.t0);
-
-	              case 8:
-	              case 'end':
-	                return _context.stop();
-	            }
-	          }
-	        }, _callee, this, [[0, 5]]);
-	      }));
-
-	      function authenticateAndFetchToken(_x, _x2) {
-	        return _ref.apply(this, arguments);
-	      }
-
-	      return authenticateAndFetchToken;
-	    }()
-	  }, {
-	    key: 'getRequestWithToken',
-	    value: function () {
-	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource, token) {
-	        var response;
-	        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-	          while (1) {
-	            switch (_context2.prev = _context2.next) {
-	              case 0:
-	                _context2.prev = 0;
-	                _context2.next = 3;
-	                return fetch('' + this.apiUrl + resource + '?token=' + token, {
-	                  method: 'GET',
-	                  mode: 'cors',
-	                  headers: {
-	                    'Accept': 'application/json',
-	                    'Content-Type': 'application/json'
-	                  }
-	                });
-
-	              case 3:
-	                response = _context2.sent;
-	                return _context2.abrupt('return', response);
-
-	              case 7:
-	                _context2.prev = 7;
-	                _context2.t0 = _context2['catch'](0);
-	                return _context2.abrupt('return', _context2.t0);
-
-	              case 10:
-	              case 'end':
-	                return _context2.stop();
-	            }
-	          }
-	        }, _callee2, this, [[0, 7]]);
-	      }));
-
-	      function getRequestWithToken(_x3, _x4) {
-	        return _ref2.apply(this, arguments);
-	      }
-
-	      return getRequestWithToken;
-	    }()
-	  }]);
-
-	  return APIFetcher;
-	}();
-
-	exports.default = APIFetcher;
-
-/***/ },
-/* 657 */
-/***/ function(module, exports) {
-
-	(function(self) {
-	  'use strict';
-
-	  if (self.fetch) {
-	    return
-	  }
-
-	  var support = {
-	    searchParams: 'URLSearchParams' in self,
-	    iterable: 'Symbol' in self && 'iterator' in Symbol,
-	    blob: 'FileReader' in self && 'Blob' in self && (function() {
-	      try {
-	        new Blob()
-	        return true
-	      } catch(e) {
-	        return false
-	      }
-	    })(),
-	    formData: 'FormData' in self,
-	    arrayBuffer: 'ArrayBuffer' in self
-	  }
-
-	  if (support.arrayBuffer) {
-	    var viewClasses = [
-	      '[object Int8Array]',
-	      '[object Uint8Array]',
-	      '[object Uint8ClampedArray]',
-	      '[object Int16Array]',
-	      '[object Uint16Array]',
-	      '[object Int32Array]',
-	      '[object Uint32Array]',
-	      '[object Float32Array]',
-	      '[object Float64Array]'
-	    ]
-
-	    var isDataView = function(obj) {
-	      return obj && DataView.prototype.isPrototypeOf(obj)
-	    }
-
-	    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
-	      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
-	    }
-	  }
-
-	  function normalizeName(name) {
-	    if (typeof name !== 'string') {
-	      name = String(name)
-	    }
-	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
-	      throw new TypeError('Invalid character in header field name')
-	    }
-	    return name.toLowerCase()
-	  }
-
-	  function normalizeValue(value) {
-	    if (typeof value !== 'string') {
-	      value = String(value)
-	    }
-	    return value
-	  }
-
-	  // Build a destructive iterator for the value list
-	  function iteratorFor(items) {
-	    var iterator = {
-	      next: function() {
-	        var value = items.shift()
-	        return {done: value === undefined, value: value}
-	      }
-	    }
-
-	    if (support.iterable) {
-	      iterator[Symbol.iterator] = function() {
-	        return iterator
-	      }
-	    }
-
-	    return iterator
-	  }
-
-	  function Headers(headers) {
-	    this.map = {}
-
-	    if (headers instanceof Headers) {
-	      headers.forEach(function(value, name) {
-	        this.append(name, value)
-	      }, this)
-
-	    } else if (headers) {
-	      Object.getOwnPropertyNames(headers).forEach(function(name) {
-	        this.append(name, headers[name])
-	      }, this)
-	    }
-	  }
-
-	  Headers.prototype.append = function(name, value) {
-	    name = normalizeName(name)
-	    value = normalizeValue(value)
-	    var oldValue = this.map[name]
-	    this.map[name] = oldValue ? oldValue+','+value : value
-	  }
-
-	  Headers.prototype['delete'] = function(name) {
-	    delete this.map[normalizeName(name)]
-	  }
-
-	  Headers.prototype.get = function(name) {
-	    name = normalizeName(name)
-	    return this.has(name) ? this.map[name] : null
-	  }
-
-	  Headers.prototype.has = function(name) {
-	    return this.map.hasOwnProperty(normalizeName(name))
-	  }
-
-	  Headers.prototype.set = function(name, value) {
-	    this.map[normalizeName(name)] = normalizeValue(value)
-	  }
-
-	  Headers.prototype.forEach = function(callback, thisArg) {
-	    for (var name in this.map) {
-	      if (this.map.hasOwnProperty(name)) {
-	        callback.call(thisArg, this.map[name], name, this)
-	      }
-	    }
-	  }
-
-	  Headers.prototype.keys = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push(name) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.values = function() {
-	    var items = []
-	    this.forEach(function(value) { items.push(value) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.entries = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push([name, value]) })
-	    return iteratorFor(items)
-	  }
-
-	  if (support.iterable) {
-	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
-	  }
-
-	  function consumed(body) {
-	    if (body.bodyUsed) {
-	      return Promise.reject(new TypeError('Already read'))
-	    }
-	    body.bodyUsed = true
-	  }
-
-	  function fileReaderReady(reader) {
-	    return new Promise(function(resolve, reject) {
-	      reader.onload = function() {
-	        resolve(reader.result)
-	      }
-	      reader.onerror = function() {
-	        reject(reader.error)
-	      }
-	    })
-	  }
-
-	  function readBlobAsArrayBuffer(blob) {
-	    var reader = new FileReader()
-	    var promise = fileReaderReady(reader)
-	    reader.readAsArrayBuffer(blob)
-	    return promise
-	  }
-
-	  function readBlobAsText(blob) {
-	    var reader = new FileReader()
-	    var promise = fileReaderReady(reader)
-	    reader.readAsText(blob)
-	    return promise
-	  }
-
-	  function bufferClone(buf) {
-	    if (buf.slice) {
-	      return buf.slice(0)
-	    } else {
-	      var view = new Uint8Array(buf.byteLength)
-	      view.set(new Uint8Array(buf))
-	      return view.buffer
-	    }
-	  }
-
-	  function Body() {
-	    this.bodyUsed = false
-
-	    this._initBody = function(body) {
-	      this._bodyInit = body
-	      if (!body) {
-	        this._bodyText = ''
-	      } else if (typeof body === 'string') {
-	        this._bodyText = body
-	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-	        this._bodyBlob = body
-	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-	        this._bodyFormData = body
-	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	        this._bodyText = body.toString()
-	      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
-	        this._bodyArrayBuffer = bufferClone(body.buffer)
-	        // IE 10-11 can't handle a DataView body.
-	        this._bodyInit = new Blob([this._bodyArrayBuffer])
-	      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
-	        this._bodyArrayBuffer = bufferClone(body)
-	      } else {
-	        throw new Error('unsupported BodyInit type')
-	      }
-
-	      if (!this.headers.get('content-type')) {
-	        if (typeof body === 'string') {
-	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
-	        } else if (this._bodyBlob && this._bodyBlob.type) {
-	          this.headers.set('content-type', this._bodyBlob.type)
-	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
-	        }
-	      }
-	    }
-
-	    if (support.blob) {
-	      this.blob = function() {
-	        var rejected = consumed(this)
-	        if (rejected) {
-	          return rejected
-	        }
-
-	        if (this._bodyBlob) {
-	          return Promise.resolve(this._bodyBlob)
-	        } else if (this._bodyArrayBuffer) {
-	          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
-	        } else if (this._bodyFormData) {
-	          throw new Error('could not read FormData body as blob')
-	        } else {
-	          return Promise.resolve(new Blob([this._bodyText]))
-	        }
-	      }
-	    }
-
-	    this.text = function() {
-	      var rejected = consumed(this)
-	      if (rejected) {
-	        return rejected
-	      }
-
-	      if (this._bodyBlob) {
-	        return readBlobAsText(this._bodyBlob)
-	      } else if (this._bodyArrayBuffer) {
-	        var view = new Uint8Array(this._bodyArrayBuffer)
-	        var str = String.fromCharCode.apply(null, view)
-	        return Promise.resolve(str)
-	      } else if (this._bodyFormData) {
-	        throw new Error('could not read FormData body as text')
-	      } else {
-	        return Promise.resolve(this._bodyText)
-	      }
-	    }
-
-	    if (support.arrayBuffer) {
-	      this.arrayBuffer = function() {
-	        if (this._bodyArrayBuffer) {
-	          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
-	        } else {
-	          return this.blob().then(readBlobAsArrayBuffer)
-	        }
-	      }
-	    }
-
-	    if (support.formData) {
-	      this.formData = function() {
-	        return this.text().then(decode)
-	      }
-	    }
-
-	    this.json = function() {
-	      return this.text().then(JSON.parse)
-	    }
-
-	    return this
-	  }
-
-	  // HTTP methods whose capitalization should be normalized
-	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
-
-	  function normalizeMethod(method) {
-	    var upcased = method.toUpperCase()
-	    return (methods.indexOf(upcased) > -1) ? upcased : method
-	  }
-
-	  function Request(input, options) {
-	    options = options || {}
-	    var body = options.body
-
-	    if (typeof input === 'string') {
-	      this.url = input
-	    } else {
-	      if (input.bodyUsed) {
-	        throw new TypeError('Already read')
-	      }
-	      this.url = input.url
-	      this.credentials = input.credentials
-	      if (!options.headers) {
-	        this.headers = new Headers(input.headers)
-	      }
-	      this.method = input.method
-	      this.mode = input.mode
-	      if (!body && input._bodyInit != null) {
-	        body = input._bodyInit
-	        input.bodyUsed = true
-	      }
-	    }
-
-	    this.credentials = options.credentials || this.credentials || 'omit'
-	    if (options.headers || !this.headers) {
-	      this.headers = new Headers(options.headers)
-	    }
-	    this.method = normalizeMethod(options.method || this.method || 'GET')
-	    this.mode = options.mode || this.mode || null
-	    this.referrer = null
-
-	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
-	      throw new TypeError('Body not allowed for GET or HEAD requests')
-	    }
-	    this._initBody(body)
-	  }
-
-	  Request.prototype.clone = function() {
-	    return new Request(this, { body: this._bodyInit })
-	  }
-
-	  function decode(body) {
-	    var form = new FormData()
-	    body.trim().split('&').forEach(function(bytes) {
-	      if (bytes) {
-	        var split = bytes.split('=')
-	        var name = split.shift().replace(/\+/g, ' ')
-	        var value = split.join('=').replace(/\+/g, ' ')
-	        form.append(decodeURIComponent(name), decodeURIComponent(value))
-	      }
-	    })
-	    return form
-	  }
-
-	  function parseHeaders(rawHeaders) {
-	    var headers = new Headers()
-	    rawHeaders.split('\r\n').forEach(function(line) {
-	      var parts = line.split(':')
-	      var key = parts.shift().trim()
-	      if (key) {
-	        var value = parts.join(':').trim()
-	        headers.append(key, value)
-	      }
-	    })
-	    return headers
-	  }
-
-	  Body.call(Request.prototype)
-
-	  function Response(bodyInit, options) {
-	    if (!options) {
-	      options = {}
-	    }
-
-	    this.type = 'default'
-	    this.status = 'status' in options ? options.status : 200
-	    this.ok = this.status >= 200 && this.status < 300
-	    this.statusText = 'statusText' in options ? options.statusText : 'OK'
-	    this.headers = new Headers(options.headers)
-	    this.url = options.url || ''
-	    this._initBody(bodyInit)
-	  }
-
-	  Body.call(Response.prototype)
-
-	  Response.prototype.clone = function() {
-	    return new Response(this._bodyInit, {
-	      status: this.status,
-	      statusText: this.statusText,
-	      headers: new Headers(this.headers),
-	      url: this.url
-	    })
-	  }
-
-	  Response.error = function() {
-	    var response = new Response(null, {status: 0, statusText: ''})
-	    response.type = 'error'
-	    return response
-	  }
-
-	  var redirectStatuses = [301, 302, 303, 307, 308]
-
-	  Response.redirect = function(url, status) {
-	    if (redirectStatuses.indexOf(status) === -1) {
-	      throw new RangeError('Invalid status code')
-	    }
-
-	    return new Response(null, {status: status, headers: {location: url}})
-	  }
-
-	  self.Headers = Headers
-	  self.Request = Request
-	  self.Response = Response
-
-	  self.fetch = function(input, init) {
-	    return new Promise(function(resolve, reject) {
-	      var request = new Request(input, init)
-	      var xhr = new XMLHttpRequest()
-
-	      xhr.onload = function() {
-	        var options = {
-	          status: xhr.status,
-	          statusText: xhr.statusText,
-	          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
-	        }
-	        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
-	        var body = 'response' in xhr ? xhr.response : xhr.responseText
-	        resolve(new Response(body, options))
-	      }
-
-	      xhr.onerror = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.ontimeout = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.open(request.method, request.url, true)
-
-	      if (request.credentials === 'include') {
-	        xhr.withCredentials = true
-	      }
-
-	      if ('responseType' in xhr && support.blob) {
-	        xhr.responseType = 'blob'
-	      }
-
-	      request.headers.forEach(function(value, name) {
-	        xhr.setRequestHeader(name, value)
-	      })
-
-	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
-	    })
-	  }
-	  self.fetch.polyfill = true
-	})(typeof self !== 'undefined' ? self : this);
-
-
-/***/ },
-/* 658 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.handleAuth = handleAuth;
-	exports.handleUnauth = handleUnauth;
-	function handleAuth() {
-	  var currUrl = window.location;
-	  var token = localStorage.getItem('@TOKEN');
-	  if (!token) {
-	    window.location.href = currUrl + 'login';
-	  }
-	}
-
-	function handleUnauth() {
-	  var token = localStorage.getItem('@TOKEN');
-	  if (token) {
-	    window.location.href = 'http://localhost:8888/reservation-client';
-	  }
-	}
-
-/***/ },
-/* 659 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var http = __webpack_require__(660);
+	var http = __webpack_require__(656);
 
 	var https = module.exports;
 
@@ -77646,13 +77004,13 @@
 
 
 /***/ },
-/* 660 */
+/* 656 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var http = module.exports;
-	var EventEmitter = __webpack_require__(661).EventEmitter;
-	var Request = __webpack_require__(662);
-	var url = __webpack_require__(690)
+	var EventEmitter = __webpack_require__(657).EventEmitter;
+	var Request = __webpack_require__(658);
+	var url = __webpack_require__(686)
 
 	http.request = function (params, cb) {
 	    if (typeof params === 'string') {
@@ -77796,7 +77154,7 @@
 	};
 
 /***/ },
-/* 661 */
+/* 657 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -78104,13 +77462,13 @@
 
 
 /***/ },
-/* 662 */
+/* 658 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stream = __webpack_require__(663);
-	var Response = __webpack_require__(684);
-	var Base64 = __webpack_require__(688);
-	var inherits = __webpack_require__(689);
+	var Stream = __webpack_require__(659);
+	var Response = __webpack_require__(680);
+	var Base64 = __webpack_require__(684);
+	var inherits = __webpack_require__(685);
 
 	var Request = module.exports = function (xhr, params) {
 	    var self = this;
@@ -78319,7 +77677,7 @@
 
 
 /***/ },
-/* 663 */
+/* 659 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -78345,15 +77703,15 @@
 
 	module.exports = Stream;
 
-	var EE = __webpack_require__(661).EventEmitter;
-	var inherits = __webpack_require__(664);
+	var EE = __webpack_require__(657).EventEmitter;
+	var inherits = __webpack_require__(660);
 
 	inherits(Stream, EE);
-	Stream.Readable = __webpack_require__(665);
-	Stream.Writable = __webpack_require__(680);
-	Stream.Duplex = __webpack_require__(681);
-	Stream.Transform = __webpack_require__(682);
-	Stream.PassThrough = __webpack_require__(683);
+	Stream.Readable = __webpack_require__(661);
+	Stream.Writable = __webpack_require__(676);
+	Stream.Duplex = __webpack_require__(677);
+	Stream.Transform = __webpack_require__(678);
+	Stream.PassThrough = __webpack_require__(679);
 
 	// Backwards-compat with node 0.4.x
 	Stream.Stream = Stream;
@@ -78452,7 +77810,7 @@
 
 
 /***/ },
-/* 664 */
+/* 660 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -78481,24 +77839,24 @@
 
 
 /***/ },
-/* 665 */
+/* 661 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(666);
-	exports.Stream = __webpack_require__(663);
+	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(662);
+	exports.Stream = __webpack_require__(659);
 	exports.Readable = exports;
-	exports.Writable = __webpack_require__(676);
-	exports.Duplex = __webpack_require__(675);
-	exports.Transform = __webpack_require__(678);
-	exports.PassThrough = __webpack_require__(679);
+	exports.Writable = __webpack_require__(672);
+	exports.Duplex = __webpack_require__(671);
+	exports.Transform = __webpack_require__(674);
+	exports.PassThrough = __webpack_require__(675);
 	if (!process.browser && process.env.READABLE_STREAM === 'disable') {
-	  module.exports = __webpack_require__(663);
+	  module.exports = __webpack_require__(659);
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 666 */
+/* 662 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -78525,17 +77883,17 @@
 	module.exports = Readable;
 
 	/*<replacement>*/
-	var isArray = __webpack_require__(667);
+	var isArray = __webpack_require__(663);
 	/*</replacement>*/
 
 
 	/*<replacement>*/
-	var Buffer = __webpack_require__(668).Buffer;
+	var Buffer = __webpack_require__(664).Buffer;
 	/*</replacement>*/
 
 	Readable.ReadableState = ReadableState;
 
-	var EE = __webpack_require__(661).EventEmitter;
+	var EE = __webpack_require__(657).EventEmitter;
 
 	/*<replacement>*/
 	if (!EE.listenerCount) EE.listenerCount = function(emitter, type) {
@@ -78543,18 +77901,18 @@
 	};
 	/*</replacement>*/
 
-	var Stream = __webpack_require__(663);
+	var Stream = __webpack_require__(659);
 
 	/*<replacement>*/
-	var util = __webpack_require__(672);
-	util.inherits = __webpack_require__(673);
+	var util = __webpack_require__(668);
+	util.inherits = __webpack_require__(669);
 	/*</replacement>*/
 
 	var StringDecoder;
 
 
 	/*<replacement>*/
-	var debug = __webpack_require__(674);
+	var debug = __webpack_require__(670);
 	if (debug && debug.debuglog) {
 	  debug = debug.debuglog('stream');
 	} else {
@@ -78566,7 +77924,7 @@
 	util.inherits(Readable, Stream);
 
 	function ReadableState(options, stream) {
-	  var Duplex = __webpack_require__(675);
+	  var Duplex = __webpack_require__(671);
 
 	  options = options || {};
 
@@ -78627,14 +77985,14 @@
 	  this.encoding = null;
 	  if (options.encoding) {
 	    if (!StringDecoder)
-	      StringDecoder = __webpack_require__(677).StringDecoder;
+	      StringDecoder = __webpack_require__(673).StringDecoder;
 	    this.decoder = new StringDecoder(options.encoding);
 	    this.encoding = options.encoding;
 	  }
 	}
 
 	function Readable(options) {
-	  var Duplex = __webpack_require__(675);
+	  var Duplex = __webpack_require__(671);
 
 	  if (!(this instanceof Readable))
 	    return new Readable(options);
@@ -78737,7 +78095,7 @@
 	// backwards compatibility.
 	Readable.prototype.setEncoding = function(enc) {
 	  if (!StringDecoder)
-	    StringDecoder = __webpack_require__(677).StringDecoder;
+	    StringDecoder = __webpack_require__(673).StringDecoder;
 	  this._readableState.decoder = new StringDecoder(enc);
 	  this._readableState.encoding = enc;
 	  return this;
@@ -79456,7 +78814,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 667 */
+/* 663 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -79465,7 +78823,7 @@
 
 
 /***/ },
-/* 668 */
+/* 664 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
@@ -79478,9 +78836,9 @@
 
 	'use strict'
 
-	var base64 = __webpack_require__(669)
-	var ieee754 = __webpack_require__(670)
-	var isArray = __webpack_require__(671)
+	var base64 = __webpack_require__(665)
+	var ieee754 = __webpack_require__(666)
+	var isArray = __webpack_require__(667)
 
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -81258,10 +80616,10 @@
 	  return val !== val // eslint-disable-line no-self-compare
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(668).Buffer, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(664).Buffer, (function() { return this; }())))
 
 /***/ },
-/* 669 */
+/* 665 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -81381,7 +80739,7 @@
 
 
 /***/ },
-/* 670 */
+/* 666 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -81471,7 +80829,7 @@
 
 
 /***/ },
-/* 671 */
+/* 667 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -81482,7 +80840,7 @@
 
 
 /***/ },
-/* 672 */
+/* 668 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
@@ -81593,10 +80951,10 @@
 	  return Object.prototype.toString.call(o);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(668).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(664).Buffer))
 
 /***/ },
-/* 673 */
+/* 669 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -81625,13 +80983,13 @@
 
 
 /***/ },
-/* 674 */
+/* 670 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 675 */
+/* 671 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -81672,12 +81030,12 @@
 
 
 	/*<replacement>*/
-	var util = __webpack_require__(672);
-	util.inherits = __webpack_require__(673);
+	var util = __webpack_require__(668);
+	util.inherits = __webpack_require__(669);
 	/*</replacement>*/
 
-	var Readable = __webpack_require__(666);
-	var Writable = __webpack_require__(676);
+	var Readable = __webpack_require__(662);
+	var Writable = __webpack_require__(672);
 
 	util.inherits(Duplex, Readable);
 
@@ -81727,7 +81085,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 676 */
+/* 672 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -81758,18 +81116,18 @@
 	module.exports = Writable;
 
 	/*<replacement>*/
-	var Buffer = __webpack_require__(668).Buffer;
+	var Buffer = __webpack_require__(664).Buffer;
 	/*</replacement>*/
 
 	Writable.WritableState = WritableState;
 
 
 	/*<replacement>*/
-	var util = __webpack_require__(672);
-	util.inherits = __webpack_require__(673);
+	var util = __webpack_require__(668);
+	util.inherits = __webpack_require__(669);
 	/*</replacement>*/
 
-	var Stream = __webpack_require__(663);
+	var Stream = __webpack_require__(659);
 
 	util.inherits(Writable, Stream);
 
@@ -81780,7 +81138,7 @@
 	}
 
 	function WritableState(options, stream) {
-	  var Duplex = __webpack_require__(675);
+	  var Duplex = __webpack_require__(671);
 
 	  options = options || {};
 
@@ -81868,7 +81226,7 @@
 	}
 
 	function Writable(options) {
-	  var Duplex = __webpack_require__(675);
+	  var Duplex = __webpack_require__(671);
 
 	  // Writable ctor is applied to Duplexes, though they're not
 	  // instanceof Writable, they're instanceof Readable.
@@ -82211,7 +81569,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 677 */
+/* 673 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -82235,7 +81593,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var Buffer = __webpack_require__(668).Buffer;
+	var Buffer = __webpack_require__(664).Buffer;
 
 	var isBufferEncoding = Buffer.isEncoding
 	  || function(encoding) {
@@ -82438,7 +81796,7 @@
 
 
 /***/ },
-/* 678 */
+/* 674 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -82507,11 +81865,11 @@
 
 	module.exports = Transform;
 
-	var Duplex = __webpack_require__(675);
+	var Duplex = __webpack_require__(671);
 
 	/*<replacement>*/
-	var util = __webpack_require__(672);
-	util.inherits = __webpack_require__(673);
+	var util = __webpack_require__(668);
+	util.inherits = __webpack_require__(669);
 	/*</replacement>*/
 
 	util.inherits(Transform, Duplex);
@@ -82653,7 +82011,7 @@
 
 
 /***/ },
-/* 679 */
+/* 675 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -82683,11 +82041,11 @@
 
 	module.exports = PassThrough;
 
-	var Transform = __webpack_require__(678);
+	var Transform = __webpack_require__(674);
 
 	/*<replacement>*/
-	var util = __webpack_require__(672);
-	util.inherits = __webpack_require__(673);
+	var util = __webpack_require__(668);
+	util.inherits = __webpack_require__(669);
 	/*</replacement>*/
 
 	util.inherits(PassThrough, Transform);
@@ -82705,39 +82063,39 @@
 
 
 /***/ },
-/* 680 */
+/* 676 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(676)
+	module.exports = __webpack_require__(672)
 
 
 /***/ },
-/* 681 */
+/* 677 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(671)
+
+
+/***/ },
+/* 678 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(674)
+
+
+/***/ },
+/* 679 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(675)
 
 
 /***/ },
-/* 682 */
+/* 680 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(678)
-
-
-/***/ },
-/* 683 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(679)
-
-
-/***/ },
-/* 684 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Stream = __webpack_require__(663);
-	var util = __webpack_require__(685);
+	var Stream = __webpack_require__(659);
+	var util = __webpack_require__(681);
 
 	var Response = module.exports = function (res) {
 	    this.offset = 0;
@@ -82859,7 +82217,7 @@
 
 
 /***/ },
-/* 685 */
+/* 681 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -83387,7 +82745,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(686);
+	exports.isBuffer = __webpack_require__(682);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -83431,7 +82789,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(687);
+	exports.inherits = __webpack_require__(683);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -83452,7 +82810,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(294)))
 
 /***/ },
-/* 686 */
+/* 682 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -83463,7 +82821,7 @@
 	}
 
 /***/ },
-/* 687 */
+/* 683 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -83492,7 +82850,7 @@
 
 
 /***/ },
-/* 688 */
+/* 684 */
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function () {
@@ -83558,7 +82916,7 @@
 
 
 /***/ },
-/* 689 */
+/* 685 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -83587,7 +82945,7 @@
 
 
 /***/ },
-/* 690 */
+/* 686 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -83611,7 +82969,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(691);
+	var punycode = __webpack_require__(687);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -83683,7 +83041,7 @@
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(692);
+	    querystring = __webpack_require__(688);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -84300,7 +83658,7 @@
 
 
 /***/ },
-/* 691 */
+/* 687 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -84835,17 +84193,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(592)(module), (function() { return this; }())))
 
 /***/ },
-/* 692 */
+/* 688 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(693);
-	exports.encode = exports.stringify = __webpack_require__(694);
+	exports.decode = exports.parse = __webpack_require__(689);
+	exports.encode = exports.stringify = __webpack_require__(690);
 
 
 /***/ },
-/* 693 */
+/* 689 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -84931,7 +84289,7 @@
 
 
 /***/ },
-/* 694 */
+/* 690 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -84999,6 +84357,671 @@
 	         encodeURIComponent(stringifyPrimitive(obj));
 	};
 
+
+/***/ },
+/* 691 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactAddonsTransitionGroup = __webpack_require__(525);
+
+	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReservationsOverview = function (_React$Component) {
+	  _inherits(ReservationsOverview, _React$Component);
+
+	  function ReservationsOverview() {
+	    _classCallCheck(this, ReservationsOverview);
+
+	    return _possibleConstructorReturn(this, (ReservationsOverview.__proto__ || Object.getPrototypeOf(ReservationsOverview)).call(this));
+	  }
+
+	  _createClass(ReservationsOverview, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'h1',
+	        null,
+	        'My Reservations'
+	      );
+	    }
+	  }]);
+
+	  return ReservationsOverview;
+	}(_react2.default.Component);
+
+	exports.default = ReservationsOverview;
+
+/***/ },
+/* 692 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(693);
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var _ = __webpack_require__(591);
+
+	var APIFetcher = function () {
+	  function APIFetcher(apiUrl) {
+	    _classCallCheck(this, APIFetcher);
+
+	    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
+
+	    this.apiUrl = apiUrl;
+	  }
+
+	  _createClass(APIFetcher, [{
+	    key: 'authenticateAndFetchToken',
+	    value: function () {
+	      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(email, password) {
+	        var response;
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                _context.prev = 0;
+
+	                //TODO Put creds in post body/header, not in URL
+	                response = fetch(this.apiUrl + '/login?email=' + email + '&password=' + password, {
+	                  method: 'POST',
+	                  mode: 'cors',
+	                  headers: {
+	                    'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+	                  }
+	                });
+	                return _context.abrupt('return', response);
+
+	              case 5:
+	                _context.prev = 5;
+	                _context.t0 = _context['catch'](0);
+	                return _context.abrupt('return', _context.t0);
+
+	              case 8:
+	              case 'end':
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee, this, [[0, 5]]);
+	      }));
+
+	      function authenticateAndFetchToken(_x, _x2) {
+	        return _ref.apply(this, arguments);
+	      }
+
+	      return authenticateAndFetchToken;
+	    }()
+	  }, {
+	    key: 'getRequestWithToken',
+	    value: function () {
+	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource, token) {
+	        var response;
+	        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	          while (1) {
+	            switch (_context2.prev = _context2.next) {
+	              case 0:
+	                _context2.prev = 0;
+	                _context2.next = 3;
+	                return fetch('' + this.apiUrl + resource + '?token=' + token, {
+	                  method: 'GET',
+	                  mode: 'cors',
+	                  headers: {
+	                    'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+	                  }
+	                });
+
+	              case 3:
+	                response = _context2.sent;
+	                return _context2.abrupt('return', response);
+
+	              case 7:
+	                _context2.prev = 7;
+	                _context2.t0 = _context2['catch'](0);
+	                return _context2.abrupt('return', _context2.t0);
+
+	              case 10:
+	              case 'end':
+	                return _context2.stop();
+	            }
+	          }
+	        }, _callee2, this, [[0, 7]]);
+	      }));
+
+	      function getRequestWithToken(_x3, _x4) {
+	        return _ref2.apply(this, arguments);
+	      }
+
+	      return getRequestWithToken;
+	    }()
+	  }]);
+
+	  return APIFetcher;
+	}();
+
+	exports.default = APIFetcher;
+
+/***/ },
+/* 693 */
+/***/ function(module, exports) {
+
+	(function(self) {
+	  'use strict';
+
+	  if (self.fetch) {
+	    return
+	  }
+
+	  var support = {
+	    searchParams: 'URLSearchParams' in self,
+	    iterable: 'Symbol' in self && 'iterator' in Symbol,
+	    blob: 'FileReader' in self && 'Blob' in self && (function() {
+	      try {
+	        new Blob()
+	        return true
+	      } catch(e) {
+	        return false
+	      }
+	    })(),
+	    formData: 'FormData' in self,
+	    arrayBuffer: 'ArrayBuffer' in self
+	  }
+
+	  if (support.arrayBuffer) {
+	    var viewClasses = [
+	      '[object Int8Array]',
+	      '[object Uint8Array]',
+	      '[object Uint8ClampedArray]',
+	      '[object Int16Array]',
+	      '[object Uint16Array]',
+	      '[object Int32Array]',
+	      '[object Uint32Array]',
+	      '[object Float32Array]',
+	      '[object Float64Array]'
+	    ]
+
+	    var isDataView = function(obj) {
+	      return obj && DataView.prototype.isPrototypeOf(obj)
+	    }
+
+	    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
+	      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
+	    }
+	  }
+
+	  function normalizeName(name) {
+	    if (typeof name !== 'string') {
+	      name = String(name)
+	    }
+	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+	      throw new TypeError('Invalid character in header field name')
+	    }
+	    return name.toLowerCase()
+	  }
+
+	  function normalizeValue(value) {
+	    if (typeof value !== 'string') {
+	      value = String(value)
+	    }
+	    return value
+	  }
+
+	  // Build a destructive iterator for the value list
+	  function iteratorFor(items) {
+	    var iterator = {
+	      next: function() {
+	        var value = items.shift()
+	        return {done: value === undefined, value: value}
+	      }
+	    }
+
+	    if (support.iterable) {
+	      iterator[Symbol.iterator] = function() {
+	        return iterator
+	      }
+	    }
+
+	    return iterator
+	  }
+
+	  function Headers(headers) {
+	    this.map = {}
+
+	    if (headers instanceof Headers) {
+	      headers.forEach(function(value, name) {
+	        this.append(name, value)
+	      }, this)
+
+	    } else if (headers) {
+	      Object.getOwnPropertyNames(headers).forEach(function(name) {
+	        this.append(name, headers[name])
+	      }, this)
+	    }
+	  }
+
+	  Headers.prototype.append = function(name, value) {
+	    name = normalizeName(name)
+	    value = normalizeValue(value)
+	    var oldValue = this.map[name]
+	    this.map[name] = oldValue ? oldValue+','+value : value
+	  }
+
+	  Headers.prototype['delete'] = function(name) {
+	    delete this.map[normalizeName(name)]
+	  }
+
+	  Headers.prototype.get = function(name) {
+	    name = normalizeName(name)
+	    return this.has(name) ? this.map[name] : null
+	  }
+
+	  Headers.prototype.has = function(name) {
+	    return this.map.hasOwnProperty(normalizeName(name))
+	  }
+
+	  Headers.prototype.set = function(name, value) {
+	    this.map[normalizeName(name)] = normalizeValue(value)
+	  }
+
+	  Headers.prototype.forEach = function(callback, thisArg) {
+	    for (var name in this.map) {
+	      if (this.map.hasOwnProperty(name)) {
+	        callback.call(thisArg, this.map[name], name, this)
+	      }
+	    }
+	  }
+
+	  Headers.prototype.keys = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push(name) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.values = function() {
+	    var items = []
+	    this.forEach(function(value) { items.push(value) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.entries = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push([name, value]) })
+	    return iteratorFor(items)
+	  }
+
+	  if (support.iterable) {
+	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+	  }
+
+	  function consumed(body) {
+	    if (body.bodyUsed) {
+	      return Promise.reject(new TypeError('Already read'))
+	    }
+	    body.bodyUsed = true
+	  }
+
+	  function fileReaderReady(reader) {
+	    return new Promise(function(resolve, reject) {
+	      reader.onload = function() {
+	        resolve(reader.result)
+	      }
+	      reader.onerror = function() {
+	        reject(reader.error)
+	      }
+	    })
+	  }
+
+	  function readBlobAsArrayBuffer(blob) {
+	    var reader = new FileReader()
+	    var promise = fileReaderReady(reader)
+	    reader.readAsArrayBuffer(blob)
+	    return promise
+	  }
+
+	  function readBlobAsText(blob) {
+	    var reader = new FileReader()
+	    var promise = fileReaderReady(reader)
+	    reader.readAsText(blob)
+	    return promise
+	  }
+
+	  function bufferClone(buf) {
+	    if (buf.slice) {
+	      return buf.slice(0)
+	    } else {
+	      var view = new Uint8Array(buf.byteLength)
+	      view.set(new Uint8Array(buf))
+	      return view.buffer
+	    }
+	  }
+
+	  function Body() {
+	    this.bodyUsed = false
+
+	    this._initBody = function(body) {
+	      this._bodyInit = body
+	      if (!body) {
+	        this._bodyText = ''
+	      } else if (typeof body === 'string') {
+	        this._bodyText = body
+	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+	        this._bodyBlob = body
+	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+	        this._bodyFormData = body
+	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	        this._bodyText = body.toString()
+	      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+	        this._bodyArrayBuffer = bufferClone(body.buffer)
+	        // IE 10-11 can't handle a DataView body.
+	        this._bodyInit = new Blob([this._bodyArrayBuffer])
+	      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+	        this._bodyArrayBuffer = bufferClone(body)
+	      } else {
+	        throw new Error('unsupported BodyInit type')
+	      }
+
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+	        }
+	      }
+	    }
+
+	    if (support.blob) {
+	      this.blob = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return Promise.resolve(this._bodyBlob)
+	        } else if (this._bodyArrayBuffer) {
+	          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as blob')
+	        } else {
+	          return Promise.resolve(new Blob([this._bodyText]))
+	        }
+	      }
+	    }
+
+	    this.text = function() {
+	      var rejected = consumed(this)
+	      if (rejected) {
+	        return rejected
+	      }
+
+	      if (this._bodyBlob) {
+	        return readBlobAsText(this._bodyBlob)
+	      } else if (this._bodyArrayBuffer) {
+	        var view = new Uint8Array(this._bodyArrayBuffer)
+	        var str = String.fromCharCode.apply(null, view)
+	        return Promise.resolve(str)
+	      } else if (this._bodyFormData) {
+	        throw new Error('could not read FormData body as text')
+	      } else {
+	        return Promise.resolve(this._bodyText)
+	      }
+	    }
+
+	    if (support.arrayBuffer) {
+	      this.arrayBuffer = function() {
+	        if (this._bodyArrayBuffer) {
+	          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+	        } else {
+	          return this.blob().then(readBlobAsArrayBuffer)
+	        }
+	      }
+	    }
+
+	    if (support.formData) {
+	      this.formData = function() {
+	        return this.text().then(decode)
+	      }
+	    }
+
+	    this.json = function() {
+	      return this.text().then(JSON.parse)
+	    }
+
+	    return this
+	  }
+
+	  // HTTP methods whose capitalization should be normalized
+	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+	  function normalizeMethod(method) {
+	    var upcased = method.toUpperCase()
+	    return (methods.indexOf(upcased) > -1) ? upcased : method
+	  }
+
+	  function Request(input, options) {
+	    options = options || {}
+	    var body = options.body
+
+	    if (typeof input === 'string') {
+	      this.url = input
+	    } else {
+	      if (input.bodyUsed) {
+	        throw new TypeError('Already read')
+	      }
+	      this.url = input.url
+	      this.credentials = input.credentials
+	      if (!options.headers) {
+	        this.headers = new Headers(input.headers)
+	      }
+	      this.method = input.method
+	      this.mode = input.mode
+	      if (!body && input._bodyInit != null) {
+	        body = input._bodyInit
+	        input.bodyUsed = true
+	      }
+	    }
+
+	    this.credentials = options.credentials || this.credentials || 'omit'
+	    if (options.headers || !this.headers) {
+	      this.headers = new Headers(options.headers)
+	    }
+	    this.method = normalizeMethod(options.method || this.method || 'GET')
+	    this.mode = options.mode || this.mode || null
+	    this.referrer = null
+
+	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+	      throw new TypeError('Body not allowed for GET or HEAD requests')
+	    }
+	    this._initBody(body)
+	  }
+
+	  Request.prototype.clone = function() {
+	    return new Request(this, { body: this._bodyInit })
+	  }
+
+	  function decode(body) {
+	    var form = new FormData()
+	    body.trim().split('&').forEach(function(bytes) {
+	      if (bytes) {
+	        var split = bytes.split('=')
+	        var name = split.shift().replace(/\+/g, ' ')
+	        var value = split.join('=').replace(/\+/g, ' ')
+	        form.append(decodeURIComponent(name), decodeURIComponent(value))
+	      }
+	    })
+	    return form
+	  }
+
+	  function parseHeaders(rawHeaders) {
+	    var headers = new Headers()
+	    rawHeaders.split('\r\n').forEach(function(line) {
+	      var parts = line.split(':')
+	      var key = parts.shift().trim()
+	      if (key) {
+	        var value = parts.join(':').trim()
+	        headers.append(key, value)
+	      }
+	    })
+	    return headers
+	  }
+
+	  Body.call(Request.prototype)
+
+	  function Response(bodyInit, options) {
+	    if (!options) {
+	      options = {}
+	    }
+
+	    this.type = 'default'
+	    this.status = 'status' in options ? options.status : 200
+	    this.ok = this.status >= 200 && this.status < 300
+	    this.statusText = 'statusText' in options ? options.statusText : 'OK'
+	    this.headers = new Headers(options.headers)
+	    this.url = options.url || ''
+	    this._initBody(bodyInit)
+	  }
+
+	  Body.call(Response.prototype)
+
+	  Response.prototype.clone = function() {
+	    return new Response(this._bodyInit, {
+	      status: this.status,
+	      statusText: this.statusText,
+	      headers: new Headers(this.headers),
+	      url: this.url
+	    })
+	  }
+
+	  Response.error = function() {
+	    var response = new Response(null, {status: 0, statusText: ''})
+	    response.type = 'error'
+	    return response
+	  }
+
+	  var redirectStatuses = [301, 302, 303, 307, 308]
+
+	  Response.redirect = function(url, status) {
+	    if (redirectStatuses.indexOf(status) === -1) {
+	      throw new RangeError('Invalid status code')
+	    }
+
+	    return new Response(null, {status: status, headers: {location: url}})
+	  }
+
+	  self.Headers = Headers
+	  self.Request = Request
+	  self.Response = Response
+
+	  self.fetch = function(input, init) {
+	    return new Promise(function(resolve, reject) {
+	      var request = new Request(input, init)
+	      var xhr = new XMLHttpRequest()
+
+	      xhr.onload = function() {
+	        var options = {
+	          status: xhr.status,
+	          statusText: xhr.statusText,
+	          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+	        }
+	        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
+	        var body = 'response' in xhr ? xhr.response : xhr.responseText
+	        resolve(new Response(body, options))
+	      }
+
+	      xhr.onerror = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.ontimeout = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.open(request.method, request.url, true)
+
+	      if (request.credentials === 'include') {
+	        xhr.withCredentials = true
+	      }
+
+	      if ('responseType' in xhr && support.blob) {
+	        xhr.responseType = 'blob'
+	      }
+
+	      request.headers.forEach(function(value, name) {
+	        xhr.setRequestHeader(name, value)
+	      })
+
+	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+	    })
+	  }
+	  self.fetch.polyfill = true
+	})(typeof self !== 'undefined' ? self : this);
+
+
+/***/ },
+/* 694 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.handleAuth = handleAuth;
+	exports.handleUnauth = handleUnauth;
+	function handleAuth() {
+	  var currUrl = window.location;
+	  var token = localStorage.getItem('@TOKEN');
+	  if (!token) {
+	    window.location.href = currUrl + 'login';
+	  }
+	}
+
+	function handleUnauth() {
+	  var token = localStorage.getItem('@TOKEN');
+	  if (token) {
+	    window.location.href = 'http://localhost:8888/reservation-client';
+	  }
+	}
 
 /***/ }
 /******/ ]);
