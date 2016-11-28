@@ -49,8 +49,8 @@ export default class Room extends React.Component {
       color,
       invalid
     } = this.props.room;
-
-    const className = is_reserved_now ? `${this.props.type} occupied` : `${this.props.type}`;
+    const typeLowerCase = type.toLowerCase();
+    const className = is_reserved_now ? `${typeLowerCase} occupied` : `${typeLowerCase}`;
     const url = `room/${id}`;
     const boxClassName = `room__color-box ${color}`;
 

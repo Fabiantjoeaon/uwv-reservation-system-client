@@ -57,7 +57,7 @@ const NavLink = styled(Link)`
 `;
 
 const DashboardTitle = styled(Title)`
-  padding-top: 3%;
+  padding-top: 2%;
   margin-left: 5%;
 `;
 

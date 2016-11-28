@@ -9,6 +9,8 @@ import FlexWrapper from '../Elements/FlexWrapper';
 import Room from '../Elements/Room';
 
 const _ = require('lodash');
+const io = require('socket.io-client');
+const https = require('https');
 
 const PageWrapper = styled.div`
   position: relative;
@@ -29,14 +31,22 @@ export default class RoomsOverview extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      isLoading: true
+    this._getAllRooms();
+    this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
+
+    this.socket.on('connect', (socket) => {
+        console.log('connected to node server', socket);
     });
 
-    this._getAllRooms();
+    this.socket.on('room-channel:roomHasUpdated', (data) => {
+      console.log('room has updated', data);
+    });
   }
 
   _getAllRooms() {
+    this.setState({
+      isLoading: true
+    });
     this.props.fetcher.getRequestWithToken('/rooms', this.props.token)
       .then(res => res.json())
       .then((data) => {
@@ -83,8 +93,7 @@ export default class RoomsOverview extends React.Component {
 
   render() {
     const roomsList = this.state.rooms.map((room, i) => {
-            const type = room.type.toLowerCase();
-            return <Room key={i} type={type} room={room} />
+            return <Room key={i} room={room} />
           });
     return (
       <PageWrapper>
