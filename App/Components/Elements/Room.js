@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
+import ActivityProgressMeter from './ActivityProgressMeter';
+
 const _ = require('lodash');
 
 const StyledRoom = styled.a`
@@ -13,6 +15,8 @@ const StyledRoom = styled.a`
   text-decoration: none;
   color: #fff;
   position: relative;
+  overflow: hidden;
+
 
   &:visited {
     color: #fff;
@@ -39,12 +43,28 @@ export default class Room extends React.Component {
     _.bindAll(this, '_getReservedRoomData', '_returnActivityMeterPercentage');
 
     this.state = {
-      reservation: {}
+      reservation: {},
+      percentage: ''
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
+  }
+
+  componentDidMount() {
+  }
+
+  _returnActivityMeterPercentage(startTime, endTime) {
+    const startTimeEpoch = new Date(startTime).getTime();
+    const endTimeEpoch = new Date(endTime).getTime();
+    const now = (new Date);
+    const nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
+    const nowEpoch = nowWithoutUTC.getTime();
+
+    const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
+    console.log(startTime, endTime, now, percentage);
+    return percentage;
   }
 
   _getReservedRoomData(id) {
@@ -58,21 +78,6 @@ export default class Room extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-  }
-
-
-  //TODO: Make styled component of meter
-  _returnActivityMeterPercentage(startTime, endTime) {
-    const startTimeEpoch = new Date(startTime).getTime();
-    const endTimeEpoch = new Date(endTime).getTime();
-    const now = (new Date);
-    const nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-    const nowEpoch = nowWithoutUTC.getTime();
-
-    const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
-    console.log(startTime, nowWithoutUTC, endTime, percentage);
-
-    return percentage;
   }
 
   // TODO: Only on shouldComponentUpdate (because next state should be different)
@@ -92,10 +97,6 @@ export default class Room extends React.Component {
     const url = `room/${id}`;
     const boxClassName = `room__color-box ${color}`;
 
-    if(this.state.reservation.activity) {
-      this._returnActivityMeterPercentage(this.state.reservation.start_date_time, this.state.reservation.end_date_time);
-    }
-
     return (
       <StyledRoom className={className} width='calc(100% / 4)' href={url}>
         <h2 className='room__name'>{name}</h2>
@@ -104,8 +105,10 @@ export default class Room extends React.Component {
         <h3 className='room__meta'>{color}</h3>
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
-        {is_reserved_now ? <h3 className='room__meta'>Now: {this.state.reservation.activity}</h3> : null}
-        {is_reserved_now ? <div className='room__activity-meter'></div> : null}
+        {is_reserved_now ?
+          <ActivityProgressMeter
+            reservation={this.state.reservation}
+            returnPercentage={this._returnActivityMeterPercentage}/> : null}
       </StyledRoom>
     );
   }

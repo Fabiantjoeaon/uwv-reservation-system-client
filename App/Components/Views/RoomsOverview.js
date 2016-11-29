@@ -29,7 +29,7 @@ export default class RoomsOverview extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this._getAllRooms();
     this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
 

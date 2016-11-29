@@ -43299,8 +43299,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.4em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.4em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.4em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.4em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.8em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.8em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68710,8 +68710,8 @@
 	  }
 
 	  _createClass(RoomsOverview, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 
 	      this._getAllRooms();
@@ -68791,7 +68791,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 2em;\n  height: 2em;\n'], ['\n  width: 2em;\n  height: 2em;\n']);
 
 	var _react = __webpack_require__(299);
@@ -68809,6 +68809,10 @@
 	var _styledComponents = __webpack_require__(528);
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _ActivityProgressMeter = __webpack_require__(695);
+
+	var _ActivityProgressMeter2 = _interopRequireDefault(_ActivityProgressMeter);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68843,15 +68847,32 @@
 	    _.bindAll(_this, '_getReservedRoomData', '_returnActivityMeterPercentage');
 
 	    _this.state = {
-	      reservation: {}
+	      reservation: {},
+	      percentage: ''
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Room, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: '_returnActivityMeterPercentage',
+	    value: function _returnActivityMeterPercentage(startTime, endTime) {
+	      var startTimeEpoch = new Date(startTime).getTime();
+	      var endTimeEpoch = new Date(endTime).getTime();
+	      var now = new Date();
+	      var nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
+	      var nowEpoch = nowWithoutUTC.getTime();
+
+	      var percentage = (nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch) * 100;
+	      console.log(startTime, endTime, now, percentage);
+	      return percentage;
 	    }
 	  }, {
 	    key: '_getReservedRoomData',
@@ -68867,23 +68888,6 @@
 	      }).catch(function (error) {
 	        console.log(error);
 	      });
-	    }
-
-	    //TODO: Make styled component of meter
-
-	  }, {
-	    key: '_returnActivityMeterPercentage',
-	    value: function _returnActivityMeterPercentage(startTime, endTime) {
-	      var startTimeEpoch = new Date(startTime).getTime();
-	      var endTimeEpoch = new Date(endTime).getTime();
-	      var now = new Date();
-	      var nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-	      var nowEpoch = nowWithoutUTC.getTime();
-
-	      var percentage = (nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch) * 100;
-	      console.log(startTime, nowWithoutUTC, endTime, percentage);
-
-	      return percentage;
 	    }
 
 	    // TODO: Only on shouldComponentUpdate (because next state should be different)
@@ -68905,10 +68909,6 @@
 	      var className = is_reserved_now ? typeLowerCase + ' occupied' : '' + typeLowerCase;
 	      var url = 'room/' + id;
 	      var boxClassName = 'room__color-box ' + color;
-
-	      if (this.state.reservation.activity) {
-	        this._returnActivityMeterPercentage(this.state.reservation.start_date_time, this.state.reservation.end_date_time);
-	      }
 
 	      return _react2.default.createElement(
 	        StyledRoom,
@@ -68945,13 +68945,9 @@
 	          { className: 'room__meta' },
 	          'Invalid'
 	        ) : null,
-	        is_reserved_now ? _react2.default.createElement(
-	          'h3',
-	          { className: 'room__meta' },
-	          'Now: ',
-	          this.state.reservation.activity
-	        ) : null,
-	        is_reserved_now ? _react2.default.createElement('div', { className: 'room__activity-meter' }) : null
+	        is_reserved_now ? _react2.default.createElement(_ActivityProgressMeter2.default, {
+	          reservation: this.state.reservation,
+	          returnPercentage: this._returnActivityMeterPercentage }) : null
 	      );
 	    }
 	  }]);
@@ -85022,6 +85018,119 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 695 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  0% {\n    left: 5%;\n  }\n\n  100% {\n    /* left: auto; */\n    left: -100%;\n  }\n'], ['\n  0% {\n    left: 5%;\n  }\n\n  100% {\n    /* left: auto; */\n    left: -100%;\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: ', '%;\n  height: 10%;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(255,255,255,0.4);\n  z-index: 1;\n'], ['\n  width: ', '%;\n  height: 10%;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(255,255,255,0.4);\n  z-index: 1;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  position: absolute;\n  bottom: 10px;\n  color: rgb(120, 120, 120);\n  z-index: 2;\n  width: 100%;\n\n  left: 10px;\n  font-weight: 100;\n  margin-top: 10px;\n  font-family: sans-serif;\n  white-space: nowrap;\n  display: inline-block;\n  ', '\n'], ['\n  position: absolute;\n  bottom: 10px;\n  color: rgb(120, 120, 120);\n  z-index: 2;\n  width: 100%;\n\n  left: 10px;\n  font-weight: 100;\n  margin-top: 10px;\n  font-family: sans-serif;\n  white-space: nowrap;\n  display: inline-block;\n  ', '\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var _ = __webpack_require__(591);
+
+	var MoveText = (0, _styledComponents.keyframes)(_templateObject);
+
+	var ProgressMeter = _styledComponents2.default.div(_templateObject2, function (props) {
+	  return props.percentage;
+	});
+
+	var Activity = _styledComponents2.default.span(_templateObject3, '' /* animation: ${MoveText} 5s infinite alternate ease-in-out;*/);
+
+	var ActivityProgressMeter = function (_React$Component) {
+	  _inherits(ActivityProgressMeter, _React$Component);
+
+	  function ActivityProgressMeter(props) {
+	    _classCallCheck(this, ActivityProgressMeter);
+
+	    var _this = _possibleConstructorReturn(this, (ActivityProgressMeter.__proto__ || Object.getPrototypeOf(ActivityProgressMeter)).call(this, props));
+
+	    _.bindAll(_this, '_setPercentage');
+
+	    _this.state = {
+	      percentage: '0'
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ActivityProgressMeter, [{
+	    key: '_setPercentage',
+	    value: function _setPercentage() {
+	      this.setState({
+	        percentage: this.props.returnPercentage(this.props.reservation.start_date_time, this.props.reservation.end_date_time)
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.interval = setInterval(this._setPercentage, 1000);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearInterval(this.interval);
+	    }
+
+	    //TODO: Render text pos absolute on top of meter
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var activity = this.props.reservation.activity;
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(ProgressMeter, { percentage: this.state.percentage }),
+	        _react2.default.createElement(
+	          Activity,
+	          { ref: 'act' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Now:'
+	          ),
+	          ' ',
+	          activity
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ActivityProgressMeter;
+	}(_react2.default.Component);
+
+	exports.default = ActivityProgressMeter;
 
 /***/ }
 /******/ ]);
