@@ -65,7 +65,7 @@ export default class RoomsOverview extends React.Component {
 
   render() {
     const roomsList = this.state.rooms.map((room, i) => {
-            return <Room key={i} fetcher={this.props.fetcher} token={this.props.token} room={room} />
+            return <Room key={i} ref={room.id} fetcher={this.props.fetcher} token={this.props.token} room={room} />
           });
     return (
       <PageWrapper>

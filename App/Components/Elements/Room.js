@@ -40,31 +40,15 @@ export default class Room extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getReservedRoomData', '_returnActivityMeterPercentage');
+    _.bindAll(this, '_getReservedRoomData');
 
     this.state = {
-      reservation: {},
-      percentage: ''
+      reservation: {}
     }
   }
 
   componentWillMount() {
     this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
-  }
-
-  componentDidMount() {
-  }
-
-  _returnActivityMeterPercentage(startTime, endTime) {
-    const startTimeEpoch = new Date(startTime).getTime();
-    const endTimeEpoch = new Date(endTime).getTime();
-    const now = (new Date);
-    const nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-    const nowEpoch = nowWithoutUTC.getTime();
-
-    const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
-    console.log(startTime, endTime, now, percentage);
-    return percentage;
   }
 
   _getReservedRoomData(id) {
@@ -106,9 +90,7 @@ export default class Room extends React.Component {
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
         {is_reserved_now ?
-          <ActivityProgressMeter
-            reservation={this.state.reservation}
-            returnPercentage={this._returnActivityMeterPercentage}/> : null}
+          <ActivityProgressMeter reservation={this.state.reservation} /> : null}
       </StyledRoom>
     );
   }

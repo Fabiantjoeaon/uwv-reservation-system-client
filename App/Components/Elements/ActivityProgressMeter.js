@@ -7,17 +7,6 @@ const _ = require('lodash');
 
 import styled, {keyframes} from 'styled-components';
 
-const MoveText = keyframes`
-  0% {
-    left: 5%;
-  }
-
-  100% {
-    /* left: auto; */
-    left: -100%;
-  }
-`;
-
 const ProgressMeter = styled.div`
   width: ${props => props.percentage}%;
   height: 10%;
@@ -26,6 +15,8 @@ const ProgressMeter = styled.div`
   left: 0;
   background-color: rgba(255,255,255,0.4);
   z-index: 1;
+  transition: all 0.3s ease-out;
+  will-change: width;
 `;
 
 const Activity = styled.span`
@@ -34,31 +25,42 @@ const Activity = styled.span`
   color: rgb(120, 120, 120);
   z-index: 2;
   width: 100%;
-
   left: 10px;
   font-weight: 100;
   margin-top: 10px;
   font-family: sans-serif;
   white-space: nowrap;
   display: inline-block;
-  ${''/* animation: ${MoveText} 5s infinite alternate ease-in-out;*/}
 `;
 
 export default class ActivityProgressMeter extends React.Component {
   constructor(props) {
     super(props);
 
-    _.bindAll(this, '_setPercentage');
+    _.bindAll(this, '_setPercentage', '_returnActivityMeterPercentage');
 
     this.state = {
       percentage: '0'
     }
   }
 
+  _returnActivityMeterPercentage(startTime, endTime) {
+    //TODO Get normal UTC time, means no converting here!
+    const startTimeEpoch = new Date(startTime).getTime();
+    const endTimeEpoch = new Date(endTime).getTime();
+    const now = (new Date);
+    const nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
+    const nowEpoch = nowWithoutUTC.getTime();
+
+    const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
+
+    return percentage;
+  }
+
   _setPercentage() {
     this.setState({
-      percentage: this.props.returnPercentage(this.props.reservation.start_date_time, this.props.reservation.end_date_time)
-    })
+      percentage: this._returnActivityMeterPercentage(this.props.reservation.start_date_time, this.props.reservation.end_date_time)
+    });
   }
 
   componentDidMount() {
@@ -69,13 +71,16 @@ export default class ActivityProgressMeter extends React.Component {
     clearInterval(this.interval);
   }
 
-  //TODO: Render text pos absolute on top of meter
   render() {
-    const {activity} = this.props.reservation;
+    const {activity, end_date_time} = this.props.reservation;
+    const endDate = new Date(end_date_time);
+    const h = endDate.getHours();
+    const m = (endDate.getMinutes()<10?'0':'') + endDate.getMinutes();
+    const time = `${h}:${m}`;
     return (
       <div>
         <ProgressMeter percentage={this.state.percentage}/>
-        <Activity ref='act'><strong>Now:</strong> {activity}</Activity>
+        <Activity ref='act'><strong>Now:</strong> {activity} till {time}</Activity>
       </div>
     )
   }
