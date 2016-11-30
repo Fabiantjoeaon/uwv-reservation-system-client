@@ -2,23 +2,27 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
-const TweenMax = require('gsap');
-const _ = require('lodash');
+const moveLoader = keyframes`
+  0% {
+    transform: translateX(-65px)
+  }
+  50% {
+    transform: translateX(65px)
+  }
+  100% {
+    transform: translateX(-65px)
+  }
+`;
 
-const SVGWrapper = styled.div`
-  position: absolute;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  top: 45%;
-  display: block;
-  height: 10em;
-  width: 10em;
-  opacity: 0;
+const Loader = styled.span`
+  width: 100px;
+  height: 5px;
+  margin: 0 auto;
+  background-color: #000;
+  animation: ${moveLoader} 1.3s ease-out infinite;
+  animation-fill-mode: forwards;
 `;
 
 export default class LoadingScreen extends React.Component {
@@ -26,29 +30,9 @@ export default class LoadingScreen extends React.Component {
     super();
   }
 
-  componentWillEnter(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {ease: Power2.easeIn, opacity: 1}).eventCallback('onComplete', callback);
-  }
-
-  componentWillLeave(callback) {
-    const node = ReactDOM.findDOMNode(this);
-    TweenMax.to(node, 0.5, {ease: Power2.easeOut, opacity: 0}).eventCallback('onComplete', callback);
-  }
-
   render() {
     return(
-      <SVGWrapper>
-        <svg version='1.1' id='loader-1' x='0px' y='0px' width='100px' height='100px' viewBox='0 0 40 40' enableBackground='new 0 0 40 40' xmlSpace='preserve'>
-          <path opacity='0.2' fill='#fff' d='M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
-            s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
-            c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z'></path>
-            <path fill='#fff' d='M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
-              C22.32,8.481,24.301,9.057,26.013,10.047z' transform='rotate(252 20 20)'>
-              <animateTransform attributeType='xml' attributeName='transform' type='rotate' from='0 20 20' to='360 20 20' dur='1s' repeatCount='indefinite'></animateTransform>
-            </path>
-          </svg>
-      </SVGWrapper>
+      <Loader/>
     )
   }
 }

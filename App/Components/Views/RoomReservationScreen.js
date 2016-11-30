@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import RoomReservationForm from '../Elements/RoomReservationForm';
+import LoadingScreen from './LoadingScreen';
 
 const _ = require('lodash');
 
@@ -47,8 +48,9 @@ export default class RoomReservationScreen extends React.Component {
   render() {
     const {type} = this.state.room;
     const className = `${type} room-reservation__wrapper`;
+    //FIXME: Fix disappearing loadingscreen
     return (
-      this.state.isLoading ? <h1>Loading</h1> :
+      this.state.isLoading ? <LoadingScreen/> :
         <RoomReservationWrapper className={className}>
           <RoomReservationForm room={this.state.room}/>
         </RoomReservationWrapper>

@@ -20,7 +20,7 @@ export default class RoomReservationForm extends React.Component {
 
   render() {
     return(
-      <ReservationFormTitle color='#fff' fontSize='5em'>{this.props.room.name}</ReservationFormTitle>
+      <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
     )
   }
 }

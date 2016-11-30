@@ -83,6 +83,7 @@ export default class Dashboard extends React.Component {
       logout: this.props.logout
     });
 
+    //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?
     return(
       <Wrapper>
         <Navigation>
@@ -95,7 +96,7 @@ export default class Dashboard extends React.Component {
             <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
         </Navigation>
-
+        
         <DashboardPageTitle>Rooms</DashboardPageTitle>
         <ContentContainer>
           {children}

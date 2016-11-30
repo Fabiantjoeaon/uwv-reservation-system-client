@@ -68499,6 +68499,7 @@
 	        logout: this.props.logout
 	      });
 
+	      //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?
 	      return _react2.default.createElement(
 	        Wrapper,
 	        null,
@@ -68679,9 +68680,17 @@
 
 	var _FlexWrapper2 = _interopRequireDefault(_FlexWrapper);
 
+	var _LoadingScreen = __webpack_require__(698);
+
+	var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
+
 	var _Room = __webpack_require__(604);
 
 	var _Room2 = _interopRequireDefault(_Room);
+
+	var _RoomDatePicker = __webpack_require__(699);
+
+	var _RoomDatePicker2 = _interopRequireDefault(_RoomDatePicker);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68692,6 +68701,19 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	Date.prototype.yyyymmdd = function () {
+	  var mm = this.getMonth() + 1; // getMonth() is zero-based
+	  var dd = this.getDate();
+
+	  return [this.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join(' - ');
+	};
+
+	Date.prototype.addDays = function (days) {
+	  var dat = new Date(this.valueOf());
+	  dat.setDate(dat.getDate() + days);
+	  return dat;
+	};
 
 	var _ = __webpack_require__(591);
 	var io = __webpack_require__(606);
@@ -68709,12 +68731,12 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomsOverview.__proto__ || Object.getPrototypeOf(RoomsOverview)).call(this));
 
-	    _.bindAll(_this, '_getAllRooms');
+	    _.bindAll(_this, '_getAllRooms', '_switchDay');
 
 	    _this.state = {
 	      isLoading: false,
 	      rooms: [],
-	      day: new Date()
+	      date: new Date()
 	    };
 	    return _this;
 	  }
@@ -68735,9 +68757,20 @@
 	      });
 	    }
 	  }, {
+	    key: '_switchDay',
+	    value: function _switchDay(index) {
+	      var _this3 = this;
+
+	      this.setState({
+	        date: this.state.date.addDays(index)
+	      }, function () {
+	        console.log(_this3.state.date);
+	      });
+	    }
+	  }, {
 	    key: '_getAllRooms',
 	    value: function _getAllRooms() {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      this.setState({
 	        isLoading: true
@@ -68751,35 +68784,32 @@
 	        Object.keys(data).map(function (room) {
 	          rooms.push(data[room]);
 	        });
-	        _this3.setState({
+	        _this4.setState({
 	          rooms: (_ref = []).concat.apply(_ref, rooms),
 	          isLoading: false
 	        });
 	      }).catch(function (error) {
 	        console.log(error);
-	        _this3.props.logout();
-	        _this3.props.router.push('/login');
+	        _this4.props.logout();
+	        _this4.props.router.push('/login');
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      var roomsList = this.state.rooms.map(function (room, i) {
-	        return _react2.default.createElement(_Room2.default, { key: i, ref: room.id, fetcher: _this4.props.fetcher, token: _this4.props.token, room: room });
+	        return _react2.default.createElement(_Room2.default, { key: i, ref: room.id, fetcher: _this5.props.fetcher, token: _this5.props.token, room: room });
 	      });
 	      return _react2.default.createElement(
 	        PageWrapper,
 	        null,
+	        _react2.default.createElement(_RoomDatePicker2.default, { switchDay: this._switchDay, currentDate: this.state.date.yyyymmdd() }),
 	        _react2.default.createElement(
 	          _FlexWrapper2.default,
 	          { direction: 'row', width: '100%' },
-	          this.state.isLoading ? _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Loading'
-	          ) : roomsList
+	          this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : roomsList
 	        )
 	      );
 	    }
@@ -84587,21 +84617,19 @@
 	                    'password': password
 	                  })
 	                });
-
-	                console.log(response);
 	                return _context.abrupt('return', response);
 
-	              case 6:
-	                _context.prev = 6;
+	              case 5:
+	                _context.prev = 5;
 	                _context.t0 = _context['catch'](0);
 	                return _context.abrupt('return', _context.t0);
 
-	              case 9:
+	              case 8:
 	              case 'end':
 	                return _context.stop();
 	            }
 	          }
-	        }, _callee, this, [[0, 6]]);
+	        }, _callee, this, [[0, 5]]);
 	      }));
 
 	      function authenticateAndFetchToken(_x, _x2) {
@@ -85190,6 +85218,10 @@
 
 	var _RoomReservationForm2 = _interopRequireDefault(_RoomReservationForm);
 
+	var _LoadingScreen = __webpack_require__(698);
+
+	var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85244,11 +85276,8 @@
 	      var type = this.state.room.type;
 
 	      var className = type + ' room-reservation__wrapper';
-	      return this.state.isLoading ? _react2.default.createElement(
-	        'h1',
-	        null,
-	        'Loading'
-	      ) : _react2.default.createElement(
+	      //FIXME: Fix disappearing loadingscreen
+	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
 	        _react2.default.createElement(_RoomReservationForm2.default, { room: this.state.room })
@@ -85329,7 +85358,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        ReservationFormTitle,
-	        { color: '#fff', fontSize: '5em' },
+	        { color: '#fff', fontSize: '4em' },
 	        this.props.room.name
 	      );
 	    }
@@ -85339,6 +85368,160 @@
 	}(_react2.default.Component);
 
 	exports.default = RoomReservationForm;
+
+/***/ },
+/* 698 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  0% {\n    transform: translateX(-65px)\n  }\n  50% {\n    transform: translateX(65px)\n  }\n  100% {\n    transform: translateX(-65px)\n  }\n'], ['\n  0% {\n    transform: translateX(-65px)\n  }\n  50% {\n    transform: translateX(65px)\n  }\n  100% {\n    transform: translateX(-65px)\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 100px;\n  height: 5px;\n  margin: 0 auto;\n  background-color: #000;\n  animation: ', ' 1.3s ease-out infinite;\n  animation-fill-mode: forwards;\n'], ['\n  width: 100px;\n  height: 5px;\n  margin: 0 auto;\n  background-color: #000;\n  animation: ', ' 1.3s ease-out infinite;\n  animation-fill-mode: forwards;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var moveLoader = (0, _styledComponents.keyframes)(_templateObject);
+
+	var Loader = _styledComponents2.default.span(_templateObject2, moveLoader);
+
+	var LoadingScreen = function (_React$Component) {
+	  _inherits(LoadingScreen, _React$Component);
+
+	  function LoadingScreen() {
+	    _classCallCheck(this, LoadingScreen);
+
+	    return _possibleConstructorReturn(this, (LoadingScreen.__proto__ || Object.getPrototypeOf(LoadingScreen)).call(this));
+	  }
+
+	  _createClass(LoadingScreen, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(Loader, null);
+	    }
+	  }]);
+
+	  return LoadingScreen;
+	}(_react2.default.Component);
+
+	exports.default = LoadingScreen;
+
+/***/ },
+/* 699 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  font-size: 1.5em;\n  margin-bottom: 1em;\n\n  font-weight: 900;\n'], ['\n  font-size: 1.5em;\n  margin-bottom: 1em;\n\n  font-weight: 900;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 40px;\n  height: 10px;\n  color: rgb(97, 97, 97);\n  cursor: pointer;\n  font-family: sans-serif;\n  position: relative;\n  box-sizing: border-box;\n\n  &::before {\n    content: attr(data-adj);\n    width: 100%;\n    height: 0%;\n    color: #fff;\n    opacity:0;\n    background-color: rgba(120, 120, 120, 0.8);\n    position: absolute;\n    display: block;\n    bottom:0;\n    right:0;\n    left:0;\n    top:0;\n\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover::before{\n    height: 100%;\n    opacity:1;\n  }\n'], ['\n  width: 40px;\n  height: 10px;\n  color: rgb(97, 97, 97);\n  cursor: pointer;\n  font-family: sans-serif;\n  position: relative;\n  box-sizing: border-box;\n\n  &::before {\n    content: attr(data-adj);\n    width: 100%;\n    height: 0%;\n    color: #fff;\n    opacity:0;\n    background-color: rgba(120, 120, 120, 0.8);\n    position: absolute;\n    display: block;\n    bottom:0;\n    right:0;\n    left:0;\n    top:0;\n\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover::before{\n    height: 100%;\n    opacity:1;\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: inline;\n  font-family:sans-serif;\n  font-weight: 100;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n'], ['\n  display: inline;\n  font-family:sans-serif;\n  font-weight: 100;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var DatePickerWrapper = _styledComponents2.default.div(_templateObject);
+
+	var AdjacentDateButton = _styledComponents2.default.span(_templateObject2);
+
+	var Day = _styledComponents2.default.p(_templateObject3);
+
+	var RoomDatePicker = function (_React$Component) {
+	  _inherits(RoomDatePicker, _React$Component);
+
+	  function RoomDatePicker() {
+	    _classCallCheck(this, RoomDatePicker);
+
+	    return _possibleConstructorReturn(this, (RoomDatePicker.__proto__ || Object.getPrototypeOf(RoomDatePicker)).call(this));
+	  }
+
+	  _createClass(RoomDatePicker, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        DatePickerWrapper,
+	        null,
+	        _react2.default.createElement(
+	          AdjacentDateButton,
+	          { className: 'datepicker__previous', 'data-adj': 'Previous', onClick: function onClick() {
+	              _this2.props.switchDay(-1);
+	            } },
+	          'Previous'
+	        ),
+	        _react2.default.createElement(
+	          Day,
+	          null,
+	          this.props.currentDate
+	        ),
+	        _react2.default.createElement(
+	          AdjacentDateButton,
+	          { className: 'datepicker__next', 'data-adj': 'Next', onClick: function onClick() {
+	              _this2.props.switchDay(1);
+	            } },
+	          'Next'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return RoomDatePicker;
+	}(_react2.default.Component);
+
+	exports.default = RoomDatePicker;
 
 /***/ }
 /******/ ]);

@@ -22,7 +22,6 @@ export default class APIFetcher {
           'password': password
         })
       });
-      console.log(response)
       return response;
     } catch(error) {
       return error;

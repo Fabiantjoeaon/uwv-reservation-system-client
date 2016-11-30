@@ -6,7 +6,25 @@ import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 import FlexWrapper from '../Elements/FlexWrapper';
+import LoadingScreen from './LoadingScreen';
 import Room from '../Elements/Room';
+import RoomDatePicker from '../Elements/RoomDatePicker';
+
+Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+         ].join(' - ');
+};
+
+Date.prototype.addDays = function(days) {
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
 
 const _ = require('lodash');
 const io = require('socket.io-client');
@@ -21,12 +39,12 @@ export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getAllRooms');
+    _.bindAll(this, '_getAllRooms', '_switchDay');
 
     this.state = {
       isLoading: false,
       rooms: [],
-      day: new Date()
+      date: new Date()
     }
   }
 
@@ -39,6 +57,14 @@ export default class RoomsOverview extends React.Component {
       const roomId = data.id;
       //TODO: only rerender one room per id (set new state?, fetch single room in room.js? )
       this._getAllRooms();
+    });
+  }
+
+  _switchDay(index) {
+    this.setState({
+      date: this.state.date.addDays(index)
+    }, () => {
+      console.log(this.state.date);
     });
   }
 
@@ -71,8 +97,9 @@ export default class RoomsOverview extends React.Component {
     });
     return (
       <PageWrapper>
+        <RoomDatePicker switchDay={this._switchDay} currentDate={this.state.date.yyyymmdd()}/>
         <FlexWrapper direction='row' width='100%'>
-          {this.state.isLoading ? <h1>Loading</h1> : roomsList}
+          {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>
       </PageWrapper>
     )
