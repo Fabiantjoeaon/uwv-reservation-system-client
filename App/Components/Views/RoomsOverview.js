@@ -17,7 +17,7 @@ Date.prototype.yyyymmdd = function() {
   return [this.getFullYear(),
           (mm>9 ? '' : '0') + mm,
           (dd>9 ? '' : '0') + dd
-         ].join(' - ');
+        ].join('-');
 };
 
 Date.prototype.addDays = function(days) {
@@ -50,20 +50,23 @@ export default class RoomsOverview extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.state.day)
     this._getAllRooms();
-    this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
 
-    this.socket.on('room-channel:roomHasUpdated', (data) => {
-      const roomId = data.id;
-      //TODO: only rerender one room per id (set new state?, fetch single room in room.js? )
-      this._getAllRooms();
-    });
+    if(this.state.isToday) {
+      this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
+      this.socket.on('room-channel:roomHasUpdated', (data) => {
+        // maybe render room per id??
+        const roomId = data.id;
+        this._getAllRooms();
+      });
+    }
   }
 
   _switchDay(index) {
     const today = new Date;
     const dayPlusState = this.state.date.addDays(index);
+
+    // Set today in state if the added day equals to today
     if(dayPlusState.getDay() == today.getDay()) {
       this.setState({
         date: today,
@@ -101,9 +104,9 @@ export default class RoomsOverview extends React.Component {
   }
 
   render() {
-    console.log(this.state.isToday);
+    const dateString = this.state.date.toGMTString().slice(0, -13)
     const roomsList = this.state.rooms.map((room, i) => {
-      return <Room key={i} ref={room.id} fetcher={this.props.fetcher} token={this.props.token} room={room} />
+      return <Room key={i} ref={room.id} isToday={this.state.isToday} date={this.state.date.yyyymmdd()} fetcher={this.props.fetcher} token={this.props.token} room={room} />
     });
     return (
       <PageWrapper>

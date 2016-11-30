@@ -17,7 +17,6 @@ const StyledRoom = styled.a`
   position: relative;
   overflow: hidden;
 
-
   &:visited {
     color: #fff;
   }
@@ -79,8 +78,8 @@ export default class Room extends React.Component {
     } = this.props.room;
 
     const typeLowerCase = type.toLowerCase();
-    const className = is_reserved_now ? `${typeLowerCase} occupied` : `${typeLowerCase}`;
-    const url = `#/room/${id}/`;
+    const className = is_reserved_now && this.props.isToday ? `${typeLowerCase} occupied` : `${typeLowerCase}`;
+    const url = `#/room/${id}/?date=${this.props.date}`;
     const boxClassName = `room__color-box ${color}`;
 
     return (
@@ -91,7 +90,7 @@ export default class Room extends React.Component {
         <h3 className='room__meta'>{color}</h3>
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
-        {is_reserved_now ?
+        {is_reserved_now && this.props.isToday ?
           <ActivityProgressMeter reservation={this.state.reservation} /> : null}
       </StyledRoom>
     );

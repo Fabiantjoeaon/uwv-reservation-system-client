@@ -68706,7 +68706,7 @@
 	  var mm = this.getMonth() + 1; // getMonth() is zero-based
 	  var dd = this.getDate();
 
-	  return [this.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join(' - ');
+	  return [this.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
 	};
 
 	Date.prototype.addDays = function (days) {
@@ -68747,21 +68747,24 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      console.log(this.state.day);
 	      this._getAllRooms();
-	      this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', { secure: true });
 
-	      this.socket.on('room-channel:roomHasUpdated', function (data) {
-	        var roomId = data.id;
-	        //TODO: only rerender one room per id (set new state?, fetch single room in room.js? )
-	        _this2._getAllRooms();
-	      });
+	      if (this.state.isToday) {
+	        this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', { secure: true });
+	        this.socket.on('room-channel:roomHasUpdated', function (data) {
+	          // maybe render room per id??
+	          var roomId = data.id;
+	          _this2._getAllRooms();
+	        });
+	      }
 	    }
 	  }, {
 	    key: '_switchDay',
 	    value: function _switchDay(index) {
 	      var today = new Date();
 	      var dayPlusState = this.state.date.addDays(index);
+
+	      // Set today in state if the added day equals to today
 	      if (dayPlusState.getDay() == today.getDay()) {
 	        this.setState({
 	          date: today,
@@ -68806,9 +68809,9 @@
 	    value: function render() {
 	      var _this4 = this;
 
-	      console.log(this.state.isToday);
+	      var dateString = this.state.date.toGMTString().slice(0, -13);
 	      var roomsList = this.state.rooms.map(function (room, i) {
-	        return _react2.default.createElement(_Room2.default, { key: i, ref: room.id, fetcher: _this4.props.fetcher, token: _this4.props.token, room: room });
+	        return _react2.default.createElement(_Room2.default, { key: i, ref: room.id, isToday: _this4.state.isToday, date: _this4.state.date.yyyymmdd(), fetcher: _this4.props.fetcher, token: _this4.props.token, room: room });
 	      });
 	      return _react2.default.createElement(
 	        PageWrapper,
@@ -68902,7 +68905,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n'], ['\n  width: ', '\n  height: calc(', ' + 10em);\n  text-decoration: none;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n\n  &:visited {\n    color: #fff;\n  }\n\n  @media(max-width: 1020px) {\n    width: calc(', ' * 2);\n  }\n\n  @media(max-width: 720px) {\n    width: calc(100%);\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 2em;\n  height: 2em;\n'], ['\n  width: 2em;\n  height: 2em;\n']);
 
 	var _react = __webpack_require__(299);
@@ -69002,8 +69005,8 @@
 
 
 	      var typeLowerCase = type.toLowerCase();
-	      var className = is_reserved_now ? typeLowerCase + ' occupied' : '' + typeLowerCase;
-	      var url = '#/room/' + id + '/';
+	      var className = is_reserved_now && this.props.isToday ? typeLowerCase + ' occupied' : '' + typeLowerCase;
+	      var url = '#/room/' + id + '/?date=' + this.props.date;
 	      var boxClassName = 'room__color-box ' + color;
 
 	      return _react2.default.createElement(
@@ -69041,7 +69044,7 @@
 	          { className: 'room__meta' },
 	          'Invalid'
 	        ) : null,
-	        is_reserved_now ? _react2.default.createElement(_ActivityProgressMeter2.default, { reservation: this.state.reservation }) : null
+	        is_reserved_now && this.props.isToday ? _react2.default.createElement(_ActivityProgressMeter2.default, { reservation: this.state.reservation }) : null
 	      );
 	    }
 	  }]);
