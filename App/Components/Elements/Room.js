@@ -47,6 +47,7 @@ export default class Room extends React.Component {
   }
 
   componentWillMount() {
+    //TODO Fetch first reservations if not today
     this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
   }
 

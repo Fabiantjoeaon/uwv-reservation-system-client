@@ -43150,7 +43150,7 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n'], ['\n  margin-top: 2.5em;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n'], ['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
 	var _react = __webpack_require__(299);
@@ -43278,7 +43278,13 @@
 	          _react2.default.createElement(_Input2.default, { name: 'password', ref: 'password', type: 'password', label: 'Password' }),
 	          _react2.default.createElement(
 	            LoginButton,
-	            { name: 'submit', type: 'submit' },
+	            {
+	              name: 'submit',
+	              type: 'submit',
+	              width: '9em',
+	              height: '3em',
+	              fontSize: '1.7em',
+	              color: '#000' },
 	            'Login'
 	          )
 	        )
@@ -60464,7 +60470,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  font-size: 1.7em;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: 9em;\n  height: 3em;\n  background-color: rgba(0,0,0,0);\n  border: 2px solid #000;\n  font-size: 1.7em;\n  cursor: pointer;\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: #000;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n  \n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n  \n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -60478,7 +60484,19 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var Button = _styledComponents2.default.button(_templateObject);
+	var Button = _styledComponents2.default.button(_templateObject, function (props) {
+	  return props.width;
+	}, function (props) {
+	  return props.height;
+	}, function (props) {
+	  return props.color;
+	}, function (props) {
+	  return props.fontSize;
+	}, function (props) {
+	  return props.color;
+	}, function (props) {
+	  return props.color;
+	});
 
 	exports.default = Button;
 
@@ -68703,7 +68721,7 @@
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 	Date.prototype.yyyymmdd = function () {
-	  var mm = this.getMonth() + 1; // getMonth() is zero-based
+	  var mm = this.getMonth() + 1;
 	  var dd = this.getDate();
 
 	  return [this.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
@@ -68763,9 +68781,8 @@
 	    value: function _switchDay(index) {
 	      var today = new Date();
 	      var dayPlusState = this.state.date.addDays(index);
-
 	      // Set today in state if the added day equals to today
-	      if (dayPlusState.getDay() == today.getDay()) {
+	      if (dayPlusState.yyyymmdd() == today.yyyymmdd()) {
 	        this.setState({
 	          date: today,
 	          isToday: true
@@ -68811,12 +68828,19 @@
 
 	      var dateString = this.state.date.toGMTString().slice(0, -13);
 	      var roomsList = this.state.rooms.map(function (room, i) {
-	        return _react2.default.createElement(_Room2.default, { key: i, ref: room.id, isToday: _this4.state.isToday, date: _this4.state.date.yyyymmdd(), fetcher: _this4.props.fetcher, token: _this4.props.token, room: room });
+	        return _react2.default.createElement(_Room2.default, {
+	          key: i,
+	          ref: room.id,
+	          isToday: _this4.state.isToday,
+	          date: _this4.state.date.yyyymmdd(),
+	          fetcher: _this4.props.fetcher,
+	          token: _this4.props.token,
+	          room: room });
 	      });
 	      return _react2.default.createElement(
 	        PageWrapper,
 	        null,
-	        _react2.default.createElement(_RoomDatePicker2.default, { switchDay: this._switchDay, currentDate: this.state.date.toGMTString().slice(0, -13) }),
+	        _react2.default.createElement(_RoomDatePicker2.default, { isToday: this.state.isToday, switchDay: this._switchDay, currentDate: this.state.date.toGMTString().slice(0, -13) }),
 	        _react2.default.createElement(
 	          _FlexWrapper2.default,
 	          { direction: 'row', width: '100%' },
@@ -68969,6 +68993,7 @@
 	  _createClass(Room, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      //TODO Fetch first reservations if not today
 	      this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
 	    }
 	  }, {
@@ -69193,9 +69218,10 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  font-size: 1.5em;\n  margin-bottom: 1em;\n\n  font-weight: 900;\n'], ['\n  font-size: 1.5em;\n  margin-bottom: 1em;\n\n  font-weight: 900;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 40px;\n  height: 10px;\n  color: rgb(97, 97, 97);\n  cursor: pointer;\n  font-family: sans-serif;\n  position: relative;\n  box-sizing: border-box;\n\n  &::before {\n    content: attr(data-adj);\n    width: 100%;\n    height: 0%;\n    color: #fff;\n    opacity:0;\n    background-color: rgba(120, 120, 120, 0.8);\n    position: absolute;\n    display: block;\n    bottom:0;\n    right:0;\n    left:0;\n    top:0;\n\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover::before{\n    height: 100%;\n    opacity:1;\n  }\n'], ['\n  width: 40px;\n  height: 10px;\n  color: rgb(97, 97, 97);\n  cursor: pointer;\n  font-family: sans-serif;\n  position: relative;\n  box-sizing: border-box;\n\n  &::before {\n    content: attr(data-adj);\n    width: 100%;\n    height: 0%;\n    color: #fff;\n    opacity:0;\n    background-color: rgba(120, 120, 120, 0.8);\n    position: absolute;\n    display: block;\n    bottom:0;\n    right:0;\n    left:0;\n    top:0;\n\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover::before{\n    height: 100%;\n    opacity:1;\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: inline;\n  font-family:sans-serif;\n  font-weight: 100;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n'], ['\n  display: inline;\n  font-family:sans-serif;\n  font-weight: 100;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  font-size: 1.5em;\n  margin-bottom: 2em;\n  width: 100%;\n  justify-content: space-between;\n  font-weight: 900;\n'], ['\n  font-size: 1.5em;\n  margin-bottom: 2em;\n  width: 100%;\n  justify-content: space-between;\n  font-weight: 900;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  left: 0;\n  top: 0;\n'], ['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  left: 0;\n  top: 0;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  right: 0;\n  top: 0;\n'], ['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  right: 0;\n  top: 0;\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n'], ['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -69209,6 +69235,10 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+	var _Button = __webpack_require__(594);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69221,9 +69251,11 @@
 
 	var DatePickerWrapper = _styledComponents2.default.div(_templateObject);
 
-	var AdjacentDateButton = _styledComponents2.default.span(_templateObject2);
+	var AdjacentDateButtonPrevious = (0, _styledComponents2.default)(_Button2.default)(_templateObject2);
 
-	var Day = _styledComponents2.default.p(_templateObject3);
+	var AdjacentDateButtonNext = (0, _styledComponents2.default)(_Button2.default)(_templateObject3);
+
+	var Day = _styledComponents2.default.p(_templateObject4);
 
 	var RoomDatePicker = function (_React$Component) {
 	  _inherits(RoomDatePicker, _React$Component);
@@ -69247,21 +69279,33 @@
 	      return _react2.default.createElement(
 	        DatePickerWrapper,
 	        null,
-	        _react2.default.createElement(
-	          AdjacentDateButton,
-	          { className: 'datepicker__previous', 'data-adj': 'Previous', onClick: function onClick() {
+	        !this.props.isToday ? _react2.default.createElement(
+	          AdjacentDateButtonPrevious,
+	          {
+	            width: '8em',
+	            height: '1.5em',
+	            fontSize: '1em',
+	            color: 'rgb(89, 89, 89)',
+	            'data-adj': 'Previous',
+	            onClick: function onClick() {
 	              _this2.props.switchDay(-1);
 	            } },
 	          'Previous'
-	        ),
+	        ) : null,
 	        _react2.default.createElement(
 	          Day,
 	          null,
 	          date
 	        ),
 	        _react2.default.createElement(
-	          AdjacentDateButton,
-	          { className: 'datepicker__next', 'data-adj': 'Next', onClick: function onClick() {
+	          AdjacentDateButtonNext,
+	          {
+	            width: '8em',
+	            height: '1.5em',
+	            fontSize: '1em',
+	            color: 'rgb(89, 89, 89)',
+	            'data-adj': 'Next',
+	            onClick: function onClick() {
 	              _this2.props.switchDay(1);
 	            } },
 	          'Next'

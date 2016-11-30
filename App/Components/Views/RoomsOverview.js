@@ -11,7 +11,7 @@ import Room from '../Elements/Room';
 import RoomDatePicker from '../Elements/RoomDatePicker';
 
 Date.prototype.yyyymmdd = function() {
-  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var mm = this.getMonth() + 1;
   var dd = this.getDate();
 
   return [this.getFullYear(),
@@ -65,9 +65,8 @@ export default class RoomsOverview extends React.Component {
   _switchDay(index) {
     const today = new Date;
     const dayPlusState = this.state.date.addDays(index);
-
     // Set today in state if the added day equals to today
-    if(dayPlusState.getDay() == today.getDay()) {
+    if(dayPlusState.yyyymmdd() == today.yyyymmdd()) {
       this.setState({
         date: today,
         isToday: true
@@ -106,11 +105,18 @@ export default class RoomsOverview extends React.Component {
   render() {
     const dateString = this.state.date.toGMTString().slice(0, -13)
     const roomsList = this.state.rooms.map((room, i) => {
-      return <Room key={i} ref={room.id} isToday={this.state.isToday} date={this.state.date.yyyymmdd()} fetcher={this.props.fetcher} token={this.props.token} room={room} />
+      return <Room
+                key={i}
+                ref={room.id}
+                isToday={this.state.isToday}
+                date={this.state.date.yyyymmdd()}
+                fetcher={this.props.fetcher}
+                token={this.props.token}
+                room={room} />
     });
     return (
       <PageWrapper>
-        <RoomDatePicker switchDay={this._switchDay} currentDate={this.state.date.toGMTString().slice(0, -13)}/>
+        <RoomDatePicker isToday={this.state.isToday} switchDay={this._switchDay} currentDate={this.state.date.toGMTString().slice(0, -13)}/>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>

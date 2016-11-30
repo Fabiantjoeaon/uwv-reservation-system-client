@@ -27,6 +27,7 @@ const LoginFormWrapper = styled.div`
 
 const LoginButton = styled(Button)`
   margin-top: 2.5em;
+  font-size: 1.7em;
 `;
 
 const StyledLoginForm = styled.form`
@@ -88,7 +89,13 @@ export default class LoginForm extends React.Component {
           </TransitionGroup>
           <Input name='email' ref='email' type='email' label='E-mail' />
           <Input name='password' ref='password' type='password' label='Password' />
-          <LoginButton name='submit' type='submit'>Login</LoginButton>
+          <LoginButton
+            name='submit'
+            type='submit'
+            width='9em'
+            height='3em'
+            fontSize='1.7em'
+            color='#000'>Login</LoginButton>
         </StyledLoginForm>
       </LoginFormWrapper>
     )
