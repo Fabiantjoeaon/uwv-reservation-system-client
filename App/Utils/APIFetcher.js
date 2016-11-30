@@ -2,23 +2,28 @@ import 'whatwg-fetch';
 const _ = require('lodash');
 
 export default class APIFetcher {
-  constructor(apiUrl) {
+  constructor(apiUrl, logoutFn) {
     _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
 
     this.apiUrl = apiUrl;
   }
 
   async authenticateAndFetchToken(email, password) {
+
     try {
-      //TODO Put creds in post body/header, not in URL
-      const response = fetch(`${this.apiUrl}/login?email=${email}&password=${password}`, {
+      const response = fetch(`${this.apiUrl}/login`, {
         method: 'POST',
         mode: 'cors',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        }
+        },
+        body: JSON.stringify({
+          'email': email,
+          'password': password
+        })
       });
+      console.log(response)
       return response;
     } catch(error) {
       return error;
@@ -35,7 +40,12 @@ export default class APIFetcher {
           'Content-Type': 'application/json',
         }
       });
-      return response;
+      if(response.status == 401) {
+        // Unauthorized
+        window.location.href = 'http://localhost:8888/reservation-client';
+      } else {
+        return response;
+      }
     } catch(error) {
       return error;
     }

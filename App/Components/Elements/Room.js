@@ -80,7 +80,7 @@ export default class Room extends React.Component {
 
     const typeLowerCase = type.toLowerCase();
     const className = is_reserved_now ? `${typeLowerCase} occupied` : `${typeLowerCase}`;
-    const url = `#/room/${id}`;
+    const url = `#/room/${id}/`;
     const boxClassName = `room__color-box ${color}`;
 
     return (

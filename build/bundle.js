@@ -68401,7 +68401,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']);
@@ -68595,7 +68595,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n  \n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n  \n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n\n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  text-decoration: none;\n  font-size: 1.8em;\n  cursor: pointer;\n  text-align: center;\n  font-weight: 100;\n  position: relative;\n\n  transition: all 0.3s ease-out;\n  color: rgb(144, 144, 144);\n\n  &::before {\n    position: absolute;\n    content: \'\';\n    height: 1px;\n    width: 0%;\n    bottom:-8px;\n    left:0;\n    background-color: #000;\n    transition: 0.2s ease-out;\n  }\n\n  &:visited {\n    color: rgb(144, 144, 144);\n  }\n\n  &:hover {\n    color: #000;\n  }\n\n  &:hover::before {\n    width: 100%;\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68897,7 +68897,7 @@
 
 	      var typeLowerCase = type.toLowerCase();
 	      var className = is_reserved_now ? typeLowerCase + ' occupied' : '' + typeLowerCase;
-	      var url = '#/room/' + id;
+	      var url = '#/room/' + id + '/';
 	      var boxClassName = 'room__color-box ' + color;
 
 	      return _react2.default.createElement(
@@ -84553,7 +84553,7 @@
 	var _ = __webpack_require__(591);
 
 	var APIFetcher = function () {
-	  function APIFetcher(apiUrl) {
+	  function APIFetcher(apiUrl, logoutFn) {
 	    _classCallCheck(this, APIFetcher);
 
 	    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
@@ -84571,29 +84571,33 @@
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                _context.prev = 0;
-
-	                //TODO Put creds in post body/header, not in URL
-	                response = fetch(this.apiUrl + '/login?email=' + email + '&password=' + password, {
+	                response = fetch(this.apiUrl + '/login', {
 	                  method: 'POST',
 	                  mode: 'cors',
 	                  headers: {
 	                    'Accept': 'application/json',
 	                    'Content-Type': 'application/json'
-	                  }
+	                  },
+	                  body: JSON.stringify({
+	                    'email': email,
+	                    'password': password
+	                  })
 	                });
+
+	                console.log(response);
 	                return _context.abrupt('return', response);
 
-	              case 5:
-	                _context.prev = 5;
+	              case 6:
+	                _context.prev = 6;
 	                _context.t0 = _context['catch'](0);
 	                return _context.abrupt('return', _context.t0);
 
-	              case 8:
+	              case 9:
 	              case 'end':
 	                return _context.stop();
 	            }
 	          }
-	        }, _callee, this, [[0, 5]]);
+	        }, _callee, this, [[0, 6]]);
 	      }));
 
 	      function authenticateAndFetchToken(_x, _x2) {
@@ -84624,19 +84628,35 @@
 
 	              case 3:
 	                response = _context2.sent;
+
+	                if (!(response.status == 401)) {
+	                  _context2.next = 8;
+	                  break;
+	                }
+
+	                // Unauthorized
+	                window.location.href = 'http://localhost:8888/reservation-client';
+	                _context2.next = 9;
+	                break;
+
+	              case 8:
 	                return _context2.abrupt('return', response);
 
-	              case 7:
-	                _context2.prev = 7;
+	              case 9:
+	                _context2.next = 14;
+	                break;
+
+	              case 11:
+	                _context2.prev = 11;
 	                _context2.t0 = _context2['catch'](0);
 	                return _context2.abrupt('return', _context2.t0);
 
-	              case 10:
+	              case 14:
 	              case 'end':
 	                return _context2.stop();
 	            }
 	          }
-	        }, _callee2, this, [[0, 7]]);
+	        }, _callee2, this, [[0, 11]]);
 	      }));
 
 	      function getRequestWithToken(_x3, _x4) {
@@ -85148,6 +85168,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n'], ['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: 4em;\n  color: #fff;\n  font-family: \'Crimson Text\', serif;\n  font-weight: 100;\n'], ['\n  font-size: 4em;\n  color: #fff;\n  font-family: \'Crimson Text\', serif;\n  font-weight: 100;\n']);
+
 	var _react = __webpack_require__(299);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -85160,6 +85183,10 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+	var _RoomReservationForm = __webpack_require__(697);
+
+	var _RoomReservationForm2 = _interopRequireDefault(_RoomReservationForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85168,7 +85195,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 	var _ = __webpack_require__(591);
+
+	var RoomReservationWrapper = _styledComponents2.default.div(_templateObject);
+
+	var RoomReservationTitle = _styledComponents2.default.h1(_templateObject2);
 
 	var RoomReservationScreen = function (_React$Component) {
 	  _inherits(RoomReservationScreen, _React$Component);
@@ -85176,16 +85209,55 @@
 	  function RoomReservationScreen() {
 	    _classCallCheck(this, RoomReservationScreen);
 
-	    return _possibleConstructorReturn(this, (RoomReservationScreen.__proto__ || Object.getPrototypeOf(RoomReservationScreen)).call(this));
+	    var _this = _possibleConstructorReturn(this, (RoomReservationScreen.__proto__ || Object.getPrototypeOf(RoomReservationScreen)).call(this));
+
+	    _this.state = {
+	      isLoading: false,
+	      room: {}
+	    };
+	    return _this;
 	  }
 
 	  _createClass(RoomReservationScreen, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      this.setState({
+	        isLoading: true
+	      });
+	      this.props.fetcher.getRequestWithToken('/rooms/' + this.props.routeParams.id, this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        _this2.setState({
+	          room: data.data,
+	          isLoading: false
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
+	      var _state$room = this.state.room,
+	          id = _state$room.id,
+	          name = _state$room.name,
+	          type = _state$room.type;
+
+	      return this.state.isLoading ? _react2.default.createElement(
 	        'h1',
 	        null,
-	        'Room res'
+	        'Loading'
+	      ) : _react2.default.createElement(
+	        RoomReservationWrapper,
+	        { className: type },
+	        _react2.default.createElement(
+	          RoomReservationTitle,
+	          null,
+	          name
+	        ),
+	        _react2.default.createElement(_RoomReservationForm2.default, null)
 	      );
 	    }
 	  }]);
@@ -85194,6 +85266,79 @@
 	}(_react2.default.Component);
 
 	exports.default = RoomReservationScreen;
+
+/***/ },
+/* 697 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _Input = __webpack_require__(590);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Title = __webpack_require__(593);
+
+	var _Title2 = _interopRequireDefault(_Title);
+
+	var _Button = __webpack_require__(594);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _Notice = __webpack_require__(595);
+
+	var _Notice2 = _interopRequireDefault(_Notice);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RoomReservationForm = function (_React$Component) {
+	  _inherits(RoomReservationForm, _React$Component);
+
+	  function RoomReservationForm() {
+	    _classCallCheck(this, RoomReservationForm);
+
+	    return _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
+	  }
+
+	  _createClass(RoomReservationForm, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'h1',
+	        null,
+	        'FORM'
+	      );
+	    }
+	  }]);
+
+	  return RoomReservationForm;
+	}(_react2.default.Component);
+
+	exports.default = RoomReservationForm;
 
 /***/ }
 /******/ ]);
