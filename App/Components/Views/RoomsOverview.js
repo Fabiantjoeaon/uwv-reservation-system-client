@@ -44,7 +44,8 @@ export default class RoomsOverview extends React.Component {
     this.state = {
       isLoading: false,
       rooms: [],
-      date: new Date()
+      date: new Date(),
+      isToday: true
     }
   }
 
@@ -61,11 +62,19 @@ export default class RoomsOverview extends React.Component {
   }
 
   _switchDay(index) {
-    this.setState({
-      date: this.state.date.addDays(index)
-    }, () => {
-      console.log(this.state.date);
-    });
+    const today = new Date;
+    const dayPlusState = this.state.date.addDays(index);
+    if(dayPlusState.getDay() == today.getDay()) {
+      this.setState({
+        date: today,
+        isToday: true
+      });
+    } else {
+      this.setState({
+        date: this.state.date.addDays(index),
+        isToday: false
+      });
+    }
   }
 
   _getAllRooms() {
@@ -92,12 +101,13 @@ export default class RoomsOverview extends React.Component {
   }
 
   render() {
+    console.log(this.state.isToday);
     const roomsList = this.state.rooms.map((room, i) => {
       return <Room key={i} ref={room.id} fetcher={this.props.fetcher} token={this.props.token} room={room} />
     });
     return (
       <PageWrapper>
-        <RoomDatePicker switchDay={this._switchDay} currentDate={this.state.date.yyyymmdd()}/>
+        <RoomDatePicker switchDay={this._switchDay} currentDate={this.state.date.toGMTString().slice(0, -13)}/>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>

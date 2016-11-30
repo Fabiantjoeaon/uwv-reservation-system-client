@@ -61,10 +61,12 @@ export default class RoomDatePicker extends React.Component {
   }
 
   render() {
+    const date = (this.props.currentDate == (new Date).toGMTString().slice(0, -13)) ? `Today: ${this.props.currentDate}` : this.props.currentDate;
+
     return(
       <DatePickerWrapper>
         <AdjacentDateButton className="datepicker__previous" data-adj='Previous' onClick={() => { this.props.switchDay(-1) }}>Previous</AdjacentDateButton>
-          <Day>{this.props.currentDate}</Day>
+          <Day>{date}</Day>
         <AdjacentDateButton className="datepicker__next" data-adj='Next' onClick={() => { this.props.switchDay(1) }}>Next</AdjacentDateButton>
       </DatePickerWrapper>
     );
