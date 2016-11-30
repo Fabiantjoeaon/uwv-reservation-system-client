@@ -45,13 +45,11 @@ export default class ActivityProgressMeter extends React.Component {
   }
 
   _returnActivityMeterPercentage(startTime, endTime) {
-    //TODO Get normal UTC time, means no converting here!
     const startTimeEpoch = new Date(startTime).getTime();
     const endTimeEpoch = new Date(endTime).getTime();
     const nowEpoch = (new Date).getTime();
 
     const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
-
     return percentage;
   }
 

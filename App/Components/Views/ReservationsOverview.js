@@ -10,6 +10,10 @@ export default class ReservationsOverview extends React.Component {
     super();
   }
 
+  componentWillMount() {
+    this.props.setCurrentPage('My Reservations');
+  }
+
   render() {
     return (
       <h1>My Reservations</h1>

@@ -39,7 +39,7 @@ export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getAllRooms', '_switchDay');
+    _.bindAll(this, '_getAllRooms', '_switchDay', '_getReservationsForThisDate');
 
     this.state = {
       isLoading: false,
@@ -59,7 +59,13 @@ export default class RoomsOverview extends React.Component {
         const roomId = data.id;
         this._getAllRooms();
       });
+    } else {
+      this._getReservationsForThisDate();
     }
+  }
+
+  _getReservationsForThisDate() {
+    
   }
 
   _switchDay(index) {

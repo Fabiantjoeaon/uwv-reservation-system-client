@@ -14,8 +14,8 @@ const Button = styled.button`
   font-family: 'Questrial', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
-  transition: all 0.3s ease-out;
-  
+  transition: all 0.2s ease-out;
+
   &:hover {
     color: #fff;
     background-color: ${props => props.color};

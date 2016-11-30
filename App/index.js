@@ -87,7 +87,7 @@ class ReservationClient extends React.Component {
 // FIXME: Router 'middleware', maybe ask StackOverflow
 // TODO: Routes as child from dashboard??
 // TODO: Active route ??
-ReactDOM.render(<Router history={hashHistory}>
+ReactDOM.render(<Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
                   <Route component={ReservationClient}>
                     <Route name='login' path='login' onEnter={handleUnauth} component={LoginScreen}/>
                     <Route path='/' name='dashboard' onEnter={handleAuth} component={Dashboard}>

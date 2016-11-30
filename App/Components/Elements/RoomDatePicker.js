@@ -44,9 +44,6 @@ export default class RoomDatePicker extends React.Component {
       super();
   }
 
-  componentDidMount() {
-  }
-
   render() {
     const date = (this.props.currentDate == (new Date).toGMTString().slice(0, -13)) ? `Today: ${this.props.currentDate}` : this.props.currentDate;
 
@@ -55,7 +52,7 @@ export default class RoomDatePicker extends React.Component {
         {!this.props.isToday ?
         <AdjacentDateButtonPrevious
           width='8em'
-          height='1.5em'
+          height='2.5em'
           fontSize='1em'
           color='rgb(89, 89, 89)'
           data-adj='Previous'
@@ -63,7 +60,7 @@ export default class RoomDatePicker extends React.Component {
         <Day>{date}</Day>
         <AdjacentDateButtonNext
           width='8em'
-          height='1.5em'
+          height='2.5em'
           fontSize='1em'
           color='rgb(89, 89, 89)'
           data-adj='Next'

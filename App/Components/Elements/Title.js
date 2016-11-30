@@ -5,7 +5,7 @@ const Title = styled.h1`
   position: relative;
   font-family: 'Questrial', sans-serif;
   font-size: ${props => props.fontSize};
-  margin: ${props => props.center ? '2em auto 1em auto' : '0'};
+  margin: ${props => props.center ? '1em auto 1em auto' : '0'};
   display: block;
   width: 50%;
   color: ${props => props.color};

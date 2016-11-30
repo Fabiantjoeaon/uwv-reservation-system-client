@@ -7,7 +7,6 @@ import styled from 'styled-components';
 
 import Title from '../Elements/Title';
 import Button from '../Elements/Button';
-import DashboardPageTitle from '../Elements/DashboardPageTitle';
 import Link from '../Elements/Link';
 import FlexWrapper from '../Elements/FlexWrapper';
 
@@ -25,7 +24,7 @@ const Navigation = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  margin: 15em auto 6em auto;
+  margin: 2em auto 6em auto;
   width: calc(90% - 6em);
   min-height: 100%;
   position: relative;
@@ -62,15 +61,39 @@ const DashboardTitle = styled(Title)`
   margin-left: 5%;
 `;
 
+const DashboardPageTitle = styled.div`
+  position: relative;
+  font-size: 4em;
+  padding: 0em 0em 0em 6em;
+  width: calc(90% - 4em);
+  text-align: right;
+  margin-bottom: 0em !important;
+  margin-right: 0em !important;
+  display: block;
+  font-weight: 100;
+  color: #787878;
+  font-family: 'Crimson Text', sans-serif;
+`;
+
 export default class Dashboard extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_logout');
+    _.bindAll(this, '_logout', '_setCurrentPage');
+
+    this.state = {
+      currentPage: 'Rooms'
+    }
   }
 
   _logout() {
     this.props.logout();
+  }
+
+  _setCurrentPage(page) {
+    this.setState({
+      currentPage: page
+    });
   }
 
   render() {
@@ -80,7 +103,8 @@ export default class Dashboard extends React.Component {
       key: this.props.location.pathname,
       fetcher: this.props.fetcher,
       token: token,
-      logout: this.props.logout
+      logout: this.props.logout,
+      setCurrentPage: this._setCurrentPage
     });
 
     //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?
@@ -96,8 +120,8 @@ export default class Dashboard extends React.Component {
             <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
         </Navigation>
-        
-        <DashboardPageTitle>Rooms</DashboardPageTitle>
+
+        <DashboardPageTitle>{this.state.currentPage}</DashboardPageTitle>
         <ContentContainer>
           {children}
         </ContentContainer>

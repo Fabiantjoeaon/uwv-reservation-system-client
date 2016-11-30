@@ -29,9 +29,11 @@ export default class RoomReservationScreen extends React.Component {
   }
 
   componentWillMount() {
+    this.props.setCurrentPage('Place a reservation');
     this.setState({
       isLoading: true
     });
+    
     this.props.fetcher.getRequestWithToken(`/rooms/${this.props.routeParams.id}`, this.props.token)
       .then(res => res.json())
       .then((data) => {

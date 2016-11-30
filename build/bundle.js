@@ -8327,7 +8327,9 @@
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
-	  { history: _reactRouter.hashHistory },
+	  { onUpdate: function onUpdate() {
+	      return window.scrollTo(0, 0);
+	    }, history: _reactRouter.hashHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { component: ReservationClient },
@@ -43149,7 +43151,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 65%;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 50em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 50em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n'], ['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
@@ -60449,7 +60451,7 @@
 	var Title = _styledComponents2.default.h1(_templateObject, function (props) {
 	  return props.fontSize;
 	}, function (props) {
-	  return props.center ? '2em auto 1em auto' : '0';
+	  return props.center ? '1em auto 1em auto' : '0';
 	}, function (props) {
 	  return props.color;
 	}, function (props) {
@@ -60470,7 +60472,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n  \n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.3s ease-out;\n  \n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.2s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n'], ['\n  width: ', ';\n  height: ', ';\n  background-color: rgba(0,0,0,0);\n  border: 2px solid ', ';\n  font-size: ', ';\n  cursor: pointer;\n  color: ', ';\n  font-family: \'Questrial\', sans-serif;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  transition: all 0.2s ease-out;\n\n  &:hover {\n    color: #fff;\n    background-color: ', ';\n  }\n\n  &:focus {\n    outline: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68423,10 +68425,11 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 15em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
-	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']);
+	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']),
+	    _templateObject7 = _taggedTemplateLiteral(['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n'], ['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68451,10 +68454,6 @@
 	var _Button = __webpack_require__(594);
 
 	var _Button2 = _interopRequireDefault(_Button);
-
-	var _DashboardPageTitle = __webpack_require__(600);
-
-	var _DashboardPageTitle2 = _interopRequireDefault(_DashboardPageTitle);
 
 	var _Link = __webpack_require__(601);
 
@@ -68488,6 +68487,8 @@
 
 	var DashboardTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject6);
 
+	var DashboardPageTitle = _styledComponents2.default.div(_templateObject7);
+
 	var Dashboard = function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
 
@@ -68496,7 +68497,11 @@
 
 	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
 
-	    _.bindAll(_this, '_logout');
+	    _.bindAll(_this, '_logout', '_setCurrentPage');
+
+	    _this.state = {
+	      currentPage: 'Rooms'
+	    };
 	    return _this;
 	  }
 
@@ -68504,6 +68509,13 @@
 	    key: '_logout',
 	    value: function _logout() {
 	      this.props.logout();
+	    }
+	  }, {
+	    key: '_setCurrentPage',
+	    value: function _setCurrentPage(page) {
+	      this.setState({
+	        currentPage: page
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -68514,7 +68526,8 @@
 	        key: this.props.location.pathname,
 	        fetcher: this.props.fetcher,
 	        token: token,
-	        logout: this.props.logout
+	        logout: this.props.logout,
+	        setCurrentPage: this._setCurrentPage
 	      });
 
 	      //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?
@@ -68566,9 +68579,9 @@
 	          )
 	        ),
 	        _react2.default.createElement(
-	          _DashboardPageTitle2.default,
+	          DashboardPageTitle,
 	          null,
-	          'Rooms'
+	          this.state.currentPage
 	        ),
 	        _react2.default.createElement(
 	          ContentContainer,
@@ -68585,30 +68598,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 600 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _templateObject = _taggedTemplateLiteral(['\n  position: absolute;\n  font-size: 4em;\n  right: 4.8%;\n  top: 22.5%;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n'], ['\n  position: absolute;\n  font-size: 4em;\n  right: 4.8%;\n  top: 22.5%;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n']);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var DashboardPageTitle = _styledComponents2.default.h2(_templateObject);
-
-	exports.default = DashboardPageTitle;
-
-/***/ },
+/* 600 */,
 /* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -68749,7 +68739,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomsOverview.__proto__ || Object.getPrototypeOf(RoomsOverview)).call(this));
 
-	    _.bindAll(_this, '_getAllRooms', '_switchDay');
+	    _.bindAll(_this, '_getAllRooms', '_switchDay', '_getReservationsForThisDate');
 
 	    _this.state = {
 	      isLoading: false,
@@ -68774,8 +68764,13 @@
 	          var roomId = data.id;
 	          _this2._getAllRooms();
 	        });
+	      } else {
+	        this._getReservationsForThisDate();
 	      }
 	    }
+	  }, {
+	    key: '_getReservationsForThisDate',
+	    value: function _getReservationsForThisDate() {}
 	  }, {
 	    key: '_switchDay',
 	    value: function _switchDay(index) {
@@ -69143,13 +69138,11 @@
 	  _createClass(ActivityProgressMeter, [{
 	    key: '_returnActivityMeterPercentage',
 	    value: function _returnActivityMeterPercentage(startTime, endTime) {
-	      //TODO Get normal UTC time, means no converting here!
 	      var startTimeEpoch = new Date(startTime).getTime();
 	      var endTimeEpoch = new Date(endTime).getTime();
 	      var nowEpoch = new Date().getTime();
 
 	      var percentage = (nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch) * 100;
-
 	      return percentage;
 	    }
 	  }, {
@@ -69267,9 +69260,6 @@
 	  }
 
 	  _createClass(RoomDatePicker, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -69283,7 +69273,7 @@
 	          AdjacentDateButtonPrevious,
 	          {
 	            width: '8em',
-	            height: '1.5em',
+	            height: '2.5em',
 	            fontSize: '1em',
 	            color: 'rgb(89, 89, 89)',
 	            'data-adj': 'Previous',
@@ -69301,7 +69291,7 @@
 	          AdjacentDateButtonNext,
 	          {
 	            width: '8em',
-	            height: '1.5em',
+	            height: '2.5em',
 	            fontSize: '1em',
 	            color: 'rgb(89, 89, 89)',
 	            'data-adj': 'Next',
@@ -84762,6 +84752,11 @@
 	  }
 
 	  _createClass(ReservationsOverview, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.setCurrentPage('My Reservations');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -84845,9 +84840,11 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
+	      this.props.setCurrentPage('Place a reservation');
 	      this.setState({
 	        isLoading: true
 	      });
+
 	      this.props.fetcher.getRequestWithToken('/rooms/' + this.props.routeParams.id, this.props.token).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
