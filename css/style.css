@@ -467,6 +467,9 @@ body {
 .paars {
   background-color: #ee45f1; }
 
+.room-reservation__wrapper::before {
+  display: none !important; }
+
 .room__name {
   font-family: 'Crimson Text', sans-serif;
   font-size: 2em;
@@ -499,17 +502,3 @@ body {
   margin-left: 5%; }
   .dashboard__sub-title .dashboard__username {
     color: #000; }
-
-.page-enter {
-  opacity: 0.01;
-  transition: opacity .5s ease-in; }
-
-.page-enter.page-enter-active {
-  opacity: 1; }
-
-.page-leave {
-  opacity: 1;
-  transition: opacity .5s ease-in; }
-
-.page-leave.page-leave-active {
-  opacity: 0; }

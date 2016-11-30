@@ -9,6 +9,10 @@ import Title from './Title.js';
 import Button from './Button.js';
 import Notice from './Notice.js';
 
+const ReservationFormTitle = styled(Title)`
+  margin-top: 0.5em;
+`;
+
 export default class RoomReservationForm extends React.Component {
   constructor() {
     super();
@@ -16,7 +20,7 @@ export default class RoomReservationForm extends React.Component {
 
   render() {
     return(
-      <h1>FORM</h1>
+      <ReservationFormTitle color='#fff' fontSize='5em'>{this.props.room.name}</ReservationFormTitle>
     )
   }
 }

@@ -86,6 +86,12 @@ $spreekkamerColor: #C4B7FF;
   background-color: rgb(238, 69, 241);
 }
 
+.room-reservation__wrapper {
+  &::before {
+    display: none !important;
+  }
+}
+
 .room__name {
   font-family: 'Crimson Text', sans-serif;
   font-size: 2em;

@@ -48,9 +48,7 @@ export default class ActivityProgressMeter extends React.Component {
     //TODO Get normal UTC time, means no converting here!
     const startTimeEpoch = new Date(startTime).getTime();
     const endTimeEpoch = new Date(endTime).getTime();
-    const now = (new Date);
-    const nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-    const nowEpoch = nowWithoutUTC.getTime();
+    const nowEpoch = (new Date).getTime();
 
     const percentage = ((nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch)) * 100;
 

@@ -25,11 +25,13 @@ export default class RoomsOverview extends React.Component {
 
     this.state = {
       isLoading: false,
-      rooms: []
+      rooms: [],
+      day: new Date()
     }
   }
 
   componentWillMount() {
+    console.log(this.state.day)
     this._getAllRooms();
     this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
 

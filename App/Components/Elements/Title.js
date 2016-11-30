@@ -8,6 +8,7 @@ const Title = styled.h1`
   margin: ${props => props.center ? '2em auto 1em auto' : '0'};
   display: block;
   width: 50%;
+  color: ${props => props.color};
   font-weight: ${props => props.fontWeight};
   letter-spacing: 3px;
 
@@ -15,7 +16,7 @@ const Title = styled.h1`
     content: '';
     display: block;
     position: absolute;
-    background-color: #000;
+    background-color: ${props => props.color};
     width: 20%;
     height: 3px;
     bottom:-30%;

@@ -9,7 +9,6 @@ export default class APIFetcher {
   }
 
   async authenticateAndFetchToken(email, password) {
-
     try {
       const response = fetch(`${this.apiUrl}/login`, {
         method: 'POST',

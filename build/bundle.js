@@ -43263,7 +43263,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _Title2.default,
-	          { fontSize: '3.7em', fontWeight: '100', center: true },
+	          { color: '#000', fontSize: '3.7em', fontWeight: '100', center: true },
 	          'Log In'
 	        ),
 	        _react2.default.createElement(
@@ -60426,7 +60426,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n'], ['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: #000;\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  color: ', ';\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: ', ';\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n'], ['\n  position: relative;\n  font-family: \'Questrial\', sans-serif;\n  font-size: ', ';\n  margin: ', ';\n  display: block;\n  width: 50%;\n  color: ', ';\n  font-weight: ', ';\n  letter-spacing: 3px;\n\n  &::before {\n    content: \'\';\n    display: block;\n    position: absolute;\n    background-color: ', ';\n    width: 20%;\n    height: 3px;\n    bottom:-30%;\n    left:0%;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -60445,7 +60445,11 @@
 	}, function (props) {
 	  return props.center ? '2em auto 1em auto' : '0';
 	}, function (props) {
+	  return props.color;
+	}, function (props) {
 	  return props.fontWeight;
+	}, function (props) {
+	  return props.color;
 	});
 
 	exports.default = Title;
@@ -68503,7 +68507,7 @@
 	          null,
 	          _react2.default.createElement(
 	            DashboardTitle,
-	            { fontSize: '4em', fontWeight: '900' },
+	            { color: '#000', fontSize: '4em', fontWeight: '900' },
 	            'Dashboard'
 	          ),
 	          _react2.default.createElement(
@@ -68709,7 +68713,8 @@
 
 	    _this.state = {
 	      isLoading: false,
-	      rooms: []
+	      rooms: [],
+	      day: new Date()
 	    };
 	    return _this;
 	  }
@@ -68719,6 +68724,7 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
+	      console.log(this.state.day);
 	      this._getAllRooms();
 	      this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', { secure: true });
 
@@ -69012,9 +69018,7 @@
 	      //TODO Get normal UTC time, means no converting here!
 	      var startTimeEpoch = new Date(startTime).getTime();
 	      var endTimeEpoch = new Date(endTime).getTime();
-	      var now = new Date();
-	      var nowWithoutUTC = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-	      var nowEpoch = nowWithoutUTC.getTime();
+	      var nowEpoch = new Date().getTime();
 
 	      var percentage = (nowEpoch - startTimeEpoch) / (endTimeEpoch - startTimeEpoch) * 100;
 
@@ -85168,8 +85172,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n'], ['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  font-size: 4em;\n  color: #fff;\n  font-family: \'Crimson Text\', serif;\n  font-weight: 100;\n'], ['\n  font-size: 4em;\n  color: #fff;\n  font-family: \'Crimson Text\', serif;\n  font-weight: 100;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n'], ['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85200,8 +85203,6 @@
 	var _ = __webpack_require__(591);
 
 	var RoomReservationWrapper = _styledComponents2.default.div(_templateObject);
-
-	var RoomReservationTitle = _styledComponents2.default.h1(_templateObject2);
 
 	var RoomReservationScreen = function (_React$Component) {
 	  _inherits(RoomReservationScreen, _React$Component);
@@ -85240,24 +85241,17 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _state$room = this.state.room,
-	          id = _state$room.id,
-	          name = _state$room.name,
-	          type = _state$room.type;
+	      var type = this.state.room.type;
 
+	      var className = type + ' room-reservation__wrapper';
 	      return this.state.isLoading ? _react2.default.createElement(
 	        'h1',
 	        null,
 	        'Loading'
 	      ) : _react2.default.createElement(
 	        RoomReservationWrapper,
-	        { className: type },
-	        _react2.default.createElement(
-	          RoomReservationTitle,
-	          null,
-	          name
-	        ),
-	        _react2.default.createElement(_RoomReservationForm2.default, null)
+	        { className: className },
+	        _react2.default.createElement(_RoomReservationForm2.default, { room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85278,6 +85272,8 @@
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n'], ['\n  margin-top: 0.5em;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85315,6 +85311,10 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var ReservationFormTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject);
+
 	var RoomReservationForm = function (_React$Component) {
 	  _inherits(RoomReservationForm, _React$Component);
 
@@ -85328,9 +85328,9 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'h1',
-	        null,
-	        'FORM'
+	        ReservationFormTitle,
+	        { color: '#fff', fontSize: '5em' },
+	        this.props.room.name
 	      );
 	    }
 	  }]);

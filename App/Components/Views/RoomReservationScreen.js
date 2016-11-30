@@ -17,13 +17,6 @@ const RoomReservationWrapper = styled.div`
   background-size: 4000% 4000;
 `;
 
-const RoomReservationTitle = styled.h1`
-  font-size: 4em;
-  color: #fff;
-  font-family: 'Crimson Text', serif;
-  font-weight: 100;
-`;
-
 export default class RoomReservationScreen extends React.Component {
   constructor() {
     super();
@@ -52,12 +45,12 @@ export default class RoomReservationScreen extends React.Component {
   }
 
   render() {
-    const {id, name, type} = this.state.room;
+    const {type} = this.state.room;
+    const className = `${type} room-reservation__wrapper`;
     return (
       this.state.isLoading ? <h1>Loading</h1> :
-        <RoomReservationWrapper className={type}>
-          <RoomReservationTitle>{name}</RoomReservationTitle>
-          <RoomReservationForm/>
+        <RoomReservationWrapper className={className}>
+          <RoomReservationForm room={this.state.room}/>
         </RoomReservationWrapper>
     )
   }

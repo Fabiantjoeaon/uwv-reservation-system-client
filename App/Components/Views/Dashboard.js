@@ -86,7 +86,7 @@ export default class Dashboard extends React.Component {
     return(
       <Wrapper>
         <Navigation>
-          <DashboardTitle fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
+          <DashboardTitle color='#000' fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
           <h2 className='dashboard__sub-title'>- Logged in as <span className='dashboard__username'>{username}</span> -</h2>
           <NavFlexWrapper direction='row' width='40%'>
             <NavLink href='#/'>Rooms</NavLink>
