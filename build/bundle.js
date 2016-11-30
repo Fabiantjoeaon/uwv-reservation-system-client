@@ -8216,6 +8216,10 @@
 
 	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
 
+	var _RoomReservationScreen = __webpack_require__(696);
+
+	var _RoomReservationScreen2 = _interopRequireDefault(_RoomReservationScreen);
+
 	var _APIFetcher = __webpack_require__(693);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
@@ -8332,6 +8336,7 @@
 	      _reactRouter.Route,
 	      { path: '/', name: 'dashboard', onEnter: _AuthHandlers.handleAuth, component: _Dashboard2.default },
 	      _react2.default.createElement(_reactRouter.IndexRoute, { name: 'rooms', component: _RoomsOverview2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: 'room/:id', component: _RoomReservationScreen2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { name: 'reservations', path: 'reservations', component: _ReservationsOverview2.default })
 	    )
 	  )
@@ -68881,6 +68886,7 @@
 	      var _props$room = this.props.room,
 	          id = _props$room.id,
 	          name = _props$room.name,
+	          floor = _props$room.floor,
 	          type = _props$room.type,
 	          is_reserved_now = _props$room.is_reserved_now,
 	          capacity = _props$room.capacity,
@@ -68888,9 +68894,10 @@
 	          color = _props$room.color,
 	          invalid = _props$room.invalid;
 
+
 	      var typeLowerCase = type.toLowerCase();
 	      var className = is_reserved_now ? typeLowerCase + ' occupied' : '' + typeLowerCase;
-	      var url = 'room/' + id;
+	      var url = '#/room/' + id;
 	      var boxClassName = 'room__color-box ' + color;
 
 	      return _react2.default.createElement(
@@ -85128,6 +85135,65 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 696 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _ = __webpack_require__(591);
+
+	var RoomReservationScreen = function (_React$Component) {
+	  _inherits(RoomReservationScreen, _React$Component);
+
+	  function RoomReservationScreen() {
+	    _classCallCheck(this, RoomReservationScreen);
+
+	    return _possibleConstructorReturn(this, (RoomReservationScreen.__proto__ || Object.getPrototypeOf(RoomReservationScreen)).call(this));
+	  }
+
+	  _createClass(RoomReservationScreen, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Room res'
+	      );
+	    }
+	  }]);
+
+	  return RoomReservationScreen;
+	}(_react2.default.Component);
+
+	exports.default = RoomReservationScreen;
 
 /***/ }
 /******/ ]);

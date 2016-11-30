@@ -13,6 +13,7 @@ import LoginScreen from './Components/Views/LoginScreen';
 import Dashboard from './Components/Views/Dashboard';
 import RoomsOverview from './Components/Views/RoomsOverview';
 import ReservationsOverview from './Components/Views/ReservationsOverview';
+import RoomReservationScreen from './Components/Views/RoomReservationScreen';
 
 import APIFetcher from './Utils/APIFetcher.js';
 import {handleAuth, handleUnauth} from './Utils/AuthHandlers.js';
@@ -91,6 +92,7 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route name='login' path='login' onEnter={handleUnauth} component={LoginScreen}/>
                     <Route path='/' name='dashboard' onEnter={handleAuth} component={Dashboard}>
                       <IndexRoute name='rooms' component={RoomsOverview}/>
+                      <Route path='room/:id' component={RoomReservationScreen}/>
                       <Route name='reservations' path='reservations' component={ReservationsOverview}/>
                     </Route>
                   </Route>
