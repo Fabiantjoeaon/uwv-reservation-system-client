@@ -445,11 +445,26 @@ body {
   background: linear-gradient(45deg, #b5d0ff, #9cc0ff); }
   .onderzoekkamer.occupied {
     background: linear-gradient(45deg, #d3d8e1, #c0d3f4) !important; }
+  .onderzoekkamer .room__not-free {
+    color: #b5d0ff; }
 
 .spreekkamer {
   background: linear-gradient(45deg, #C4B7FF, #af9eff); }
   .spreekkamer.occupied {
     background: linear-gradient(45deg, #d6d4e2, #cbc2f4) !important; }
+  .spreekkamer .room__not-free {
+    color: #C4B7FF; }
+
+.room__not-free {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 1.2em !important;
+  line-height: 1.55em;
+  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  margin: 0 !important; }
 
 .room__unavailable {
   background: linear-gradient(45deg, #C6C6C6, #b9b9b9);
@@ -457,15 +472,6 @@ body {
   cursor: default; }
   .room__unavailable .room__name, .room__unavailable .room__meta {
     color: #787878; }
-
-.oranje {
-  background-color: #e68514; }
-
-.groen {
-  background-color: #4ceb1c; }
-
-.paars {
-  background-color: #ee45f1; }
 
 .room-reservation__wrapper::before {
   display: none !important; }
@@ -483,6 +489,7 @@ body {
 .room__meta {
   font-family: sans-serif;
   font-size: 1.5em;
+  white-space: pre-wrap;
   font-weight: 100;
   color: #fff;
   margin-left: 10%; }

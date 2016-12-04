@@ -6,6 +6,7 @@ import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 import ActivityProgressMeter from './ActivityProgressMeter';
+import {convertDateTimeToTime} from '../../Utils/DateUtils.js';
 
 const _ = require('lodash');
 
@@ -39,7 +40,7 @@ export default class Room extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getReservedRoomData');
+    _.bindAll(this, '_getReservedRoomData', '_renderFutureReservations');
 
     this.state = {
       reservation: {}
@@ -47,10 +48,12 @@ export default class Room extends React.Component {
   }
 
   componentWillMount() {
-    //TODO Fetch first reservations if not today
     this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
   }
 
+  /**
+   *
+   */
   _getReservedRoomData(id) {
     this.props.fetcher.getRequestWithToken(`/rooms/${id}/active-reservation`, this.props.token)
       .then(res => res.json())
@@ -62,6 +65,21 @@ export default class Room extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  /**
+   * 
+   */
+  _renderFutureReservations() {
+      if (!_.isEmpty(this.props.futureReservation) && !this.props.isToday){
+        const total = this.props.futureReservation.length;
+        const time = convertDateTimeToTime(this.props.futureReservation[0].start_date_time);
+        return (
+          <h3 className='room__meta room__not-free'>
+            This room has {total}{total == 1 ? ' reservation ' : ' reservations '}for today,&nbsp;{'\n'}
+            {total == 1 ? 'starting at ' : 'the first one starts at '}{time}.
+          </h3>);
+      }
   }
 
   // TODO: Only on shouldComponentUpdate (because next state should be different)
@@ -91,6 +109,7 @@ export default class Room extends React.Component {
         <h3 className='room__meta'>{color}</h3>
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
+        {this._renderFutureReservations()}
         {is_reserved_now && this.props.isToday ?
           <ActivityProgressMeter reservation={this.state.reservation} /> : null}
       </StyledRoom>

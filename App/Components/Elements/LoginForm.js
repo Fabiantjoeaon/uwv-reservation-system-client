@@ -19,7 +19,7 @@ const LoginFormWrapper = styled.div`
   top:15%;
   left:15%;
   width: 65%;
-  height: 50em;
+  height: 60em;
   background-color: rgba(255,255,255,1);
   opacity: 0;
   transform: translateY(160px);

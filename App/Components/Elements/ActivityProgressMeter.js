@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 const _ = require('lodash');
 
 import styled, {keyframes} from 'styled-components';
+import {convertDateTimeToTime} from '../../Utils/DateUtils.js';
 
 const ProgressMeter = styled.div`
   width: ${props => props.percentage}%;
@@ -69,10 +70,7 @@ export default class ActivityProgressMeter extends React.Component {
 
   render() {
     const {activity, end_date_time} = this.props.reservation;
-    const endDate = new Date(end_date_time);
-    const h = endDate.getHours();
-    const m = (endDate.getMinutes()<10?'0':'') + endDate.getMinutes();
-    const time = `${h}:${m}`;
+    const time = convertDateTimeToTime(end_date_time);
     return (
       <div>
         <ProgressMeter percentage={this.state.percentage}/>

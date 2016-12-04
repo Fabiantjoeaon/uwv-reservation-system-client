@@ -8208,7 +8208,7 @@
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _RoomsOverview = __webpack_require__(603);
+	var _RoomsOverview = __webpack_require__(602);
 
 	var _RoomsOverview2 = _interopRequireDefault(_RoomsOverview);
 
@@ -8282,6 +8282,7 @@
 	          error: 'Your email and password are incorrect!'
 	        });
 	        //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
+	        _this2._logout();
 	      });
 	    }
 	  }, {
@@ -8322,7 +8323,6 @@
 	}(_react2.default.Component);
 	// FIXME: Router 'middleware', maybe ask StackOverflow
 	// TODO: Routes as child from dashboard??
-	// TODO: Active route ??
 
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -43151,7 +43151,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 50em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 50em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:15%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n'], ['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
@@ -68455,11 +68455,11 @@
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _Link = __webpack_require__(601);
+	var _Link = __webpack_require__(600);
 
 	var _Link2 = _interopRequireDefault(_Link);
 
-	var _FlexWrapper = __webpack_require__(602);
+	var _FlexWrapper = __webpack_require__(601);
 
 	var _FlexWrapper2 = _interopRequireDefault(_FlexWrapper);
 
@@ -68598,8 +68598,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 600 */,
-/* 601 */
+/* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68627,7 +68626,7 @@
 	exports.default = Link;
 
 /***/ },
-/* 602 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68655,7 +68654,7 @@
 	exports.default = FlexWrapper;
 
 /***/ },
-/* 603 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68684,15 +68683,15 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _FlexWrapper = __webpack_require__(602);
+	var _FlexWrapper = __webpack_require__(601);
 
 	var _FlexWrapper2 = _interopRequireDefault(_FlexWrapper);
 
-	var _LoadingScreen = __webpack_require__(604);
+	var _LoadingScreen = __webpack_require__(603);
 
 	var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
 
-	var _Room = __webpack_require__(605);
+	var _Room = __webpack_require__(604);
 
 	var _Room2 = _interopRequireDefault(_Room);
 
@@ -68739,11 +68738,12 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomsOverview.__proto__ || Object.getPrototypeOf(RoomsOverview)).call(this));
 
-	    _.bindAll(_this, '_getAllRooms', '_switchDay', '_getReservationsForThisDate');
+	    _.bindAll(_this, '_getAllRooms', '_switchDay', '_getReservationsForDate', '_filterReservationsByRoom');
 
 	    _this.state = {
 	      isLoading: false,
 	      rooms: [],
+	      futureReservations: [],
 	      date: new Date(),
 	      isToday: true
 	    };
@@ -68765,15 +68765,14 @@
 	          _this2._getAllRooms();
 	        });
 	      } else {
-	        this._getReservationsForThisDate();
+	        console.log('is not today');
 	      }
 	    }
 	  }, {
-	    key: '_getReservationsForThisDate',
-	    value: function _getReservationsForThisDate() {}
-	  }, {
 	    key: '_switchDay',
 	    value: function _switchDay(index) {
+	      var _this3 = this;
+
 	      var today = new Date();
 	      var dayPlusState = this.state.date.addDays(index);
 	      // Set today in state if the added day equals to today
@@ -68786,13 +68785,43 @@
 	        this.setState({
 	          date: this.state.date.addDays(index),
 	          isToday: false
+	        }, function () {
+	          _this3._getReservationsForDate();
 	        });
 	      }
 	    }
 	  }, {
+	    key: '_getReservationsForDate',
+	    value: function _getReservationsForDate() {
+	      var _this4 = this;
+
+	      this.setState({
+	        isLoading: true
+	      });
+	      this.props.fetcher.getRequestWithToken('/reservations/date/' + this.state.date.yyyymmdd(), this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        var _ref;
+
+	        var reservations = [];
+	        data.data.map(function (reservation) {
+	          reservations.push(reservation);
+	        });
+	        _this4.setState({
+	          futureReservations: (_ref = []).concat.apply(_ref, reservations),
+	          isLoading: false
+	        });
+	      }).catch(function (error) {
+	        _this4.setState({
+	          futureReservations: {},
+	          isLoading: false
+	        });
+	      });
+	    }
+	  }, {
 	    key: '_getAllRooms',
 	    value: function _getAllRooms() {
-	      var _this3 = this;
+	      var _this5 = this;
 
 	      this.setState({
 	        isLoading: true
@@ -68800,42 +68829,73 @@
 	      this.props.fetcher.getRequestWithToken('/rooms', this.props.token).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
-	        var _ref;
+	        var _ref2;
 
 	        var rooms = [];
 	        Object.keys(data).map(function (room) {
 	          rooms.push(data[room]);
 	        });
-	        _this3.setState({
-	          rooms: (_ref = []).concat.apply(_ref, rooms),
+	        _this5.setState({
+	          rooms: (_ref2 = []).concat.apply(_ref2, rooms),
 	          isLoading: false
 	        });
 	      }).catch(function (error) {
 	        console.log(error);
-	        _this3.props.logout();
-	        _this3.props.router.push('/login');
 	      });
+	    }
+	  }, {
+	    key: '_filterReservationsByRoom',
+	    value: function _filterReservationsByRoom(reservations, id) {
+	      var reservationForThisRoom = reservations.filter(function (reservation) {
+	        return reservation.room_id == id;
+	      });
+	      return reservationForThisRoom;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this6 = this;
+
+	      /** TODO Build filter to filter rooms based on props,
+	       *  add class instead of display none so that its still available in DOM,
+	       *  also dont reset on new day
+	       */
 
 	      var dateString = this.state.date.toGMTString().slice(0, -13);
-	      var roomsList = this.state.rooms.map(function (room, i) {
-	        return _react2.default.createElement(_Room2.default, {
-	          key: i,
-	          ref: room.id,
-	          isToday: _this4.state.isToday,
-	          date: _this4.state.date.yyyymmdd(),
-	          fetcher: _this4.props.fetcher,
-	          token: _this4.props.token,
-	          room: room });
-	      });
+	      var roomsList = void 0;
+	      // Better performance wise
+	      if (this.state.isToday || _.isEmpty(this.state.futureReservations)) {
+	        roomsList = this.state.rooms.map(function (room, i) {
+	          return _react2.default.createElement(_Room2.default, {
+	            key: i,
+	            ref: room.id,
+	            isToday: _this6.state.isToday,
+	            date: _this6.state.date.yyyymmdd(),
+	            fetcher: _this6.props.fetcher,
+	            token: _this6.props.token,
+	            room: room });
+	        });
+	      } else {
+	        roomsList = this.state.rooms.map(function (room, i) {
+	          return _react2.default.createElement(_Room2.default, {
+	            key: i,
+	            ref: room.id,
+	            isToday: _this6.state.isToday,
+	            date: _this6.state.date.yyyymmdd(),
+	            fetcher: _this6.props.fetcher,
+	            token: _this6.props.token,
+	            room: room,
+	            futureReservation: _this6._filterReservationsByRoom(_this6.state.futureReservations, room.id) });
+	        });
+	      }
+
 	      return _react2.default.createElement(
 	        PageWrapper,
 	        null,
-	        _react2.default.createElement(_RoomDatePicker2.default, { isToday: this.state.isToday, switchDay: this._switchDay, currentDate: this.state.date.toGMTString().slice(0, -13) }),
+	        _react2.default.createElement(_RoomDatePicker2.default, {
+	          isToday: this.state.isToday,
+	          switchDay: this._switchDay,
+	          currentDate: this.state.date.toGMTString().slice(0, -13) }),
 	        _react2.default.createElement(
 	          _FlexWrapper2.default,
 	          { direction: 'row', width: '100%' },
@@ -68851,7 +68911,7 @@
 	exports.default = RoomsOverview;
 
 /***/ },
-/* 604 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68862,8 +68922,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  0% {\n    transform: translateX(-65px)\n  }\n  50% {\n    transform: translateX(65px)\n  }\n  100% {\n    transform: translateX(-65px)\n  }\n'], ['\n  0% {\n    transform: translateX(-65px)\n  }\n  50% {\n    transform: translateX(65px)\n  }\n  100% {\n    transform: translateX(-65px)\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 100px;\n  height: 5px;\n  margin: 0 auto;\n  background-color: #000;\n  animation: ', ' 1.3s ease-out infinite;\n  animation-fill-mode: forwards;\n'], ['\n  width: 100px;\n  height: 5px;\n  margin: 0 auto;\n  background-color: #000;\n  animation: ', ' 1.3s ease-out infinite;\n  animation-fill-mode: forwards;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  0% {\n    transform: translateX(-100px)\n  }\n  50% {\n    transform: translateX(100px)\n  }\n  100% {\n    transform: translateX(-100px)\n  }\n'], ['\n  0% {\n    transform: translateX(-100px)\n  }\n  50% {\n    transform: translateX(100px)\n  }\n  100% {\n    transform: translateX(-100px)\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 100px;\n  height: 5px;\n  margin: 5em auto 0em auto;\n  background-color: #000;\n  animation: ', ' 1s ease-out infinite;\n  animation-fill-mode: forwards;\n'], ['\n  width: 100px;\n  height: 5px;\n  margin: 5em auto 0em auto;\n  background-color: #000;\n  animation: ', ' 1s ease-out infinite;\n  animation-fill-mode: forwards;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68913,7 +68973,7 @@
 	exports.default = LoadingScreen;
 
 /***/ },
-/* 605 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68943,9 +69003,11 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _ActivityProgressMeter = __webpack_require__(606);
+	var _ActivityProgressMeter = __webpack_require__(605);
 
 	var _ActivityProgressMeter2 = _interopRequireDefault(_ActivityProgressMeter);
+
+	var _DateUtils = __webpack_require__(606);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68977,7 +69039,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this));
 
-	    _.bindAll(_this, '_getReservedRoomData');
+	    _.bindAll(_this, '_getReservedRoomData', '_renderFutureReservations');
 
 	    _this.state = {
 	      reservation: {}
@@ -68988,9 +69050,13 @@
 	  _createClass(Room, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      //TODO Fetch first reservations if not today
 	      this.props.room.is_reserved_now ? this._getReservedRoomData(this.props.room.id) : null;
 	    }
+
+	    /**
+	     *
+	     */
+
 	  }, {
 	    key: '_getReservedRoomData',
 	    value: function _getReservedRoomData(id) {
@@ -69005,6 +69071,31 @@
 	      }).catch(function (error) {
 	        console.log(error);
 	      });
+	    }
+
+	    /**
+	     * 
+	     */
+
+	  }, {
+	    key: '_renderFutureReservations',
+	    value: function _renderFutureReservations() {
+	      if (!_.isEmpty(this.props.futureReservation) && !this.props.isToday) {
+	        var total = this.props.futureReservation.length;
+	        var time = (0, _DateUtils.convertDateTimeToTime)(this.props.futureReservation[0].start_date_time);
+	        return _react2.default.createElement(
+	          'h3',
+	          { className: 'room__meta room__not-free' },
+	          'This room has ',
+	          total,
+	          total == 1 ? ' reservation ' : ' reservations ',
+	          'for today,\xA0',
+	          '\n',
+	          total == 1 ? 'starting at ' : 'the first one starts at ',
+	          time,
+	          '.'
+	        );
+	      }
 	    }
 
 	    // TODO: Only on shouldComponentUpdate (because next state should be different)
@@ -69064,6 +69155,7 @@
 	          { className: 'room__meta' },
 	          'Invalid'
 	        ) : null,
+	        this._renderFutureReservations(),
 	        is_reserved_now && this.props.isToday ? _react2.default.createElement(_ActivityProgressMeter2.default, { reservation: this.state.reservation }) : null
 	      );
 	    }
@@ -69075,7 +69167,7 @@
 	exports.default = Room;
 
 /***/ },
-/* 606 */
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69100,6 +69192,8 @@
 	var _styledComponents = __webpack_require__(528);
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _DateUtils = __webpack_require__(606);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69169,10 +69263,7 @@
 	          activity = _props$reservation.activity,
 	          end_date_time = _props$reservation.end_date_time;
 
-	      var endDate = new Date(end_date_time);
-	      var h = endDate.getHours();
-	      var m = (endDate.getMinutes() < 10 ? '0' : '') + endDate.getMinutes();
-	      var time = h + ':' + m;
+	      var time = (0, _DateUtils.convertDateTimeToTime)(end_date_time);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -69198,6 +69289,25 @@
 	}(_react2.default.Component);
 
 	exports.default = ActivityProgressMeter;
+
+/***/ },
+/* 606 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.convertDateTimeToTime = convertDateTimeToTime;
+	function convertDateTimeToTime(date) {
+	  var endDate = new Date(date);
+	  var h = endDate.getHours();
+	  var m = (endDate.getMinutes() < 10 ? '0' : '') + endDate.getMinutes();
+	  var time = h + ':' + m;
+
+	  return time;
+	}
 
 /***/ },
 /* 607 */
@@ -69249,6 +69359,9 @@
 	var AdjacentDateButtonNext = (0, _styledComponents2.default)(_Button2.default)(_templateObject3);
 
 	var Day = _styledComponents2.default.p(_templateObject4);
+
+	//TODO: Make circle and show other add day options like week? Check out tympanus / gooey effects
+	// http://tympanus.net/codrops/2015/03/10/creative-gooey-effects/
 
 	var RoomDatePicker = function (_React$Component) {
 	  _inherits(RoomDatePicker, _React$Component);
@@ -84802,7 +84915,7 @@
 
 	var _RoomReservationForm2 = _interopRequireDefault(_RoomReservationForm);
 
-	var _LoadingScreen = __webpack_require__(604);
+	var _LoadingScreen = __webpack_require__(603);
 
 	var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
 
@@ -85566,6 +85679,7 @@
 	  var currUrl = window.location;
 	  var token = localStorage.getItem('@TOKEN');
 	  if (!token) {
+	    console.log('in handleAuth function');
 	    window.location.href = currUrl + 'login';
 	  }
 	}

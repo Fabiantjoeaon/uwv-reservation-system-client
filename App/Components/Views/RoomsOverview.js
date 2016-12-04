@@ -39,11 +39,12 @@ export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getAllRooms', '_switchDay', '_getReservationsForThisDate');
+    _.bindAll(this, '_getAllRooms', '_switchDay', '_getReservationsForDate', '_filterReservationsByRoom');
 
     this.state = {
       isLoading: false,
       rooms: [],
+      futureReservations: [],
       date: new Date(),
       isToday: true
     }
@@ -60,12 +61,9 @@ export default class RoomsOverview extends React.Component {
         this._getAllRooms();
       });
     } else {
-      this._getReservationsForThisDate();
-    }
-  }
+      console.log('is not today');
 
-  _getReservationsForThisDate() {
-    
+    }
   }
 
   _switchDay(index) {
@@ -81,8 +79,34 @@ export default class RoomsOverview extends React.Component {
       this.setState({
         date: this.state.date.addDays(index),
         isToday: false
+      }, () => {
+        this._getReservationsForDate();
       });
     }
+  }
+
+  _getReservationsForDate() {
+    this.setState({
+      isLoading: true
+    });
+    this.props.fetcher.getRequestWithToken(`/reservations/date/${this.state.date.yyyymmdd()}`, this.props.token)
+      .then(res => res.json())
+      .then((data) => {
+        const reservations = [];
+        data.data.map((reservation) => {
+          reservations.push(reservation);
+        });
+        this.setState({
+          futureReservations: [].concat(...reservations),
+          isLoading: false
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          futureReservations: {},
+          isLoading: false
+        })
+      });
   }
 
   _getAllRooms() {
@@ -103,26 +127,56 @@ export default class RoomsOverview extends React.Component {
       })
       .catch((error) => {
         console.log(error);
-        this.props.logout();
-        this.props.router.push('/login');
       });
   }
 
-  render() {
-    const dateString = this.state.date.toGMTString().slice(0, -13)
-    const roomsList = this.state.rooms.map((room, i) => {
-      return <Room
-                key={i}
-                ref={room.id}
-                isToday={this.state.isToday}
-                date={this.state.date.yyyymmdd()}
-                fetcher={this.props.fetcher}
-                token={this.props.token}
-                room={room} />
+  _filterReservationsByRoom(reservations, id) {
+    const reservationForThisRoom = reservations.filter((reservation) => {
+      return reservation.room_id == id;
     });
+    return reservationForThisRoom;
+  }
+
+  render() {
+    /** TODO Build filter to filter rooms based on props,
+     *  add class instead of display none so that its still available in DOM,
+     *  also dont reset on new day
+     */
+
+    const dateString = this.state.date.toGMTString().slice(0, -13);
+    let roomsList;
+    // Better performance wise
+    if(this.state.isToday || _.isEmpty(this.state.futureReservations)) {
+    roomsList = this.state.rooms.map((room, i) => {
+        return <Room
+                  key={i}
+                  ref={room.id}
+                  isToday={this.state.isToday}
+                  date={this.state.date.yyyymmdd()}
+                  fetcher={this.props.fetcher}
+                  token={this.props.token}
+                  room={room}/>
+      });
+    } else {
+      roomsList = this.state.rooms.map((room, i) => {
+        return <Room
+                  key={i}
+                  ref={room.id}
+                  isToday={this.state.isToday}
+                  date={this.state.date.yyyymmdd()}
+                  fetcher={this.props.fetcher}
+                  token={this.props.token}
+                  room={room}
+                  futureReservation={this._filterReservationsByRoom(this.state.futureReservations, room.id)}/>
+      });
+    }
+
     return (
       <PageWrapper>
-        <RoomDatePicker isToday={this.state.isToday} switchDay={this._switchDay} currentDate={this.state.date.toGMTString().slice(0, -13)}/>
+        <RoomDatePicker
+          isToday={this.state.isToday}
+          switchDay={this._switchDay}
+          currentDate={this.state.date.toGMTString().slice(0, -13)}/>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>

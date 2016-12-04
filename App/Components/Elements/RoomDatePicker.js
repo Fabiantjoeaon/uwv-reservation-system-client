@@ -39,6 +39,8 @@ const Day = styled.p`
   padding: 0em 1em;
 `;
 
+//TODO: Make circle and show other add day options like week? Check out tympanus / gooey effects
+// http://tympanus.net/codrops/2015/03/10/creative-gooey-effects/
 export default class RoomDatePicker extends React.Component {
   constructor() {
       super();
