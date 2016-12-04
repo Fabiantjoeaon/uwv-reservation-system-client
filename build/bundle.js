@@ -69322,9 +69322,7 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _templateObject = _taggedTemplateLiteral(['\n  font-size: 1.5em;\n  margin-bottom: 2em;\n  width: 100%;\n  justify-content: space-between;\n  font-weight: 900;\n'], ['\n  font-size: 1.5em;\n  margin-bottom: 2em;\n  width: 100%;\n  justify-content: space-between;\n  font-weight: 900;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  left: 0;\n  top: 0;\n'], ['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  left: 0;\n  top: 0;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  right: 0;\n  top: 0;\n'], ['\n  position: absolute;\n  padding: 0.5em 0em 1em 0em;\n  right: 0;\n  top: 0;\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n'], ['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n']);
+	    _templateObject2 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n'], ['\n  display: block;\n  margin: 0 auto;\n  text-align: center;\n  font-family:sans-serif;\n  font-weight: 100;\n  font-size: 1.6em;\n  color: rgb(153, 153, 153);\n  padding: 0em 1em;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -69338,9 +69336,9 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _Button = __webpack_require__(594);
+	var _DateButton = __webpack_require__(700);
 
-	var _Button2 = _interopRequireDefault(_Button);
+	var _DateButton2 = _interopRequireDefault(_DateButton);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69354,11 +69352,7 @@
 
 	var DatePickerWrapper = _styledComponents2.default.div(_templateObject);
 
-	var AdjacentDateButtonPrevious = (0, _styledComponents2.default)(_Button2.default)(_templateObject2);
-
-	var AdjacentDateButtonNext = (0, _styledComponents2.default)(_Button2.default)(_templateObject3);
-
-	var Day = _styledComponents2.default.p(_templateObject4);
+	var Day = _styledComponents2.default.p(_templateObject2);
 
 	//TODO: Make circle and show other add day options like week? Check out tympanus / gooey effects
 	// http://tympanus.net/codrops/2015/03/10/creative-gooey-effects/
@@ -69375,25 +69369,16 @@
 	  _createClass(RoomDatePicker, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-
 	      var date = this.props.currentDate == new Date().toGMTString().slice(0, -13) ? 'Today: ' + this.props.currentDate : this.props.currentDate;
 
 	      return _react2.default.createElement(
 	        DatePickerWrapper,
 	        null,
 	        !this.props.isToday ? _react2.default.createElement(
-	          AdjacentDateButtonPrevious,
+	          _DateButton2.default,
 	          {
-	            width: '8em',
-	            height: '2.5em',
-	            fontSize: '1em',
-	            color: 'rgb(89, 89, 89)',
-	            'data-adj': 'Previous',
-	            onClick: function onClick() {
-	              _this2.props.switchDay(-1);
-	            } },
-	          'Previous'
+	            switchDay: this.props.switchDay },
+	          '-1'
 	        ) : null,
 	        _react2.default.createElement(
 	          Day,
@@ -69401,17 +69386,11 @@
 	          date
 	        ),
 	        _react2.default.createElement(
-	          AdjacentDateButtonNext,
+	          _DateButton2.default,
 	          {
-	            width: '8em',
-	            height: '2.5em',
-	            fontSize: '1em',
-	            color: 'rgb(89, 89, 89)',
-	            'data-adj': 'Next',
-	            onClick: function onClick() {
-	              _this2.props.switchDay(1);
-	            } },
-	          'Next'
+	            switchDay: this.props.switchDay,
+	            next: true },
+	          '+1'
 	        )
 	      );
 	    }
@@ -85690,6 +85669,78 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 700 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  cursor: pointer;\n  border-radius: 50%;\n  position: absolute;\n  top: -10px;\n  left: ', ';\n  right: ', ';\n  filter: url(\'assets/filters/goo.svg#goo\');\n  border: 1px solid #787878;\n  color: #787878;\n  background-color: rgb(224, 224, 224);\n  transition: all 0.2s ease-out;\n  padding: 15px;\n  &:focus {\n    outline: none;\n  }\n  &:hover {\n    color: #fff;\n    background-color: #787878;\n  }\n'], ['\n  cursor: pointer;\n  border-radius: 50%;\n  position: absolute;\n  top: -10px;\n  left: ', ';\n  right: ', ';\n  filter: url(\'assets/filters/goo.svg#goo\');\n  border: 1px solid #787878;\n  color: #787878;\n  background-color: rgb(224, 224, 224);\n  transition: all 0.2s ease-out;\n  padding: 15px;\n  &:focus {\n    outline: none;\n  }\n  &:hover {\n    color: #fff;\n    background-color: #787878;\n  }\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var StyledDateButton = _styledComponents2.default.button(_templateObject, function (props) {
+	  return !props.next ? 0 : null;
+	}, function (props) {
+	  return props.next ? 0 : null;
+	});
+
+	var DateButton = function (_React$Component) {
+	  _inherits(DateButton, _React$Component);
+
+	  function DateButton() {
+	    _classCallCheck(this, DateButton);
+
+	    return _possibleConstructorReturn(this, (DateButton.__proto__ || Object.getPrototypeOf(DateButton)).call(this));
+	  }
+
+	  _createClass(DateButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var val = this.props.next ? 1 : -1;
+	      return _react2.default.createElement(
+	        StyledDateButton,
+	        { onClick: function onClick() {
+	            _this2.props.switchDay(val);
+	          }, next: this.props.next },
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return DateButton;
+	}(_react2.default.Component);
+
+	exports.default = DateButton;
 
 /***/ }
 /******/ ]);
