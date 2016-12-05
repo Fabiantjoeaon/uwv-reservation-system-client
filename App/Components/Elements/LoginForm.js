@@ -63,14 +63,12 @@ export default class LoginForm extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
 
-    const email = ReactDOM.findDOMNode(this.refs.email).children.email.value;
-    const password = ReactDOM.findDOMNode(this.refs.password).children.password.value;
+    const data = {
+      email: ReactDOM.findDOMNode(this.refs.email).children.email.value,
+      password: ReactDOM.findDOMNode(this.refs.password).children.password.value
+    }
 
-    if(!(email.length == 0 || password.length == 0)) {
-      const data = {
-        email: email,
-        password: password
-      }
+    if(!(data.email.length == 0 || data.password.length == 0)) {
       this.props.login(data);
     } else {
       this.setState({

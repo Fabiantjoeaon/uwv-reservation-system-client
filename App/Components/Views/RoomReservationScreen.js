@@ -33,7 +33,7 @@ export default class RoomReservationScreen extends React.Component {
     this.setState({
       isLoading: true
     });
-    
+
     this.props.fetcher.getRequestWithToken(`/rooms/${this.props.routeParams.id}`, this.props.token)
       .then(res => res.json())
       .then((data) => {
@@ -54,7 +54,7 @@ export default class RoomReservationScreen extends React.Component {
     return (
       this.state.isLoading ? <LoadingScreen/> :
         <RoomReservationWrapper className={className}>
-          <RoomReservationForm room={this.state.room}/>
+          <RoomReservationForm fetcher={this.props.fetcher} date={this.props.location.query.date} token={this.props.token} room={this.state.room}/>
         </RoomReservationWrapper>
     )
   }

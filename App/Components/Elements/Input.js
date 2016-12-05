@@ -60,6 +60,7 @@ const StyledInput = styled.input`
   background-color: rgba(0,0,0,0);
   font-family: 'Lora', serif;
   font-size: 1.5em;
+  margin-top: 0.5em;
   border: none;
   padding: 20px 0px;
   transition: all 0.3s ease-out;

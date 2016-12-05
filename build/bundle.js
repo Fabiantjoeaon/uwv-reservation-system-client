@@ -43242,14 +43242,12 @@
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
 
-	      var email = _reactDom2.default.findDOMNode(this.refs.email).children.email.value;
-	      var password = _reactDom2.default.findDOMNode(this.refs.password).children.password.value;
+	      var data = {
+	        email: _reactDom2.default.findDOMNode(this.refs.email).children.email.value,
+	        password: _reactDom2.default.findDOMNode(this.refs.password).children.password.value
+	      };
 
-	      if (!(email.length == 0 || password.length == 0)) {
-	        var data = {
-	          email: email,
-	          password: password
-	        };
+	      if (!(data.email.length == 0 || data.password.length == 0)) {
 	        this.props.login(data);
 	      } else {
 	        this.setState({
@@ -43313,7 +43311,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68429,7 +68427,7 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']),
-	    _templateObject7 = _taggedTemplateLiteral(['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n'], ['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n']);
+	    _templateObject7 = _taggedTemplateLiteral(['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n'], ['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -69309,6 +69307,24 @@
 
 	  return time;
 	}
+
+	// Date.prototype.yyyymmdd = function() {
+	//   const mm = this.getMonth() + 1;
+	//   const dd = this.getDate();
+	//
+	//   return [this.getFullYear(),
+	//           (mm>9 ? '' : '0') + mm,
+	//           (dd>9 ? '' : '0') + dd
+	//         ].join('-');
+	// };
+	//
+	// Date.prototype.addDays = function(days) {
+	//     const date = new Date(this.valueOf());
+	//     date.setDate(date.getDate() + days);
+	//     return date;
+	// }
+	//
+	// module.exports = Date;
 
 /***/ },
 /* 607 */
@@ -85332,7 +85348,7 @@
 	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
-	        _react2.default.createElement(_RoomReservationForm2.default, { room: this.state.room })
+	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, date: this.props.location.query.date, token: this.props.token, room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85354,7 +85370,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n'], ['\n  margin-top: 0.5em;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  display: block;\n'], ['\n  margin-top: 0.5em;\n  display: block;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 0em auto;\n  text-align: center;\n'], ['\n  margin: 6em auto 0em auto;\n  text-align: center;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85394,7 +85411,11 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+	var _ = __webpack_require__(591);
+
 	var ReservationFormTitle = (0, _styledComponents2.default)(_Title2.default)(_templateObject);
+
+	var ReservationForm = _styledComponents2.default.form(_templateObject2);
 
 	var RoomReservationForm = function (_React$Component) {
 	  _inherits(RoomReservationForm, _React$Component);
@@ -85402,16 +85423,97 @@
 	  function RoomReservationForm() {
 	    _classCallCheck(this, RoomReservationForm);
 
-	    return _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
+	    var _this = _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
+
+	    _.bindAll(_this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate');
+
+	    _this.state = {
+	      isLoading: false,
+	      customers: {},
+	      reservations: {}
+	    };
+	    return _this;
 	  }
 
 	  _createClass(RoomReservationForm, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this._getClientsForThisRoom();
+	    }
+	  }, {
+	    key: '_getClientsForThisRoom',
+	    value: function _getClientsForThisRoom() {
+	      var _this2 = this;
+
+	      this.setState({
+	        isLoading: true
+	      });
+
+	      this.props.fetcher.getRequestWithToken('/me/customers', this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        _this2.setState({
+	          customers: data.data
+	        }, function () {
+	          _this2._getReservationsForDate();
+	        });
+	      }).catch(function (error) {
+	        _this2.setState({
+	          customers: {}
+	        }, function () {
+	          _this2._getReservationsForDate();
+	        });
+	      });
+	    }
+	  }, {
+	    key: '_getReservationsForDate',
+	    value: function _getReservationsForDate() {
+	      var _this3 = this;
+
+	      // get per room per date
+	      this.props.fetcher.getRequestWithToken('/reservations/date/' + this.props.date, this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        var _ref;
+
+	        var reservations = [];
+	        data.data.map(function (reservation) {
+	          reservations.push(reservation);
+	        });
+	        _this3.setState({
+	          reservations: (_ref = []).concat.apply(_ref, reservations),
+	          isLoading: false
+	        }, function () {
+	          console.log(_this3.state);
+	        });
+	      }).catch(function (error) {
+	        _this3.setState({
+	          reservations: {},
+	          isLoading: false
+	        });
+	      });
+	    }
+	  }, {
+	    key: '_handleSubmit',
+	    value: function _handleSubmit(e) {
+	      var data = {};
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        ReservationFormTitle,
-	        { color: '#fff', fontSize: '4em' },
-	        this.props.room.name
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          ReservationFormTitle,
+	          { color: '#fff', fontSize: '4em' },
+	          this.props.room.name
+	        ),
+	        _react2.default.createElement(
+	          ReservationForm,
+	          { onSubmit: this._handleSubmit },
+	          _react2.default.createElement(_Input2.default, { name: 'activity', ref: 'activity', type: 'text', label: 'Activity' })
+	        )
 	      );
 	    }
 	  }]);

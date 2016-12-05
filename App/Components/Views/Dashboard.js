@@ -73,6 +73,13 @@ const DashboardPageTitle = styled.div`
   font-weight: 100;
   color: #787878;
   font-family: 'Crimson Text', sans-serif;
+
+  @media(max-width: 950px) {
+    padding: 0 !important;
+    margin: 3em auto 0em auto !important;
+    font-size: 2.5em;
+    text-align: center !important;
+  }
 `;
 
 export default class Dashboard extends React.Component {
