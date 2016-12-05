@@ -86,11 +86,9 @@ export default class Dashboard extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_logout', '_setCurrentPage');
+    _.bindAll(this, '_logout', '_setCurrentPage', '_getCustomersForUser');
 
-    this.state = {
-      currentPage: 'Rooms'
-    }
+    this.state = { currentPage: 'Rooms', customers: {} }
   }
 
   _logout() {
@@ -103,6 +101,24 @@ export default class Dashboard extends React.Component {
     });
   }
 
+  componentWillMount() {
+    this._getCustomersForUser();
+  }
+
+  _getCustomersForUser() {
+    const token = this.props.retrieveFromLocalStorage('@TOKEN');
+    this.props.fetcher.getRequestWithToken('/me/customers', token)
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({
+          customers: data.data
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const token = this.props.retrieveFromLocalStorage('@TOKEN');
     const username = this.props.retrieveFromLocalStorage('@USERNAME');
@@ -111,7 +127,8 @@ export default class Dashboard extends React.Component {
       fetcher: this.props.fetcher,
       token: token,
       logout: this.props.logout,
-      setCurrentPage: this._setCurrentPage
+      setCurrentPage: this._setCurrentPage,
+      customers: this.state.customers
     });
 
     //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?

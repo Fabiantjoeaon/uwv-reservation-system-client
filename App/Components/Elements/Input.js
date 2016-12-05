@@ -21,7 +21,7 @@ const StyledInputWrapper = styled.div`
     width: 100%;
     bottom: 0;
     left: 0;
-    background-color: rgb(0, 0, 0);
+    background-color: ${props => props.color};
   }
 `;
 
@@ -32,8 +32,8 @@ const StyledLabel = styled.label`
   font-size: 1.6em;
   padding: 2px 3px 1px 2px;
   background-color: rgba(0,0,0,0);
-  font-family: 'Lora', sans-serif;
-  color: #000;
+  font-family: sans-serif;
+  color: ${props => props.color};
   text-align: left;
   pointer-events: none;
   transition: all 0.3s;
@@ -46,10 +46,10 @@ const StyledLabel = styled.label`
     height: 100%;
     position: absolute;
     top:0;
-    padding: 2px 3px 1px 2px;
+    padding: 2px 3px 1px 3px;
     left:0;
-    background-color: rgb(0,0,0);
-    color: #fff;
+    background-color: ${props => props.color};
+    color: ${props => props.secondColor};
   }
 `;
 
@@ -58,7 +58,7 @@ const StyledInput = styled.input`
   height: 2em;
   position: relative;
   background-color: rgba(0,0,0,0);
-  font-family: 'Lora', serif;
+  font-family: sans-serif;
   font-size: 1.5em;
   margin-top: 0.5em;
   border: none;
@@ -92,9 +92,9 @@ export default class Input extends React.Component {
     const {name, type, label, inputRef, value} = this.props;
 
     return (
-      <StyledInputWrapper className='input__wrapper'>
+      <StyledInputWrapper color={this.props.color} className='input__wrapper'>
         <StyledInput className='input__input' value={value} autoComplete='off' name={name} type={type}/>
-        <StyledLabel className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
+        <StyledLabel color={this.props.color} secondColor={this.props.secondColor} className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
       </StyledInputWrapper>
     );
   }

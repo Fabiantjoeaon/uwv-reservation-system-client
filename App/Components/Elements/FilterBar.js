@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const FilterBarWrapper = styled.div`
   width: 100%;
   display: block;
-  margin: 2em 0em;
+  margin: 4em 0em 2.5em 0em;
 `;
 
 const FilterBarForm = styled.div`
@@ -46,6 +46,7 @@ export default class FilterBar extends React.Component {
     console.log('Selected: ', e.target.value);
 
     // TODO: Gather values in object and pass to parent function (this.props) that sets state ( roomoverview)
+    // TODO: Dynamic option values
   }
 
   render() {
@@ -54,24 +55,24 @@ export default class FilterBar extends React.Component {
         <FilterBarForm>
           <Filter>
             <FilterLabel for='roomtype'>Room type</FilterLabel>
-            <FilterSelect name='roomtype' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='roomtype' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='spreekkamer'>Spreekkamer</option>
               <option value='onderzoekkamer'>Onderzoekkamer</option>
             </FilterSelect>
           </Filter>
           <Filter>
             <FilterLabel for='floor'>Floor</FilterLabel>
-            <FilterSelect name='floor' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='floor' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='0'>0</option>
               <option value='1'>1</option>
             </FilterSelect>
           </Filter>
           <Filter>
             <FilterLabel for='max-persons'>Max persons</FilterLabel>
-            <FilterSelect name='max-persons' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='max-persons' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='1'>1</option>
               <option value='2'>2</option>
               <option value='3'>3</option>
@@ -81,8 +82,8 @@ export default class FilterBar extends React.Component {
           </Filter>
           <Filter>
             <FilterLabel for='color'>Color</FilterLabel>
-            <FilterSelect name='color' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='color' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='paars'>Paars</option>
               <option value='oranje'>Oranje</option>
               <option value='groen'>Groen</option>
@@ -90,24 +91,24 @@ export default class FilterBar extends React.Component {
           </Filter>
           <Filter>
             <FilterLabel for='has-pc'>Has PC</FilterLabel>
-            <FilterSelect name='has-pc' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='has-pc' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='1'>PC</option>
               <option value='0'>No PC</option>
             </FilterSelect>
           </Filter>
           <Filter>
             <FilterLabel for='invalid'>Invalid</FilterLabel>
-            <FilterSelect name='invalid' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='invalid' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='1'>Invalid</option>
               <option value='0'>None</option>
             </FilterSelect>
           </Filter>
           <Filter>
             <FilterLabel for='is_reserved_now'>Reserved now</FilterLabel>
-            <FilterSelect name='is_reserved_now' onChange={this._handleChange}>
-              <option selected='selected' value='all'>All</option>
+            <FilterSelect name='is_reserved_now' defaultValue='all' onChange={this._handleChange}>
+              <option value='all'>All</option>
               <option value='1'>Yes</option>
               <option value='0'>No</option>
             </FilterSelect>

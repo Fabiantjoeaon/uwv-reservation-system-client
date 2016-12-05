@@ -43274,8 +43274,8 @@
 	            null,
 	            this.state.error ? _react2.default.createElement(_Notice2.default, { key: 'notice', type: 'error', notice: this.state.error }) : null
 	          ),
-	          _react2.default.createElement(_Input2.default, { name: 'email', ref: 'email', type: 'email', label: 'E-mail' }),
-	          _react2.default.createElement(_Input2.default, { name: 'password', ref: 'password', type: 'password', label: 'Password' }),
+	          _react2.default.createElement(_Input2.default, { color: '#000', secondColor: '#fff', name: 'email', ref: 'email', type: 'email', label: 'E-mail' }),
+	          _react2.default.createElement(_Input2.default, { color: '#000', secondColor: '#fff', name: 'password', ref: 'password', type: 'password', label: 'Password' }),
 	          _react2.default.createElement(
 	            LoginButton,
 	            {
@@ -43309,9 +43309,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: rgb(0, 0, 0);\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', sans-serif;\n  color: #000;\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 2px;\n    left:0;\n    background-color: rgb(0,0,0);\n    color: #fff;\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: \'Lora\', serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -43337,9 +43337,17 @@
 
 	var _ = __webpack_require__(591);
 
-	var StyledInputWrapper = _styledComponents2.default.div(_templateObject);
+	var StyledInputWrapper = _styledComponents2.default.div(_templateObject, function (props) {
+	  return props.color;
+	});
 
-	var StyledLabel = _styledComponents2.default.label(_templateObject2);
+	var StyledLabel = _styledComponents2.default.label(_templateObject2, function (props) {
+	  return props.color;
+	}, function (props) {
+	  return props.color;
+	}, function (props) {
+	  return props.secondColor;
+	});
 
 	var StyledInput = _styledComponents2.default.input(_templateObject3);
 
@@ -43365,11 +43373,11 @@
 
 	      return _react2.default.createElement(
 	        StyledInputWrapper,
-	        { className: 'input__wrapper' },
+	        { color: this.props.color, className: 'input__wrapper' },
 	        _react2.default.createElement(StyledInput, { className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
 	        _react2.default.createElement(
 	          StyledLabel,
-	          { className: 'input__label', 'data-label': label, htmlFor: name },
+	          { color: this.props.color, secondColor: this.props.secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
 	          label
 	        )
 	      );
@@ -68495,11 +68503,9 @@
 
 	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
 
-	    _.bindAll(_this, '_logout', '_setCurrentPage');
+	    _.bindAll(_this, '_logout', '_setCurrentPage', '_getCustomersForUser');
 
-	    _this.state = {
-	      currentPage: 'Rooms'
-	    };
+	    _this.state = { currentPage: 'Rooms', customers: {} };
 	    return _this;
 	  }
 
@@ -68516,6 +68522,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this._getCustomersForUser();
+	    }
+	  }, {
+	    key: '_getCustomersForUser',
+	    value: function _getCustomersForUser() {
+	      var _this2 = this;
+
+	      var token = this.props.retrieveFromLocalStorage('@TOKEN');
+	      this.props.fetcher.getRequestWithToken('/me/customers', token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        _this2.setState({
+	          customers: data.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var token = this.props.retrieveFromLocalStorage('@TOKEN');
@@ -68525,7 +68552,8 @@
 	        fetcher: this.props.fetcher,
 	        token: token,
 	        logout: this.props.logout,
-	        setCurrentPage: this._setCurrentPage
+	        setCurrentPage: this._setCurrentPage,
+	        customers: this.state.customers
 	      });
 
 	      //TODO: Make dashboardpagetitle dynamic and maybe give values from reservation data?
@@ -69502,7 +69530,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  display: block;\n  margin: 2em 0em;\n'], ['\n  width: 100%;\n  display: block;\n  margin: 2em 0em;\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  display: block;\n  margin: 4em 0em 2.5em 0em;\n'], ['\n  width: 100%;\n  display: block;\n  margin: 4em 0em 2.5em 0em;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  display: flex;\n  justify-content: space-between;\n'], ['\n  display: flex;\n  justify-content: space-between;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  display: inline-block;\n'], ['\n  display: inline-block;\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  color: #787878;\n  font-family: sans-serif;\n  display: block;\n  margin-bottom: 0.5em;\n'], ['\n  color: #787878;\n  font-family: sans-serif;\n  display: block;\n  margin-bottom: 0.5em;\n']),
@@ -69555,6 +69583,7 @@
 	      console.log('Selected: ', e.target.value);
 
 	      // TODO: Gather values in object and pass to parent function (this.props) that sets state ( roomoverview)
+	      // TODO: Dynamic option values
 	    }
 	  }, {
 	    key: 'render',
@@ -69575,10 +69604,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'roomtype', onChange: this._handleChange },
+	              { name: 'roomtype', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69603,10 +69632,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'floor', onChange: this._handleChange },
+	              { name: 'floor', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69631,10 +69660,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'max-persons', onChange: this._handleChange },
+	              { name: 'max-persons', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69674,10 +69703,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'color', onChange: this._handleChange },
+	              { name: 'color', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69707,10 +69736,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'has-pc', onChange: this._handleChange },
+	              { name: 'has-pc', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69735,10 +69764,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'invalid', onChange: this._handleChange },
+	              { name: 'invalid', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -69763,10 +69792,10 @@
 	            ),
 	            _react2.default.createElement(
 	              FilterSelect,
-	              { name: 'is_reserved_now', onChange: this._handleChange },
+	              { name: 'is_reserved_now', defaultValue: 'all', onChange: this._handleChange },
 	              _react2.default.createElement(
 	                'option',
-	                { selected: 'selected', value: 'all' },
+	                { value: 'all' },
 	                'All'
 	              ),
 	              _react2.default.createElement(
@@ -85348,7 +85377,7 @@
 	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
-	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
+	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, customers: this.props.customers, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85368,10 +85397,17 @@
 	  value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  display: block;\n'], ['\n  margin-top: 0.5em;\n  display: block;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 0em auto;\n  text-align: center;\n'], ['\n  margin: 6em auto 0em auto;\n  text-align: center;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n'], ['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 0em auto;\n'], ['\n  margin: 6em auto 0em auto;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 40%;\n'], ['\n  width: 40%;\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  margin-bottom: 5em;\n  display: block;\n'], ['\n  margin-bottom: 5em;\n  display: block;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n']),
+	    _templateObject6 = _taggedTemplateLiteral(['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n'], ['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n']),
+	    _templateObject7 = _taggedTemplateLiteral(['\n  display: none;\n'], ['\n  display: none;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85417,6 +85453,16 @@
 
 	var ReservationForm = _styledComponents2.default.form(_templateObject2);
 
+	var ReservationFormDivider = _styledComponents2.default.div(_templateObject3);
+
+	var CustomerOptionWrapper = _styledComponents2.default.div(_templateObject4);
+
+	var CustomerLabel = _styledComponents2.default.label(_templateObject5);
+
+	var CustomerItem = _styledComponents2.default.span(_templateObject6);
+
+	var CustomerOption = _styledComponents2.default.input(_templateObject7);
+
 	var RoomReservationForm = function (_React$Component) {
 	  _inherits(RoomReservationForm, _React$Component);
 
@@ -85425,53 +85471,24 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
 
-	    _.bindAll(_this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate', '_filterRoomsById');
+	    _.bindAll(_this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_showCustomerForm');
 
-	    _this.state = {
-	      isLoading: false,
-	      customers: {},
-	      reservations: {}
-	    };
+	    _this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} };
 	    return _this;
 	  }
 
 	  _createClass(RoomReservationForm, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this._getClientsForThisRoom();
-	    }
-	  }, {
-	    key: '_getClientsForThisRoom',
-	    value: function _getClientsForThisRoom() {
-	      var _this2 = this;
-
-	      this.setState({
-	        isLoading: true
-	      });
-
-	      this.props.fetcher.getRequestWithToken('/me/customers', this.props.token).then(function (res) {
-	        return res.json();
-	      }).then(function (data) {
-	        _this2.setState({
-	          customers: data.data
-	        }, function () {
-	          _this2._getReservationsForDate();
-	        });
-	      }).catch(function (error) {
-	        _this2.setState({
-	          customers: {}
-	        }, function () {
-	          _this2._getReservationsForDate();
-	        });
-	      });
+	      this._getReservationsForDate();
 	    }
 	  }, {
 	    key: '_filterRoomsById',
 	    value: function _filterRoomsById(reservations) {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      var filteredReservations = reservations.filter(function (res) {
-	        return _this3.props.roomId == res.room_id;
+	        return _this2.props.roomId == res.room_id;
 	      });
 
 	      return filteredReservations;
@@ -85479,8 +85496,11 @@
 	  }, {
 	    key: '_getReservationsForDate',
 	    value: function _getReservationsForDate() {
-	      var _this4 = this;
+	      var _this3 = this;
 
+	      this.setState({
+	        isLoading: true
+	      });
 	      this.props.fetcher.getRequestWithToken('/reservations/date/' + this.props.date, this.props.token).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
@@ -85490,14 +85510,12 @@
 	        data.data.map(function (reservation) {
 	          reservations.push(reservation);
 	        });
-	        _this4.setState({
-	          reservations: _this4._filterRoomsById((_ref = []).concat.apply(_ref, reservations)),
+	        _this3.setState({
+	          reservations: _this3._filterRoomsById((_ref = []).concat.apply(_ref, reservations)),
 	          isLoading: false
-	        }, function () {
-	          console.log(_this4.state);
 	        });
 	      }).catch(function (error) {
-	        _this4.setState({
+	        _this3.setState({
 	          reservations: {},
 	          isLoading: false
 	        });
@@ -85509,11 +85527,63 @@
 	      var data = {};
 	    }
 	  }, {
+	    key: '_showCustomerForm',
+	    value: function _showCustomerForm(e) {
+	      this.setState({
+	        addCustomer: e.target.value == 'on' ? 1 : 0
+	      });
+	    }
+	  }, {
+	    key: '_renderCustomersSelect',
+	    value: function _renderCustomersSelect() {
+	      var _this4 = this;
+
+	      // Weird array object bug hack..??
+	      var customers = void 0;
+	      if (_typeof(this.props.customers) === 'object') {
+	        customers = Array.from(this.props.customers);
+	      } else {
+	        customers = this.props.customers;
+	      }
+
+	      var customerOptions = customers.map(function (customer, i) {
+	        var id = customer.id,
+	            first_name = customer.first_name,
+	            last_name = customer.last_name;
+
+	        return _react2.default.createElement(
+	          CustomerItem,
+	          { key: i },
+	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, name: 'customer-option', value: id, onClick: function onClick(e) {
+	              _this4._showCustomerForm(e);
+	            } }),
+	          _react2.default.createElement(
+	            CustomerLabel,
+	            { htmlFor: 'customer-' + id },
+	            first_name,
+	            ' ',
+	            last_name
+	          )
+	        );
+	      });
+	      return customerOptions;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this5 = this;
+
+	      var className = 'res-form__' + this.props.room.type;
+	      var inputColor = this.props.room.type == 'Onderzoekkamer' ? '#b5d0ff' : '#C4B7FF';
+	      var customerList = _typeof(this.props.customers) == 'object' && !this.props.customers.length == 0 ? this._renderCustomersSelect() : _react2.default.createElement(
+	        'h3',
+	        { className: 'res-form__text' },
+	        'No customers found'
+	      );
+
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: className },
 	        _react2.default.createElement(
 	          ReservationFormTitle,
 	          { color: '#fff', fontSize: '4em' },
@@ -85522,7 +85592,39 @@
 	        _react2.default.createElement(
 	          ReservationForm,
 	          { onSubmit: this._handleSubmit },
-	          _react2.default.createElement(_Input2.default, { name: 'activity', ref: 'activity', type: 'text', label: 'Activity' })
+	          _react2.default.createElement(
+	            ReservationFormDivider,
+	            { dir: 'left' },
+	            _react2.default.createElement(
+	              CustomerOptionWrapper,
+	              null,
+	              _react2.default.createElement(
+	                'h2',
+	                { className: 'res-form__title' },
+	                'Customer for reservation:'
+	              ),
+	              customerList,
+	              _react2.default.createElement(
+	                CustomerItem,
+	                null,
+	                _react2.default.createElement(CustomerOption, { id: 'customer-add', type: 'radio', name: 'customer-option', onClick: function onClick(e) {
+	                    _this5._showCustomerForm(e);
+	                  } }),
+	                _react2.default.createElement(
+	                  CustomerLabel,
+	                  { htmlFor: 'customer-add' },
+	                  'Add a customer'
+	                )
+	              )
+	            ),
+	            this.state.addCustomer ? _react2.default.createElement(
+	              'p',
+	              null,
+	              'FORM'
+	            ) : null,
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' })
+	          ),
+	          _react2.default.createElement(ReservationFormDivider, { dir: 'right' })
 	        )
 	      );
 	    }

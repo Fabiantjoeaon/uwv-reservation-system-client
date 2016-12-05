@@ -509,3 +509,22 @@ body {
   margin-left: 5%; }
   .dashboard__sub-title .dashboard__username {
     color: #000; }
+
+.res-form__title, .res-form__text {
+  font-weight: 100; }
+
+.res-form__text {
+  color: #fff;
+  font-size: 1.8em; }
+
+.res-form__title {
+  background-color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 2em; }
+
+.res-form__spreekkamer .res-form__title {
+  color: #C4B7FF; }
+
+.res-form__onderzoekkamer .res-form__title {
+  color: #b5d0ff; }

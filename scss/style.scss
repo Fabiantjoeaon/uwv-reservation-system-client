@@ -139,3 +139,30 @@ $spreekkamerColor: #C4B7FF;
     color: #000;
   }
 }
+
+.res-form__title, .res-form__text {
+  font-weight: 100;
+}
+
+.res-form__text {
+  color: #fff;
+  font-size: 1.8em;
+}
+.res-form__title {
+  background-color: rgba(255,255,255,1);
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 2em;
+}
+
+.res-form__spreekkamer {
+  .res-form__title {
+    color: $spreekkamerColor;
+  }
+}
+
+.res-form__onderzoekkamer {
+  .res-form__title {
+    color: $onderzoekkamerColor;
+  }
+}

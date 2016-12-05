@@ -14,51 +14,70 @@ import Notice from './Notice.js';
 const ReservationFormTitle = styled(Title)`
   margin-top: 0.5em;
   display: block;
+  font-size: 5.3em;
 `;
 
 const ReservationForm = styled.form`
   margin: 6em auto 0em auto;
-  text-align: center;
+`;
+
+const ReservationFormDivider = styled.div`
+  width: 40%;
+`;
+
+const CustomerOptionWrapper = styled.div`
+  margin-bottom: 5em;
+  display: block;
+`;
+
+const CustomerLabel = styled.label`
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 1.8em;
+  margin-left: 1.5em;
+
+  &:before {
+     content: '';
+     display: inline-block;
+     width: 15px;
+     height: 15px;
+     position: absolute;
+     left: 0;
+     bottom: 1px;
+     border: 2px solid #fff;
+     border-radius: 50%;
+     cursor: pointer;
+     background-color: rgba(0,0,0,0);
+     transition: all 0.2s ease-out;
+  }
+`;
+
+const CustomerItem = styled.span`
+  display: block;
+  position: relative;
+  margin: 2em 0em;
+
+  > input[type='radio']:checked + label:before {
+    background-color: #fff;
+  }
+`;
+
+const CustomerOption = styled.input`
+  display: none;
 `;
 
 export default class RoomReservationForm extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate', '_filterRoomsById');
+    _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_showCustomerForm');
 
-    this.state = {
-      isLoading: false,
-      customers: {},
-      reservations: {}
-    }
+    this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} }
   }
 
   componentWillMount() {
-    this._getClientsForThisRoom();
-  }
-
-  _getClientsForThisRoom() {
-    this.setState({
-      isLoading: true
-    });
-
-    this.props.fetcher.getRequestWithToken('/me/customers', this.props.token)
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({
-            customers: data.data
-        }, () => {
-          this._getReservationsForDate();
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          customers: {}
-        }, () => {
-          this._getReservationsForDate();
-        });
-      });
+    this._getReservationsForDate();
   }
 
   _filterRoomsById(reservations) {
@@ -70,6 +89,9 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _getReservationsForDate() {
+    this.setState({
+      isLoading: true
+    });
     this.props.fetcher.getRequestWithToken(`/reservations/date/${this.props.date}`, this.props.token)
       .then(res => res.json())
       .then((data) => {
@@ -80,8 +102,6 @@ export default class RoomReservationForm extends React.Component {
         this.setState({
           reservations: this._filterRoomsById([].concat(...reservations)),
           isLoading: false
-        }, () => {
-          console.log(this.state);
         });
       })
       .catch((error) => {
@@ -96,12 +116,59 @@ export default class RoomReservationForm extends React.Component {
     const data = {};
   }
 
+  _showCustomerForm(e) {
+    this.setState({
+      addCustomer: e.target.value == 'on' ? 1 : 0
+    });
+  }
+
+  _renderCustomersSelect() {
+    // Weird array object bug hack..??
+    let customers;
+    if(typeof this.props.customers === 'object') {
+      customers = Array.from(this.props.customers);
+    } else {
+      customers = this.props.customers;
+    }
+
+    const customerOptions = customers.map((customer, i) => {
+      const {id, first_name, last_name} = customer;
+      return (
+        <CustomerItem key={i}>
+          <CustomerOption type='radio' id={`customer-${id}`} name='customer-option' value={id} onClick={(e) => {this._showCustomerForm(e)}} />
+          <CustomerLabel htmlFor={`customer-${id}`}>{first_name} {last_name}</CustomerLabel>
+        </CustomerItem>
+      );
+    });
+    return customerOptions;
+  }
+
   render() {
-    return(
-      <div>
+    const className = `res-form__${this.props.room.type}`;
+    const inputColor = this.props.room.type == 'Onderzoekkamer' ? '#b5d0ff' : '#C4B7FF';
+    const customerList = typeof this.props.customers == 'object' && !this.props.customers.length == 0 ?
+      this._renderCustomersSelect() :
+      <h3 className='res-form__text'>No customers found</h3>;
+
+    return (
+      <div className={className}>
         <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
         <ReservationForm onSubmit={this._handleSubmit}>
-          <Input name='activity' ref='activity' type='text' label='Activity' />
+          <ReservationFormDivider dir='left'>
+            <CustomerOptionWrapper>
+              <h2 className='res-form__title'>Customer for reservation:</h2>
+              {customerList}
+              <CustomerItem>
+                <CustomerOption id='customer-add' type='radio' name='customer-option' onClick={(e) => {this._showCustomerForm(e)}} />
+                <CustomerLabel htmlFor='customer-add'>Add a customer</CustomerLabel>
+              </CustomerItem>
+            </CustomerOptionWrapper>
+            {this.state.addCustomer ? <p>FORM</p> : null}
+            <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
+          </ReservationFormDivider>
+
+          <ReservationFormDivider dir='right'>
+          </ReservationFormDivider>
         </ReservationForm>
       </div>
     )

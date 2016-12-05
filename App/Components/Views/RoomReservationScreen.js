@@ -54,7 +54,7 @@ export default class RoomReservationScreen extends React.Component {
     return (
       this.state.isLoading ? <LoadingScreen/> :
         <RoomReservationWrapper className={className}>
-          <RoomReservationForm fetcher={this.props.fetcher} date={this.props.location.query.date} roomId={this.props.routeParams.id} token={this.props.token} room={this.state.room}/>
+          <RoomReservationForm fetcher={this.props.fetcher} customers={this.props.customers} date={this.props.location.query.date} roomId={this.props.routeParams.id} token={this.props.token} room={this.state.room}/>
         </RoomReservationWrapper>
     )
   }

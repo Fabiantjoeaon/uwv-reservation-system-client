@@ -85,8 +85,8 @@ export default class LoginForm extends React.Component {
           <TransitionGroup>
             {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
           </TransitionGroup>
-          <Input name='email' ref='email' type='email' label='E-mail' />
-          <Input name='password' ref='password' type='password' label='Password' />
+          <Input color='#000' secondColor='#fff' name='email' ref='email' type='email' label='E-mail' />
+          <Input color='#000' secondColor='#fff' name='password' ref='password' type='password' label='Password' />
           <LoginButton
             name='submit'
             type='submit'
