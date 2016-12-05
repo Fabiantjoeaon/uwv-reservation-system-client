@@ -11,7 +11,8 @@ const _ = require('lodash');
 
 const RoomReservationWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  height: auto;
   padding: 2em 5em;
   box-sizing: border-box;
   margin: 0 auto;

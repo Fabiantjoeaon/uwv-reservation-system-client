@@ -27,6 +27,7 @@ const ContentContainer = styled.div`
   margin: 2em auto 6em auto;
   width: calc(90% - 6em);
   min-height: 100%;
+  height: auto;
   position: relative;
   padding: 3em;
   background-color: rgb(240, 240, 240);

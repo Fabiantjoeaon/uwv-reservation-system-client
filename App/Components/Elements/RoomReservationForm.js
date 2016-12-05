@@ -6,10 +6,12 @@ import styled from 'styled-components';
 
 const _ = require('lodash');
 
-import Input from './Input.js';
-import Title from './Title.js';
-import Button from './Button.js';
-import Notice from './Notice.js';
+import Input from './Input';
+import Title from './Title';
+import Button from './Button';
+import Notice from './Notice';
+import ReservationOverviewInMinutes from './ReservationOverviewInMinutes';
+import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 const ReservationFormTitle = styled(Title)`
   margin-top: 0.5em;
@@ -22,7 +24,14 @@ const ReservationForm = styled.form`
 `;
 
 const ReservationFormDivider = styled.div`
-  width: 40%;
+  width: 50%;
+  display: inline-block;
+  vertical-align:top;
+
+  @media(max-width: 950px) {
+    display: block;
+    width: 100%;
+  }
 `;
 
 const CustomerOptionWrapper = styled.div`
@@ -36,6 +45,7 @@ const CustomerLabel = styled.label`
   font-weight: 100;
   font-size: 1.8em;
   margin-left: 1.5em;
+  cursor: pointer;
 
   &:before {
      content: '';
@@ -73,7 +83,7 @@ export default class RoomReservationForm extends React.Component {
 
     _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_showCustomerForm');
 
-    this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} }
+    this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} };
   }
 
   componentWillMount() {
@@ -123,14 +133,7 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _renderCustomersSelect() {
-    // Weird array object bug hack..??
-    let customers;
-    if(typeof this.props.customers === 'object') {
-      customers = Array.from(this.props.customers);
-    } else {
-      customers = this.props.customers;
-    }
-
+    const customers = resolveArrayLikeObject(this.props.customers);
     const customerOptions = customers.map((customer, i) => {
       const {id, first_name, last_name} = customer;
       return (
@@ -145,7 +148,9 @@ export default class RoomReservationForm extends React.Component {
 
   render() {
     const className = `res-form__${this.props.room.type}`;
+    // Color label of input based on room type
     const inputColor = this.props.room.type == 'Onderzoekkamer' ? '#b5d0ff' : '#C4B7FF';
+    // Get customers, if there are none show notice
     const customerList = typeof this.props.customers == 'object' && !this.props.customers.length == 0 ?
       this._renderCustomersSelect() :
       <h3 className='res-form__text'>No customers found</h3>;
@@ -163,11 +168,21 @@ export default class RoomReservationForm extends React.Component {
                 <CustomerLabel htmlFor='customer-add'>Add a customer</CustomerLabel>
               </CustomerItem>
             </CustomerOptionWrapper>
-            {this.state.addCustomer ? <p>FORM</p> : null}
-            <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
+            {this.state.addCustomer ?
+              <div>
+                <Input color='#fff' ref='first_name' secondColor={inputColor} name='first_name' type='text' label='Customers first name' />
+                <Input color='#fff' ref='last_name' secondColor={inputColor} name='last_name' type='text' label='Customers last name' />
+                <Input color='#fff' ref='email' secondColor={inputColor} name='email' type='text' label='Customers E-mail' />
+                <Input color='#fff' ref='bsn' secondColor={inputColor} name='bsn' type='text' label='Customers BSN' />
+              </div>
+               : null}
+              <h2 className='res-form__title'>Reservation data:</h2>
+              <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
           </ReservationFormDivider>
 
           <ReservationFormDivider dir='right'>
+            <h2 className='res-form__title'>Pick a time:</h2>
+            <ReservationOverviewInMinutes reservations={this.state.reservations}/>
           </ReservationFormDivider>
         </ReservationForm>
       </div>

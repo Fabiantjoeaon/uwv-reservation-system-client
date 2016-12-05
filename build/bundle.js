@@ -43309,9 +43309,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em 4em 0em;\n  display: block;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em 4em 0em;\n  display: block;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -43349,7 +43349,9 @@
 	  return props.secondColor;
 	});
 
-	var StyledInput = _styledComponents2.default.input(_templateObject3);
+	var StyledInput = _styledComponents2.default.input(_templateObject3, function (props) {
+	  return props.color;
+	});
 
 	var Input = function (_React$Component) {
 	  _inherits(Input, _React$Component);
@@ -43374,7 +43376,7 @@
 	      return _react2.default.createElement(
 	        StyledInputWrapper,
 	        { color: this.props.color, className: 'input__wrapper' },
-	        _react2.default.createElement(StyledInput, { className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
+	        _react2.default.createElement(StyledInput, { color: this.props.color, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
 	        _react2.default.createElement(
 	          StyledLabel,
 	          { color: this.props.color, secondColor: this.props.secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
@@ -68431,7 +68433,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']),
@@ -85295,7 +85297,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n'], ['\n  width: 100%;\n  height: 100%;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  min-height: 100%;\n  height: auto;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n'], ['\n  width: 100%;\n  min-height: 100%;\n  height: auto;\n  padding: 2em 5em;\n  box-sizing: border-box;\n  margin: 0 auto;\n  background-size: 4000% 4000;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85403,9 +85405,9 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n'], ['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 0em auto;\n'], ['\n  margin: 6em auto 0em auto;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 40%;\n'], ['\n  width: 40%;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n'], ['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  margin-bottom: 5em;\n  display: block;\n'], ['\n  margin-bottom: 5em;\n  display: block;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n'], ['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n']),
 	    _templateObject7 = _taggedTemplateLiteral(['\n  display: none;\n'], ['\n  display: none;\n']);
 
@@ -85436,6 +85438,14 @@
 	var _Notice = __webpack_require__(595);
 
 	var _Notice2 = _interopRequireDefault(_Notice);
+
+	var _ReservationOverviewInMinutes = __webpack_require__(702);
+
+	var _ReservationOverviewInMinutes2 = _interopRequireDefault(_ReservationOverviewInMinutes);
+
+	var _ResolveArrayLikeObject = __webpack_require__(704);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85538,14 +85548,7 @@
 	    value: function _renderCustomersSelect() {
 	      var _this4 = this;
 
-	      // Weird array object bug hack..??
-	      var customers = void 0;
-	      if (_typeof(this.props.customers) === 'object') {
-	        customers = Array.from(this.props.customers);
-	      } else {
-	        customers = this.props.customers;
-	      }
-
+	      var customers = (0, _ResolveArrayLikeObject2.default)(this.props.customers);
 	      var customerOptions = customers.map(function (customer, i) {
 	        var id = customer.id,
 	            first_name = customer.first_name,
@@ -85574,7 +85577,9 @@
 	      var _this5 = this;
 
 	      var className = 'res-form__' + this.props.room.type;
+	      // Color label of input based on room type
 	      var inputColor = this.props.room.type == 'Onderzoekkamer' ? '#b5d0ff' : '#C4B7FF';
+	      // Get customers, if there are none show notice
 	      var customerList = _typeof(this.props.customers) == 'object' && !this.props.customers.length == 0 ? this._renderCustomersSelect() : _react2.default.createElement(
 	        'h3',
 	        { className: 'res-form__text' },
@@ -85618,13 +85623,30 @@
 	              )
 	            ),
 	            this.state.addCustomer ? _react2.default.createElement(
-	              'p',
+	              'div',
 	              null,
-	              'FORM'
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'first_name', secondColor: inputColor, name: 'first_name', type: 'text', label: 'Customers first name' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'last_name', secondColor: inputColor, name: 'last_name', type: 'text', label: 'Customers last name' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'email', secondColor: inputColor, name: 'email', type: 'text', label: 'Customers E-mail' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'bsn', secondColor: inputColor, name: 'bsn', type: 'text', label: 'Customers BSN' })
 	            ) : null,
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'res-form__title' },
+	              'Reservation data:'
+	            ),
 	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' })
 	          ),
-	          _react2.default.createElement(ReservationFormDivider, { dir: 'right' })
+	          _react2.default.createElement(
+	            ReservationFormDivider,
+	            { dir: 'right' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'res-form__title' },
+	              'Pick a time:'
+	            ),
+	            _react2.default.createElement(_ReservationOverviewInMinutes2.default, { reservations: this.state.reservations })
+	          )
 	        )
 	      );
 	    }
@@ -86256,6 +86278,126 @@
 	  if (token) {
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
+	}
+
+/***/ },
+/* 702 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 50em;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 50em;\n  background-color: #fff;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _ResolveArrayLikeObject = __webpack_require__(704);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var _ = __webpack_require__(591);
+
+	var MinuteOverview = _styledComponents2.default.div(_templateObject);
+
+	var ReservationOverviewInMinutes = function (_React$Component) {
+	  _inherits(ReservationOverviewInMinutes, _React$Component);
+
+	  function ReservationOverviewInMinutes() {
+	    _classCallCheck(this, ReservationOverviewInMinutes);
+
+	    var _this = _possibleConstructorReturn(this, (ReservationOverviewInMinutes.__proto__ || Object.getPrototypeOf(ReservationOverviewInMinutes)).call(this));
+
+	    _this.state = { reservations: {} };
+	    return _this;
+	  }
+
+	  _createClass(ReservationOverviewInMinutes, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var node = _reactDom2.default.findDOMNode(this);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        reservations: nextProps.reservations
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
+	      reservations.map(function (res) {
+	        console.log(res.activity);
+	      });
+
+	      var startTime = '8:00';
+	      var endTime = '18:00';
+	      var totalHours = Math.abs(parseInt(startTime.slice(0, -2)) - parseInt(endTime.slice(0, -2)));
+	      var totalMinutes = totalHours * 60;
+
+	      return _react2.default.createElement(
+	        MinuteOverview,
+	        null,
+	        _react2.default.createElement('h1', null)
+	      );
+	    }
+	  }]);
+
+	  return ReservationOverviewInMinutes;
+	}(_react2.default.Component);
+
+	exports.default = ReservationOverviewInMinutes;
+
+/***/ },
+/* 703 */,
+/* 704 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports.default = resolveArrayLikeObject;
+	// Weird array object bug hack..??
+	function resolveArrayLikeObject(arrayLikeObject) {
+	  var array = void 0;
+	  if ((typeof arrayLikeObject === 'undefined' ? 'undefined' : _typeof(arrayLikeObject)) === 'object') {
+	    array = Array.from(arrayLikeObject);
+	  } else {
+	    array = arrayLikeObject;
+	  }
+
+	  return array;
 	}
 
 /***/ }

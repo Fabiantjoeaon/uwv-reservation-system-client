@@ -11,7 +11,8 @@ const StyledInputWrapper = styled.div`
   width: 50%;
   margin: 0 auto;
   position: relative;
-  margin: 1.75em 0em;
+  margin: 1.75em 0em 4em 0em;
+  display: block;
 
   &::after {
     content: '';
@@ -61,6 +62,7 @@ const StyledInput = styled.input`
   font-family: sans-serif;
   font-size: 1.5em;
   margin-top: 0.5em;
+  color: ${props => props.color};
   border: none;
   padding: 20px 0px;
   transition: all 0.3s ease-out;
@@ -93,7 +95,7 @@ export default class Input extends React.Component {
 
     return (
       <StyledInputWrapper color={this.props.color} className='input__wrapper'>
-        <StyledInput className='input__input' value={value} autoComplete='off' name={name} type={type}/>
+        <StyledInput color={this.props.color} className='input__input' value={value} autoComplete='off' name={name} type={type}/>
         <StyledLabel color={this.props.color} secondColor={this.props.secondColor} className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
       </StyledInputWrapper>
     );
