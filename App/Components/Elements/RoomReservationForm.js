@@ -25,7 +25,7 @@ export default class RoomReservationForm extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate');
+    _.bindAll(this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate', '_filterRoomsById');
 
     this.state = {
       isLoading: false,
@@ -61,8 +61,15 @@ export default class RoomReservationForm extends React.Component {
       });
   }
 
+  _filterRoomsById(reservations) {
+    const filteredReservations = reservations.filter((res) => {
+      return this.props.roomId == res.room_id;
+    });
+
+    return filteredReservations;
+  }
+
   _getReservationsForDate() {
-    // get per room per date
     this.props.fetcher.getRequestWithToken(`/reservations/date/${this.props.date}`, this.props.token)
       .then(res => res.json())
       .then((data) => {
@@ -71,7 +78,7 @@ export default class RoomReservationForm extends React.Component {
           reservations.push(reservation);
         });
         this.setState({
-          reservations: [].concat(...reservations),
+          reservations: this._filterRoomsById([].concat(...reservations)),
           isLoading: false
         }, () => {
           console.log(this.state);

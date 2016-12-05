@@ -85348,7 +85348,7 @@
 	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
-	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, date: this.props.location.query.date, token: this.props.token, room: this.state.room })
+	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85425,7 +85425,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
 
-	    _.bindAll(_this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate');
+	    _.bindAll(_this, '_getClientsForThisRoom', '_handleSubmit', '_getReservationsForDate', '_filterRoomsById');
 
 	    _this.state = {
 	      isLoading: false,
@@ -85466,11 +85466,21 @@
 	      });
 	    }
 	  }, {
-	    key: '_getReservationsForDate',
-	    value: function _getReservationsForDate() {
+	    key: '_filterRoomsById',
+	    value: function _filterRoomsById(reservations) {
 	      var _this3 = this;
 
-	      // get per room per date
+	      var filteredReservations = reservations.filter(function (res) {
+	        return _this3.props.roomId == res.room_id;
+	      });
+
+	      return filteredReservations;
+	    }
+	  }, {
+	    key: '_getReservationsForDate',
+	    value: function _getReservationsForDate() {
+	      var _this4 = this;
+
 	      this.props.fetcher.getRequestWithToken('/reservations/date/' + this.props.date, this.props.token).then(function (res) {
 	        return res.json();
 	      }).then(function (data) {
@@ -85480,14 +85490,14 @@
 	        data.data.map(function (reservation) {
 	          reservations.push(reservation);
 	        });
-	        _this3.setState({
-	          reservations: (_ref = []).concat.apply(_ref, reservations),
+	        _this4.setState({
+	          reservations: _this4._filterRoomsById((_ref = []).concat.apply(_ref, reservations)),
 	          isLoading: false
 	        }, function () {
-	          console.log(_this3.state);
+	          console.log(_this4.state);
 	        });
 	      }).catch(function (error) {
-	        _this3.setState({
+	        _this4.setState({
 	          reservations: {},
 	          isLoading: false
 	        });
