@@ -2,17 +2,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TransitionGroup from 'react-addons-transition-group';
 import styled from 'styled-components';
 
 import FlexWrapper from '../Elements/FlexWrapper';
 import LoadingScreen from './LoadingScreen';
 import Room from '../Elements/Room';
 import RoomDatePicker from '../Elements/RoomDatePicker';
+import FilterBar from '../Elements/FilterBar';
 
 Date.prototype.yyyymmdd = function() {
-  var mm = this.getMonth() + 1;
-  var dd = this.getDate();
+  const mm = this.getMonth() + 1;
+  const dd = this.getDate();
 
   return [this.getFullYear(),
           (mm>9 ? '' : '0') + mm,
@@ -21,9 +21,9 @@ Date.prototype.yyyymmdd = function() {
 };
 
 Date.prototype.addDays = function(days) {
-    var dat = new Date(this.valueOf());
-    dat.setDate(dat.getDate() + days);
-    return dat;
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
 }
 
 const _ = require('lodash');
@@ -177,6 +177,7 @@ export default class RoomsOverview extends React.Component {
           isToday={this.state.isToday}
           switchDay={this._switchDay}
           currentDate={this.state.date.toGMTString().slice(0, -13)}/>
+        <FilterBar/>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>

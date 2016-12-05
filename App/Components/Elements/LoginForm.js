@@ -16,7 +16,7 @@ const _ = require('lodash');
 const LoginFormWrapper = styled.div`
   padding-top: 5em;
   position: absolute;
-  top:15%;
+  top:10%;
   left:15%;
   width: 65%;
   height: 60em;
