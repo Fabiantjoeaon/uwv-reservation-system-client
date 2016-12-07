@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
+const dateFns = require('date-fns');
 const _ = require('lodash');
 
 const MinuteOverview = styled.div`
@@ -47,7 +48,9 @@ class QuarterLine extends React.Component {
 
   render() {
     return(
-      <StyledLine onClick={this._handleClick} reserved={this.state.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}/>
+      <StyledLine onClick={this._handleClick} reserved={this.state.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}>
+        {this.props.timeSlot}
+      </StyledLine>
     )
   }
 }
@@ -58,23 +61,23 @@ export default class ReservationOverviewInMinutes extends React.Component {
 
     this.startTime = '8:00';
     this.endTime = '18:00';
-    this.totalHours = Math.abs(parseInt(this.startTime.slice(0, -2)) - parseInt(this.endTime.slice(0, -2)));
-    this.totalMinutes = this.totalHours * 60;
-    this.quarters = Array(this.totalHours * 4);
+    this.startInHours = parseInt(this.startTime.slice(0, -2));
+    this.minutesFromStartTime = this.startInHours * 60;
+    const totalHours = Math.abs(this.startInHours - parseInt(this.endTime.slice(0, -2)));
+    const totalMinutes = totalHours * 60;
+    const quarters = totalHours * 4;
+    const quartersArray = Array(totalHours * 4);
+
     this.state = {
       reservations: {},
-      startTime: this.startTime,
-      endTime: this.endTime,
-      totalHours: this.totalHours,
-      totalMinutes: this.totalHours,
-      quarters: this.quarters,
+      quarters: quartersArray,
       currentIndex: 0,
       startPoint: -1,
       endPoint: -1,
       activeLines: []
     };
 
-    _.bindAll(this, '_setCurrentIndex', '_fillLines');
+    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -109,23 +112,34 @@ export default class ReservationOverviewInMinutes extends React.Component {
     }
     this.setState({
       activeLines: activeLines
-    }, () => {
-      console.log('active lines: ', this.state.activeLines)
     });
+  }
+
+  _toDate(dateStr) {
+    const parts = dateStr.split("-");
+    return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
   }
 
   render() {
     const reservations = resolveArrayLikeObject(this.state.reservations);
     const quarters = resolveArrayLikeObject(this.state.quarters);
-    console.log('index: ', _.indexOf(this.state.activeLines, 3));
+    const date = this._toDate(this.props.date);
+
     return (
       <MinuteOverview>
         {quarters.map((quarter, i) => {
+          const addedTime = dateFns.addMinutes(date, (i * 15));
+          const addedInminutes = addedTime.getMinutes();
+          const minutes = addedInminutes < 10 ? `0${addedInminutes}` : addedInminutes;
+
+          const timeSlot = `${addedTime.getHours()}:${minutes}`;
+
           if(!(_.indexOf(this.state.activeLines, i) == -1)) {
             return <QuarterLine
                       key={i}
                       index={i}
                       selected={true}
+                      timeSlot={timeSlot}
                       ref={`line_${i}`}
                       setCurrentIndex={this._setCurrentIndex}
                       currentIndex={this.state.currentIndex}
@@ -135,6 +149,7 @@ export default class ReservationOverviewInMinutes extends React.Component {
                       key={i}
                       index={i}
                       selected={false}
+                      timeSlot={timeSlot}
                       ref={`line_${i}`}
                       setCurrentIndex={this._setCurrentIndex}
                       currentIndex={this.state.currentIndex}

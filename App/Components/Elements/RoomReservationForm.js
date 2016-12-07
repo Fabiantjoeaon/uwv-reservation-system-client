@@ -183,7 +183,7 @@ export default class RoomReservationForm extends React.Component {
 
           <ReservationFormDivider dir='right'>
             <h2 className='res-form__title'>Pick a time:</h2>
-            <ReservationOverviewInMinutes type={this.props.type} reservations={this.state.reservations}/>
+            <ReservationOverviewInMinutes date={this.props.date} type={this.props.type} reservations={this.state.reservations}/>
           </ReservationFormDivider>
         </ReservationForm>
       </div>
