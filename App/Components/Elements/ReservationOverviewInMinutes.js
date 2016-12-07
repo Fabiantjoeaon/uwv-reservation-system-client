@@ -9,9 +9,18 @@ import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 const dateFns = require('date-fns');
 const _ = require('lodash');
 
+/* ------------------------------ START STYLES ----------------------------- */
+const TimePickerWrapper = styled.div`
+  width: 100%;
+  position: relative;
+  display: inline-block;
+`;
+
 const MinuteOverview = styled.div`
   width: 80%;
   height: 65em;
+  margin-left: 8%;
+  display: inline-block;
   position: relative;
   background-color: #fff;
 `;
@@ -23,11 +32,43 @@ const StyledLine = styled.span`
   border-bottom: 1px solid rgba(222, 222, 222, 0.7);
   transition: 0.2s ease-out;
   cursor: pointer;
-  background-color: ${props => props.selected ? 'rgba(222,222,222, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
+  background-color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
+  position: relative;
+  &:before {
+    content: attr(data-time);
+    color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
+    position: absolute;
+    display: block;
+    width: 10%;
+    height: 100%;
+    top:0;
+    left:-10%;
+    transition: all 0.2s ease-out;
+  }
+
   &:hover {
-    background-color:rgb(222, 222, 222);
+    background-color:rgb(120, 120, 120);
+  }
+
+  &:hover::before {
+    color: rgb(120, 120, 120);
   }
 `;
+
+const CurrentReservationDataWrapper = styled.div`
+  position: absolute;
+  top: -10%;
+  right: 12%;
+  text-align: right;
+  width: 40%;
+  height: 5em;
+`;
+
+const TimeIndicator = styled.h3`
+  color: #fff;
+  font-weight: 100;
+`;
+/* ------------------------------ END STYLES ----------------------------- */
 
 class QuarterLine extends React.Component {
   constructor() {
@@ -48,9 +89,7 @@ class QuarterLine extends React.Component {
 
   render() {
     return(
-      <StyledLine onClick={this._handleClick} reserved={this.state.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}>
-        {this.props.timeSlot}
-      </StyledLine>
+      <StyledLine onClick={this._handleClick} data-time={this.props.timeSlot} reserved={this.state.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}/>
     )
   }
 }
@@ -61,23 +100,26 @@ export default class ReservationOverviewInMinutes extends React.Component {
 
     this.startTime = '8:00';
     this.endTime = '18:00';
+    this.timeMultiplier = 15;
     this.startInHours = parseInt(this.startTime.slice(0, -2));
     this.minutesFromStartTime = this.startInHours * 60;
     const totalHours = Math.abs(this.startInHours - parseInt(this.endTime.slice(0, -2)));
     const totalMinutes = totalHours * 60;
-    const quarters = totalHours * 4;
-    const quartersArray = Array(totalHours * 4);
+    // Add 1 for last time slot
+    const quarters = Array((totalHours * 4) + 1);
 
     this.state = {
       reservations: {},
-      quarters: quartersArray,
+      quarters: quarters,
       currentIndex: 0,
       startPoint: -1,
+      startTime: null,
       endPoint: -1,
+      endTime: null,
       activeLines: []
     };
 
-    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate');
+    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate', '_reset');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,19 +131,32 @@ export default class ReservationOverviewInMinutes extends React.Component {
   _setCurrentIndex(index) {
     // First click, set start point
     if(!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
-      this.setState({ currentIndex: index, startPoint: index });
+      const startTime = eval(`this.refs.line_${index}`).props.timeSlot;
+      this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
     }
     // Second click, set start point to click before, and end point to this one
+    // TODO: Check if index is before so that you can handle going backwards!
     if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
-      this.setState({ currentIndex: index, startPoint: this.state.currentIndex, endPoint: index }, () => {
+      const startTime = eval(`this.refs.line_${this.state.currentIndex}`).props.timeSlot;
+      const endTime = eval(`this.refs.line_${index}`).props.timeSlot;
+      this.setState({
+        currentIndex: index,
+        startPoint: this.state.currentIndex,
+        startTime: startTime,
+        endPoint: index,
+        endTime: endTime
+      }, () => {
         this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint));
       });
     }
     // Third click, reset
     if (this.state.startPoint >= 0 && this.state.endPoint >= 0){
-      console.log('reset');
-      this.setState({ currentIndex: index, startPoint: -1, endPoint: -1, activeLines: []});
+      this._reset();
     }
+  }
+
+  _reset() {
+    this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: []});
   }
 
   _fillLines(numberLines) {
@@ -122,41 +177,48 @@ export default class ReservationOverviewInMinutes extends React.Component {
 
   render() {
     const reservations = resolveArrayLikeObject(this.state.reservations);
+    console.log(reservations);
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
 
     return (
-      <MinuteOverview>
-        {quarters.map((quarter, i) => {
-          const addedTime = dateFns.addMinutes(date, (i * 15));
-          const addedInminutes = addedTime.getMinutes();
-          const minutes = addedInminutes < 10 ? `0${addedInminutes}` : addedInminutes;
+      <TimePickerWrapper>
+        <CurrentReservationDataWrapper>
+          {!(this.state.startPoint == -1) ? <TimeIndicator>Start time: {this.state.startTime}</TimeIndicator> : null}
+          {!(this.state.endPoint == -1) ? <TimeIndicator>End time: {this.state.endTime}</TimeIndicator> : null}
+        </CurrentReservationDataWrapper>
+        <MinuteOverview>
+          {quarters.map((quarter, i) => {
+            //TODO: Move this to renderLines function
+            const addedTime = dateFns.addMinutes(date, (i * this.timeMultiplier));
+            const addedInminutes = addedTime.getMinutes();
+            const minutes = addedInminutes < 10 ? `0${addedInminutes}` : addedInminutes;
+            const timeSlot = `${addedTime.getHours()}:${minutes}`;
 
-          const timeSlot = `${addedTime.getHours()}:${minutes}`;
-
-          if(!(_.indexOf(this.state.activeLines, i) == -1)) {
-            return <QuarterLine
-                      key={i}
-                      index={i}
-                      selected={true}
-                      timeSlot={timeSlot}
-                      ref={`line_${i}`}
-                      setCurrentIndex={this._setCurrentIndex}
-                      currentIndex={this.state.currentIndex}
-                      totalQuarters={quarters.length}/>
-          } else {
-            return <QuarterLine
-                      key={i}
-                      index={i}
-                      selected={false}
-                      timeSlot={timeSlot}
-                      ref={`line_${i}`}
-                      setCurrentIndex={this._setCurrentIndex}
-                      currentIndex={this.state.currentIndex}
-                      totalQuarters={quarters.length}/>
-          }
-        })}
-      </MinuteOverview>
+            if(!(_.indexOf(this.state.activeLines, i) == -1)) {
+              return <QuarterLine
+                        key={i}
+                        index={i}
+                        selected={true}
+                        timeSlot={timeSlot}
+                        ref={`line_${i}`}
+                        setCurrentIndex={this._setCurrentIndex}
+                        currentIndex={this.state.currentIndex}
+                        totalQuarters={quarters.length}/>
+            } else {
+              return <QuarterLine
+                        key={i}
+                        index={i}
+                        selected={false}
+                        timeSlot={timeSlot}
+                        ref={`line_${i}`}
+                        setCurrentIndex={this._setCurrentIndex}
+                        currentIndex={this.state.currentIndex}
+                        totalQuarters={quarters.length}/>
+            }
+          })}
+        </MinuteOverview>
+      </TimePickerWrapper>
     )
   }
 }

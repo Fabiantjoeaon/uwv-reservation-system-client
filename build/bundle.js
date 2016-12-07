@@ -68440,7 +68440,7 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']),
-	    _templateObject7 = _taggedTemplateLiteral(['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n'], ['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: #787878;\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n']);
+	    _templateObject7 = _taggedTemplateLiteral(['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: rgb(120, 120, 120);\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n'], ['\n  position: relative;\n  font-size: 4em;\n  padding: 0em 0em 0em 6em;\n  width: calc(90% - 4em);\n  text-align: right;\n  margin-bottom: 0em !important;\n  margin-right: 0em !important;\n  display: block;\n  font-weight: 100;\n  color: rgb(120, 120, 120);\n  font-family: \'Crimson Text\', sans-serif;\n\n  @media(max-width: 950px) {\n    padding: 0 !important;\n    margin: 3em auto 0em auto !important;\n    font-size: 2.5em;\n    text-align: center !important;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85681,8 +85681,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  position: relative;\n  background-color: #fff;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  &:hover {\n    background-color:rgb(222, 222, 222);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  &:hover {\n    background-color:rgb(222, 222, 222);\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85713,13 +85716,23 @@
 	var dateFns = __webpack_require__(704);
 	var _ = __webpack_require__(591);
 
-	var MinuteOverview = _styledComponents2.default.div(_templateObject);
+	/* ------------------------------ START STYLES ----------------------------- */
+	var TimePickerWrapper = _styledComponents2.default.div(_templateObject);
 
-	var StyledLine = _styledComponents2.default.span(_templateObject2, function (props) {
+	var MinuteOverview = _styledComponents2.default.div(_templateObject2);
+
+	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
 	  return props.totalQuarters;
 	}, function (props) {
-	  return props.selected ? 'rgba(222,222,222, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
+	}, function (props) {
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
 	});
+
+	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
+
+	var TimeIndicator = _styledComponents2.default.h3(_templateObject5);
+	/* ------------------------------ END STYLES ----------------------------- */
 
 	var QuarterLine = function (_React$Component) {
 	  _inherits(QuarterLine, _React$Component);
@@ -85747,11 +85760,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        StyledLine,
-	        { onClick: this._handleClick, reserved: this.state.reserved, selected: this.props.selected, totalQuarters: this.props.totalQuarters },
-	        this.props.timeSlot
-	      );
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, 'data-time': this.props.timeSlot, reserved: this.state.reserved, selected: this.props.selected, totalQuarters: this.props.totalQuarters });
 	    }
 	  }]);
 
@@ -85768,23 +85777,26 @@
 
 	    _this2.startTime = '8:00';
 	    _this2.endTime = '18:00';
+	    _this2.timeMultiplier = 15;
 	    _this2.startInHours = parseInt(_this2.startTime.slice(0, -2));
 	    _this2.minutesFromStartTime = _this2.startInHours * 60;
 	    var totalHours = Math.abs(_this2.startInHours - parseInt(_this2.endTime.slice(0, -2)));
 	    var totalMinutes = totalHours * 60;
-	    var quarters = totalHours * 4;
-	    var quartersArray = Array(totalHours * 4);
+	    // Add 1 for last time slot
+	    var quarters = Array(totalHours * 4 + 1);
 
 	    _this2.state = {
 	      reservations: {},
-	      quarters: quartersArray,
+	      quarters: quarters,
 	      currentIndex: 0,
 	      startPoint: -1,
+	      startTime: null,
 	      endPoint: -1,
+	      endTime: null,
 	      activeLines: []
 	    };
 
-	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_toDate');
+	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_toDate', '_reset');
 	    return _this2;
 	  }
 
@@ -85802,19 +85814,33 @@
 
 	      // First click, set start point
 	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
-	        this.setState({ currentIndex: index, startPoint: index });
+	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
+	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
 	      }
 	      // Second click, set start point to click before, and end point to this one
+	      // TODO: Check if index is before so that you can handle going backwards!
 	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
-	        this.setState({ currentIndex: index, startPoint: this.state.currentIndex, endPoint: index }, function () {
+	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
+	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
+	        this.setState({
+	          currentIndex: index,
+	          startPoint: this.state.currentIndex,
+	          startTime: _startTime,
+	          endPoint: index,
+	          endTime: endTime
+	        }, function () {
 	          _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint));
 	        });
 	      }
 	      // Third click, reset
 	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
-	        console.log('reset');
-	        this.setState({ currentIndex: index, startPoint: -1, endPoint: -1, activeLines: [] });
+	        this._reset();
 	      }
+	    }
+	  }, {
+	    key: '_reset',
+	    value: function _reset() {
+	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
 	    }
 	  }, {
 	    key: '_fillLines',
@@ -85840,41 +85866,62 @@
 	      var _this4 = this;
 
 	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
+	      console.log(reservations);
 	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
 	      var date = this._toDate(this.props.date);
 
 	      return _react2.default.createElement(
-	        MinuteOverview,
+	        TimePickerWrapper,
 	        null,
-	        quarters.map(function (quarter, i) {
-	          var addedTime = dateFns.addMinutes(date, i * 15);
-	          var addedInminutes = addedTime.getMinutes();
-	          var minutes = addedInminutes < 10 ? '0' + addedInminutes : addedInminutes;
+	        _react2.default.createElement(
+	          CurrentReservationDataWrapper,
+	          null,
+	          !(this.state.startPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'Start time: ',
+	            this.state.startTime
+	          ) : null,
+	          !(this.state.endPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'End time: ',
+	            this.state.endTime
+	          ) : null
+	        ),
+	        _react2.default.createElement(
+	          MinuteOverview,
+	          null,
+	          quarters.map(function (quarter, i) {
+	            //TODO: Move this to renderLines function
+	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
+	            var addedInminutes = addedTime.getMinutes();
+	            var minutes = addedInminutes < 10 ? '0' + addedInminutes : addedInminutes;
+	            var timeSlot = addedTime.getHours() + ':' + minutes;
 
-	          var timeSlot = addedTime.getHours() + ':' + minutes;
-
-	          if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
-	            return _react2.default.createElement(QuarterLine, {
-	              key: i,
-	              index: i,
-	              selected: true,
-	              timeSlot: timeSlot,
-	              ref: 'line_' + i,
-	              setCurrentIndex: _this4._setCurrentIndex,
-	              currentIndex: _this4.state.currentIndex,
-	              totalQuarters: quarters.length });
-	          } else {
-	            return _react2.default.createElement(QuarterLine, {
-	              key: i,
-	              index: i,
-	              selected: false,
-	              timeSlot: timeSlot,
-	              ref: 'line_' + i,
-	              setCurrentIndex: _this4._setCurrentIndex,
-	              currentIndex: _this4.state.currentIndex,
-	              totalQuarters: quarters.length });
-	          }
-	        })
+	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                selected: true,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            } else {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                selected: false,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            }
+	          })
+	        )
 	      );
 	    }
 	  }]);

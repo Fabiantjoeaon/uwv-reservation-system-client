@@ -72,7 +72,7 @@ const DashboardPageTitle = styled.div`
   margin-right: 0em !important;
   display: block;
   font-weight: 100;
-  color: #787878;
+  color: rgb(120, 120, 120);
   font-family: 'Crimson Text', sans-serif;
 
   @media(max-width: 950px) {
