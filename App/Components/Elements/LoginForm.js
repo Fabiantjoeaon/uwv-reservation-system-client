@@ -32,6 +32,7 @@ const LoginButton = styled(Button)`
 
 const StyledLoginForm = styled.form`
   display: flex;
+  margin-top: 6.5em;
   flex-direction: column;
   align-items: center;
   justify-content: center;

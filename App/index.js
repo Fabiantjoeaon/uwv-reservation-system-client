@@ -30,12 +30,16 @@ class ReservationClient extends React.Component {
       fetcher: new APIFetcher(API_URL)
     }
 
-    _.bindAll(this, '_login', '_logout', '_retrieveFromLocalStorage');
+    _.bindAll(this, '_login', '_logout', '_retrieveFromLocalStorage', '_setError');
   }
 
   _retrieveFromLocalStorage(item) {
     const data = localStorage.getItem(item);
     return data;
+  }
+
+  _setError(error) {
+    this.setState({ error: error });
   }
 
   _login(creds) {
@@ -46,11 +50,10 @@ class ReservationClient extends React.Component {
         localStorage.setItem('@TOKEN', token.token);
         localStorage.setItem('@USERNAME', user.name);
         this.props.router.push('/');
+        this._setError('');
       })
       .catch((error) => {
-        this.setState({
-          error: 'Your email and password are incorrect!'
-        });
+        this._setError('Your email and password are incorrect!');
         //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
         this._logout();
       });
@@ -59,10 +62,8 @@ class ReservationClient extends React.Component {
   _logout() {
     localStorage.removeItem('@TOKEN');
     localStorage.removeItem('@USERNAME');
-    this.setState({
-      error: ''
-    });
-    this.props.router.push('login');
+
+    !(this.props.location.pathname == '/login') ? this.props.router.push('/login') : null;
   }
 
   render() {
@@ -71,6 +72,7 @@ class ReservationClient extends React.Component {
       key: this.props.location.pathname,
       login: this._login,
       logout: this._logout,
+      setError: this._setError,
       credError: this.state.error,
       fetcher: this.state.fetcher,
       retrieveFromLocalStorage: this._retrieveFromLocalStorage

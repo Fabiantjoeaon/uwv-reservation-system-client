@@ -68,15 +68,15 @@ export default class Room extends React.Component {
   }
 
   /**
-   * 
+   *
    */
   _renderFutureReservations() {
-      if (!_.isEmpty(this.props.futureReservation) && !this.props.isToday){
+      if (!_.isEmpty(this.props.futureReservation)){
         const total = this.props.futureReservation.length;
         const time = convertDateTimeToTime(this.props.futureReservation[0].start_date_time);
         return (
           <h3 className='room__meta room__not-free'>
-            This room has {total}{total == 1 ? ' reservation ' : ' reservations '}for today,&nbsp;{'\n'}
+            This room has {total}{total == 1 ? ' reservation ' : ' reservations '}for {this.props.isToday ? 'today' : 'this day'},&nbsp;{'\n'}
             {total == 1 ? 'starting at ' : 'the first one starts at '}{time}.
           </h3>);
       }
@@ -109,9 +109,9 @@ export default class Room extends React.Component {
         <h3 className='room__meta'>{color}</h3>
         {has_pc ? <h3 className='room__meta'>PC available</h3> : null}
         {invalid ? <h3 className='room__meta'>Invalid</h3> : null}
-        {this._renderFutureReservations()}
+        {!is_reserved_now ? this._renderFutureReservations() : null}
         {is_reserved_now && this.props.isToday ?
-          <ActivityProgressMeter reservation={this.state.reservation} /> : null}
+          <ActivityProgressMeter reservation={this.state.reservation} /> : this._renderFutureReservations()}
       </StyledRoom>
     );
   }

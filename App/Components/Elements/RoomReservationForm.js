@@ -15,12 +15,13 @@ import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 const ReservationFormTitle = styled(Title)`
   margin-top: 0.5em;
+  width: 100%;
   display: block;
   font-size: 5.3em;
 `;
 
 const ReservationForm = styled.form`
-  margin: 6em auto 0em auto;
+  margin: 6em auto 4em auto;
 `;
 
 const ReservationFormDivider = styled.div`
@@ -182,7 +183,7 @@ export default class RoomReservationForm extends React.Component {
 
           <ReservationFormDivider dir='right'>
             <h2 className='res-form__title'>Pick a time:</h2>
-            <ReservationOverviewInMinutes reservations={this.state.reservations}/>
+            <ReservationOverviewInMinutes type={this.props.type} reservations={this.state.reservations}/>
           </ReservationFormDivider>
         </ReservationForm>
       </div>

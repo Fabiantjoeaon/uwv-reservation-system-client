@@ -8220,11 +8220,11 @@
 
 	var _RoomReservationScreen2 = _interopRequireDefault(_RoomReservationScreen);
 
-	var _APIFetcher = __webpack_require__(699);
+	var _APIFetcher = __webpack_require__(701);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
-	var _AuthHandlers = __webpack_require__(701);
+	var _AuthHandlers = __webpack_require__(703);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8253,7 +8253,7 @@
 	      fetcher: new _APIFetcher2.default(API_URL)
 	    };
 
-	    _.bindAll(_this, '_login', '_logout', '_retrieveFromLocalStorage');
+	    _.bindAll(_this, '_login', '_logout', '_retrieveFromLocalStorage', '_setError');
 	    return _this;
 	  }
 
@@ -8262,6 +8262,11 @@
 	    value: function _retrieveFromLocalStorage(item) {
 	      var data = localStorage.getItem(item);
 	      return data;
+	    }
+	  }, {
+	    key: '_setError',
+	    value: function _setError(error) {
+	      this.setState({ error: error });
 	    }
 	  }, {
 	    key: '_login',
@@ -8277,10 +8282,9 @@
 	        localStorage.setItem('@TOKEN', token.token);
 	        localStorage.setItem('@USERNAME', user.name);
 	        _this2.props.router.push('/');
+	        _this2._setError('');
 	      }).catch(function (error) {
-	        _this2.setState({
-	          error: 'Your email and password are incorrect!'
-	        });
+	        _this2._setError('Your email and password are incorrect!');
 	        //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
 	        _this2._logout();
 	      });
@@ -8290,10 +8294,8 @@
 	    value: function _logout() {
 	      localStorage.removeItem('@TOKEN');
 	      localStorage.removeItem('@USERNAME');
-	      this.setState({
-	        error: ''
-	      });
-	      this.props.router.push('login');
+
+	      !(this.props.location.pathname == '/login') ? this.props.router.push('/login') : null;
 	    }
 	  }, {
 	    key: 'render',
@@ -8303,6 +8305,7 @@
 	        key: this.props.location.pathname,
 	        login: this._login,
 	        logout: this._logout,
+	        setError: this._setError,
 	        credError: this.state.error,
 	        fetcher: this.state.fetcher,
 	        retrieveFromLocalStorage: this._retrieveFromLocalStorage
@@ -43153,7 +43156,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n'], ['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  margin-top: 6.5em;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  margin-top: 6.5em;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -68554,6 +68557,7 @@
 	        fetcher: this.props.fetcher,
 	        token: token,
 	        logout: this.props.logout,
+	        setError: this.props.setError,
 	        setCurrentPage: this._setCurrentPage,
 	        customers: this.state.customers
 	      });
@@ -68784,13 +68788,17 @@
 	      var _this2 = this;
 
 	      this._getAllRooms();
-
+	      // FIXME: On first reseed gets extra reservations???
+	      this._getReservationsForDate();
 	      if (this.state.isToday) {
 	        this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', { secure: true });
 	        this.socket.on('room-channel:roomHasUpdated', function (data) {
 	          // maybe render room per id??
 	          var roomId = data.id;
 	          _this2._getAllRooms();
+	        });
+	        this.socket.on('room-channel:roomIsFree', function (data) {
+	          console.log(data);
 	        });
 	      } else {
 	        console.log('is not today');
@@ -68808,6 +68816,8 @@
 	        this.setState({
 	          date: today,
 	          isToday: true
+	        }, function () {
+	          _this3._getReservationsForDate();
 	        });
 	      } else {
 	        this.setState({
@@ -68888,7 +68898,6 @@
 	       *  add class instead of display none so that its still available in DOM,
 	       *  also dont reset on new day
 	       */
-
 	      var dateString = this.state.date.toGMTString().slice(0, -13);
 	      var roomsList = void 0;
 	      // Better performance wise
@@ -68901,7 +68910,8 @@
 	            date: _this6.state.date.yyyymmdd(),
 	            fetcher: _this6.props.fetcher,
 	            token: _this6.props.token,
-	            room: room });
+	            room: room,
+	            futureReservation: _this6.state.futureReservation ? _this6._filterReservationsByRoom(_this6.state.futureReservations, room.id) : null });
 	        });
 	      } else {
 	        roomsList = this.state.rooms.map(function (room, i) {
@@ -69103,13 +69113,13 @@
 	    }
 
 	    /**
-	     * 
+	     *
 	     */
 
 	  }, {
 	    key: '_renderFutureReservations',
 	    value: function _renderFutureReservations() {
-	      if (!_.isEmpty(this.props.futureReservation) && !this.props.isToday) {
+	      if (!_.isEmpty(this.props.futureReservation)) {
 	        var total = this.props.futureReservation.length;
 	        var time = (0, _DateUtils.convertDateTimeToTime)(this.props.futureReservation[0].start_date_time);
 	        return _react2.default.createElement(
@@ -69118,7 +69128,9 @@
 	          'This room has ',
 	          total,
 	          total == 1 ? ' reservation ' : ' reservations ',
-	          'for today,\xA0',
+	          'for ',
+	          this.props.isToday ? 'today' : 'this day',
+	          ',\xA0',
 	          '\n',
 	          total == 1 ? 'starting at ' : 'the first one starts at ',
 	          time,
@@ -69184,8 +69196,8 @@
 	          { className: 'room__meta' },
 	          'Invalid'
 	        ) : null,
-	        this._renderFutureReservations(),
-	        is_reserved_now && this.props.isToday ? _react2.default.createElement(_ActivityProgressMeter2.default, { reservation: this.state.reservation }) : null
+	        !is_reserved_now ? this._renderFutureReservations() : null,
+	        is_reserved_now && this.props.isToday ? _react2.default.createElement(_ActivityProgressMeter2.default, { reservation: this.state.reservation }) : this._renderFutureReservations()
 	      );
 	    }
 	  }]);
@@ -85379,7 +85391,7 @@
 	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
-	        _react2.default.createElement(_RoomReservationForm2.default, { fetcher: this.props.fetcher, customers: this.props.customers, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
+	        _react2.default.createElement(_RoomReservationForm2.default, { type: type, fetcher: this.props.fetcher, customers: this.props.customers, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85403,8 +85415,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n'], ['\n  margin-top: 0.5em;\n  display: block;\n  font-size: 5.3em;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 0em auto;\n'], ['\n  margin: 6em auto 0em auto;\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  margin-top: 0.5em;\n  width: 100%;\n  display: block;\n  font-size: 5.3em;\n'], ['\n  margin-top: 0.5em;\n  width: 100%;\n  display: block;\n  font-size: 5.3em;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 4em auto;\n'], ['\n  margin: 6em auto 4em auto;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n'], ['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  margin-bottom: 5em;\n  display: block;\n'], ['\n  margin-bottom: 5em;\n  display: block;\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n']),
@@ -85439,11 +85451,11 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
-	var _ReservationOverviewInMinutes = __webpack_require__(702);
+	var _ReservationOverviewInMinutes = __webpack_require__(699);
 
 	var _ReservationOverviewInMinutes2 = _interopRequireDefault(_ReservationOverviewInMinutes);
 
-	var _ResolveArrayLikeObject = __webpack_require__(704);
+	var _ResolveArrayLikeObject = __webpack_require__(700);
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
 
@@ -85645,7 +85657,7 @@
 	              { className: 'res-form__title' },
 	              'Pick a time:'
 	            ),
-	            _react2.default.createElement(_ReservationOverviewInMinutes2.default, { reservations: this.state.reservations })
+	            _react2.default.createElement(_ReservationOverviewInMinutes2.default, { type: this.props.type, reservations: this.state.reservations })
 	          )
 	        )
 	      );
@@ -85669,7 +85681,231 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(700);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  position: relative;\n  background-color: #fff;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  &:hover {\n    background-color:rgb(222, 222, 222);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  &:hover {\n    background-color:rgb(222, 222, 222);\n  }\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _ResolveArrayLikeObject = __webpack_require__(700);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var _ = __webpack_require__(591);
+
+	var MinuteOverview = _styledComponents2.default.div(_templateObject);
+
+	var StyledLine = _styledComponents2.default.span(_templateObject2, function (props) {
+	  return props.totalQuarters;
+	}, function (props) {
+	  return props.selected ? 'rgba(222,222,222, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
+	});
+
+	var QuarterLine = function (_React$Component) {
+	  _inherits(QuarterLine, _React$Component);
+
+	  function QuarterLine() {
+	    _classCallCheck(this, QuarterLine);
+
+	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
+
+	    _this.state = {
+	      selected: false,
+	      reserved: false
+	    };
+
+	    _.bindAll(_this, '_handleClick');
+	    return _this;
+	  }
+
+	  _createClass(QuarterLine, [{
+	    key: '_handleClick',
+	    value: function _handleClick() {
+	      console.log(this.props.index, this.props.currentIndex);
+	      this.props.setCurrentIndex(this.props.index);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, reserved: this.state.reserved, selected: this.props.selected, totalQuarters: this.props.totalQuarters });
+	    }
+	  }]);
+
+	  return QuarterLine;
+	}(_react2.default.Component);
+
+	var ReservationOverviewInMinutes = function (_React$Component2) {
+	  _inherits(ReservationOverviewInMinutes, _React$Component2);
+
+	  function ReservationOverviewInMinutes() {
+	    _classCallCheck(this, ReservationOverviewInMinutes);
+
+	    var _this2 = _possibleConstructorReturn(this, (ReservationOverviewInMinutes.__proto__ || Object.getPrototypeOf(ReservationOverviewInMinutes)).call(this));
+
+	    _this2.startTime = '8:00';
+	    _this2.endTime = '18:00';
+	    _this2.totalHours = Math.abs(parseInt(_this2.startTime.slice(0, -2)) - parseInt(_this2.endTime.slice(0, -2)));
+	    _this2.totalMinutes = _this2.totalHours * 60;
+	    _this2.quarters = Array(_this2.totalHours * 4);
+	    _this2.state = {
+	      reservations: {},
+	      startTime: _this2.startTime,
+	      endTime: _this2.endTime,
+	      totalHours: _this2.totalHours,
+	      totalMinutes: _this2.totalHours,
+	      quarters: _this2.quarters,
+	      currentIndex: 0,
+	      startPoint: -1,
+	      endPoint: -1,
+	      activeLines: []
+	    };
+
+	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines');
+	    return _this2;
+	  }
+
+	  _createClass(ReservationOverviewInMinutes, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        reservations: nextProps.reservations
+	      });
+	    }
+	  }, {
+	    key: '_setCurrentIndex',
+	    value: function _setCurrentIndex(index) {
+	      var _this3 = this;
+
+	      // First click, set start point
+	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
+	        this.setState({ currentIndex: index, startPoint: index });
+	      }
+	      // Second click, set start point to click before, and end point to this one
+	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
+	        this.setState({ currentIndex: index, startPoint: this.state.currentIndex, endPoint: index }, function () {
+	          _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint));
+	        });
+	      }
+	      // Third click, reset
+	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
+	        console.log('reset');
+	        this.setState({ currentIndex: index, startPoint: -1, endPoint: -1, activeLines: [] });
+	      }
+	    }
+	  }, {
+	    key: '_fillLines',
+	    value: function _fillLines(numberLines) {
+	      var _this4 = this;
+
+	      var activeLines = [];
+	      for (var i = 0; i <= numberLines; i++) {
+	        var lineIndex = i + this.state.startPoint;
+	        activeLines.push(lineIndex);
+	      }
+	      this.setState({
+	        activeLines: activeLines
+	      }, function () {
+	        console.log('active lines: ', _this4.state.activeLines);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this5 = this;
+
+	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
+	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
+	      console.log('index: ', _.indexOf(this.state.activeLines, 3));
+	      return _react2.default.createElement(
+	        MinuteOverview,
+	        null,
+	        quarters.map(function (quarter, i) {
+	          if (!(_.indexOf(_this5.state.activeLines, i) == -1)) {
+	            return _react2.default.createElement(QuarterLine, {
+	              key: i,
+	              index: i,
+	              selected: true,
+	              ref: 'line_' + i,
+	              setCurrentIndex: _this5._setCurrentIndex,
+	              currentIndex: _this5.state.currentIndex,
+	              totalQuarters: quarters.length });
+	          } else {
+	            return _react2.default.createElement(QuarterLine, {
+	              key: i,
+	              index: i,
+	              selected: false,
+	              ref: 'line_' + i,
+	              setCurrentIndex: _this5._setCurrentIndex,
+	              currentIndex: _this5.state.currentIndex,
+	              totalQuarters: quarters.length });
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return ReservationOverviewInMinutes;
+	}(_react2.default.Component);
+
+	exports.default = ReservationOverviewInMinutes;
+
+/***/ },
+/* 700 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports.default = resolveArrayLikeObject;
+	// Weird array object bug hack..??
+	function resolveArrayLikeObject(arrayLikeObject) {
+	  var array = void 0;
+	  if ((typeof arrayLikeObject === 'undefined' ? 'undefined' : _typeof(arrayLikeObject)) === 'object') {
+	    array = Array.from(arrayLikeObject);
+	  } else {
+	    array = arrayLikeObject;
+	  }
+
+	  return array;
+	}
+
+/***/ },
+/* 701 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(702);
 
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -85796,7 +86032,7 @@
 	exports.default = APIFetcher;
 
 /***/ },
-/* 700 */
+/* 702 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -86254,7 +86490,7 @@
 
 
 /***/ },
-/* 701 */
+/* 703 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -86278,126 +86514,6 @@
 	  if (token) {
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
-	}
-
-/***/ },
-/* 702 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 50em;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 50em;\n  background-color: #fff;\n']);
-
-	var _react = __webpack_require__(299);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(331);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	var _ResolveArrayLikeObject = __webpack_require__(704);
-
-	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var _ = __webpack_require__(591);
-
-	var MinuteOverview = _styledComponents2.default.div(_templateObject);
-
-	var ReservationOverviewInMinutes = function (_React$Component) {
-	  _inherits(ReservationOverviewInMinutes, _React$Component);
-
-	  function ReservationOverviewInMinutes() {
-	    _classCallCheck(this, ReservationOverviewInMinutes);
-
-	    var _this = _possibleConstructorReturn(this, (ReservationOverviewInMinutes.__proto__ || Object.getPrototypeOf(ReservationOverviewInMinutes)).call(this));
-
-	    _this.state = { reservations: {} };
-	    return _this;
-	  }
-
-	  _createClass(ReservationOverviewInMinutes, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var node = _reactDom2.default.findDOMNode(this);
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({
-	        reservations: nextProps.reservations
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
-	      reservations.map(function (res) {
-	        console.log(res.activity);
-	      });
-
-	      var startTime = '8:00';
-	      var endTime = '18:00';
-	      var totalHours = Math.abs(parseInt(startTime.slice(0, -2)) - parseInt(endTime.slice(0, -2)));
-	      var totalMinutes = totalHours * 60;
-
-	      return _react2.default.createElement(
-	        MinuteOverview,
-	        null,
-	        _react2.default.createElement('h1', null)
-	      );
-	    }
-	  }]);
-
-	  return ReservationOverviewInMinutes;
-	}(_react2.default.Component);
-
-	exports.default = ReservationOverviewInMinutes;
-
-/***/ },
-/* 703 */,
-/* 704 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports.default = resolveArrayLikeObject;
-	// Weird array object bug hack..??
-	function resolveArrayLikeObject(arrayLikeObject) {
-	  var array = void 0;
-	  if ((typeof arrayLikeObject === 'undefined' ? 'undefined' : _typeof(arrayLikeObject)) === 'object') {
-	    array = Array.from(arrayLikeObject);
-	  } else {
-	    array = arrayLikeObject;
-	  }
-
-	  return array;
 	}
 
 /***/ }

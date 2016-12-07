@@ -45,14 +45,15 @@ export default class RoomsOverview extends React.Component {
       isLoading: false,
       rooms: [],
       futureReservations: [],
-      date: new Date(),
+      date: new Date,
       isToday: true
     }
   }
 
   componentWillMount() {
     this._getAllRooms();
-
+    // FIXME: On first reseed gets extra reservations???
+    this._getReservationsForDate();
     if(this.state.isToday) {
       this.socket = io.connect('https://dorsia.fabiantjoeaon.com:8080', {secure: true});
       this.socket.on('room-channel:roomHasUpdated', (data) => {
@@ -60,9 +61,11 @@ export default class RoomsOverview extends React.Component {
         const roomId = data.id;
         this._getAllRooms();
       });
+      this.socket.on('room-channel:roomIsFree', (data) => {
+        console.log(data);
+      });
     } else {
       console.log('is not today');
-
     }
   }
 
@@ -74,6 +77,8 @@ export default class RoomsOverview extends React.Component {
       this.setState({
         date: today,
         isToday: true
+      }, () => {
+        this._getReservationsForDate();
       });
     } else {
       this.setState({
@@ -142,7 +147,6 @@ export default class RoomsOverview extends React.Component {
      *  add class instead of display none so that its still available in DOM,
      *  also dont reset on new day
      */
-
     const dateString = this.state.date.toGMTString().slice(0, -13);
     let roomsList;
     // Better performance wise
@@ -155,7 +159,8 @@ export default class RoomsOverview extends React.Component {
                   date={this.state.date.yyyymmdd()}
                   fetcher={this.props.fetcher}
                   token={this.props.token}
-                  room={room}/>
+                  room={room}
+                  futureReservation={this.state.futureReservation ? this._filterReservationsByRoom(this.state.futureReservations, room.id) : null}/>
       });
     } else {
       roomsList = this.state.rooms.map((room, i) => {

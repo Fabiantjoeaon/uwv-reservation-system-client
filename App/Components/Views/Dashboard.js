@@ -128,6 +128,7 @@ export default class Dashboard extends React.Component {
       fetcher: this.props.fetcher,
       token: token,
       logout: this.props.logout,
+      setError: this.props.setError,
       setCurrentPage: this._setCurrentPage,
       customers: this.state.customers
     });
