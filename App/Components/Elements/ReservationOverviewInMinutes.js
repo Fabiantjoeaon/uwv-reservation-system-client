@@ -75,7 +75,6 @@ class QuarterLine extends React.Component {
     super();
 
     this.state = {
-      selected: false,
       reserved: false
     }
 
@@ -83,7 +82,6 @@ class QuarterLine extends React.Component {
   }
 
   _handleClick() {
-    console.log(this.props.index, this.props.currentIndex)
     this.props.setCurrentIndex(this.props.index);
   }
 
@@ -139,15 +137,30 @@ export default class ReservationOverviewInMinutes extends React.Component {
     if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
       const startTime = eval(`this.refs.line_${this.state.currentIndex}`).props.timeSlot;
       const endTime = eval(`this.refs.line_${index}`).props.timeSlot;
-      this.setState({
-        currentIndex: index,
-        startPoint: this.state.currentIndex,
-        startTime: startTime,
-        endPoint: index,
-        endTime: endTime
-      }, () => {
-        this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint));
-      });
+
+      // If beginpoint is selected first, count lines up
+      if(this.state.currentIndex < index) {
+        this.setState({
+          currentIndex: index,
+          startPoint: this.state.currentIndex,
+          startTime: startTime,
+          endPoint: index,
+          endTime: endTime
+        }, () => {
+          this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc');
+        });
+      } else {
+        this.setState({
+          currentIndex: index,
+          startPoint: index,
+          startTime: endTime,
+          endPoint: this.state.currentIndex,
+          endTime: startTime
+        }, () => {
+          // console.log(this.state.startPoint, this.state.endPoint);
+          this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'desc');
+        });
+      }
     }
     // Third click, reset
     if (this.state.startPoint >= 0 && this.state.endPoint >= 0){
@@ -159,11 +172,23 @@ export default class ReservationOverviewInMinutes extends React.Component {
     this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: []});
   }
 
-  _fillLines(numberLines) {
+  _fillLines(numberLines, dir) {
     const activeLines = [];
-    for(let i = 0; i <= numberLines; i++) {
-      const lineIndex = i + this.state.startPoint;
-      activeLines.push(lineIndex);
+    switch(dir) {
+      case 'asc':
+        for(let i = 0; i <= numberLines; i++) {
+          const lineIndex = i + this.state.startPoint;
+          activeLines.push(lineIndex);
+        }
+        break;
+
+      case 'desc':
+        for(let i = numberLines; i >= 0; i--) {
+          console.log(numberLines, i)
+          const lineIndex = i + this.state.startPoint;
+          activeLines.push(lineIndex);
+        }
+        break;
     }
     this.setState({
       activeLines: activeLines
@@ -177,7 +202,6 @@ export default class ReservationOverviewInMinutes extends React.Component {
 
   render() {
     const reservations = resolveArrayLikeObject(this.state.reservations);
-    console.log(reservations);
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
 

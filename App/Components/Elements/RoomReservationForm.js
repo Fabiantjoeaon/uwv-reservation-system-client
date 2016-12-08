@@ -179,6 +179,7 @@ export default class RoomReservationForm extends React.Component {
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
               <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
+              <Input color='#fff' secondColor={inputColor} name='description' ref='description' type='text' label='Description' />
           </ReservationFormDivider>
 
           <ReservationFormDivider dir='right'>
