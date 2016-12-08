@@ -66,7 +66,6 @@ const CustomerLabel = styled.label`
 
   &:after {
     content: '';
-
     height: 1px;
     display: inline-block;
     background-color: #fff;

@@ -14,6 +14,7 @@ const TimePickerWrapper = styled.div`
   width: 100%;
   position: relative;
   display: inline-block;
+  height: auto;
 `;
 
 const MinuteOverview = styled.div`
@@ -39,11 +40,13 @@ const StyledLine = styled.span`
     content: attr(data-time);
     color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
     position: absolute;
+    font-weight: ${props => props.hour ? 900 : 100};
     display: block;
     width: 10%;
     height: 100%;
     top:0;
-    left:-10%;
+    text-align: right;
+    left:-15%;
     transition: all 0.2s ease-out;
   }
 
@@ -76,6 +79,8 @@ class QuarterLine extends React.Component {
     super();
 
     _.bindAll(this, '_handleClick');
+
+    this.hour = false;
   }
 
   _handleClick() {
@@ -83,8 +88,12 @@ class QuarterLine extends React.Component {
   }
 
   render() {
+    const {timeSlot, reserved, selected, totalQuarters} = this.props;
+    if(timeSlot.indexOf('00') !== -1) {
+      this.hour = true;
+    }
     return(
-      <StyledLine onClick={this._handleClick} data-time={this.props.timeSlot} reserved={this.props.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}/>
+      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={reserved} selected={selected} totalQuarters={totalQuarters}/>
     )
   }
 }
@@ -114,7 +123,7 @@ export default class TimePicker extends React.Component {
       activeLines: []
     };
 
-    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate', '_reset');
+    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate', '_makeHoursAndMinutes', '_reset');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -124,13 +133,12 @@ export default class TimePicker extends React.Component {
   }
 
   _setCurrentIndex(index) {
-    // First click, set start point
+    // Click 1: set start point
     if(!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
       const startTime = eval(`this.refs.line_${index}`).props.timeSlot;
       this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
     }
-    // Second click, set start point to click before, and end point to this one
-    // TODO: Check if index is before so that you can handle going backwards!
+    // Click 2: set start point to click before, and end point to this one
     if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
       const startTime = eval(`this.refs.line_${this.state.currentIndex}`).props.timeSlot;
       const endTime = eval(`this.refs.line_${index}`).props.timeSlot;
@@ -146,6 +154,7 @@ export default class TimePicker extends React.Component {
         }, () => {
           this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc');
         });
+      // Endpoint is selected first, count lines down
       } else {
         this.setState({
           currentIndex: index,
@@ -154,12 +163,11 @@ export default class TimePicker extends React.Component {
           endPoint: this.state.currentIndex,
           endTime: startTime
         }, () => {
-          // console.log(this.state.startPoint, this.state.endPoint);
           this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'desc');
         });
       }
     }
-    // Third click, reset
+    // Click 3: reset
     if (this.state.startPoint >= 0 && this.state.endPoint >= 0){
       this._reset();
     }
@@ -196,8 +204,23 @@ export default class TimePicker extends React.Component {
     return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
   }
 
+  _makeHoursAndMinutes(time) {
+    const timeObj = new Date(time);
+    const minutesWithoutZero = timeObj.getMinutes();
+    const minutes = minutesWithoutZero < 10 ? `0${minutesWithoutZero}` : minutesWithoutZero;
+    const hours = timeObj.getHours();
+    const string = `${hours}:${minutes}`;
+
+    return string;
+  }
+
   render() {
     const reservations = resolveArrayLikeObject(this.props.reservations);
+    reservations.map((res) => {
+      const startTime = this._makeHoursAndMinutes(res.start_date_time);
+      const endTime = this._makeHoursAndMinutes(res.end_date_time);
+      console.log(startTime, endTime);
+    })
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
 
@@ -211,9 +234,7 @@ export default class TimePicker extends React.Component {
           {quarters.map((quarter, i) => {
             //TODO: Move this to renderLines function
             const addedTime = dateFns.addMinutes(date, (i * this.timeMultiplier));
-            const addedInminutes = addedTime.getMinutes();
-            const minutes = addedInminutes < 10 ? `0${addedInminutes}` : addedInminutes;
-            const timeSlot = `${addedTime.getHours()}:${minutes}`;
+            const timeSlot = this._makeHoursAndMinutes(addedTime);
 
             if(!(_.indexOf(this.state.activeLines, i) == -1)) {
               return <QuarterLine
