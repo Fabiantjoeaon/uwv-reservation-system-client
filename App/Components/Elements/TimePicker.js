@@ -29,7 +29,8 @@ const StyledLine = styled.span`
   display: block;
   height: calc(65em / ${props => props.totalQuarters});
   box-sizing: border-box;
-  border-bottom: 1px solid rgba(222, 222, 222, 0.7);
+  padding: 5px 0px;
+  border-top: 1px solid rgba(222, 222, 222, 0.7);
   transition: 0.2s ease-out;
   cursor: pointer;
   background-color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
@@ -74,10 +75,6 @@ class QuarterLine extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      reserved: false
-    }
-
     _.bindAll(this, '_handleClick');
   }
 
@@ -87,12 +84,12 @@ class QuarterLine extends React.Component {
 
   render() {
     return(
-      <StyledLine onClick={this._handleClick} data-time={this.props.timeSlot} reserved={this.state.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}/>
+      <StyledLine onClick={this._handleClick} data-time={this.props.timeSlot} reserved={this.props.reserved} selected={this.props.selected} totalQuarters={this.props.totalQuarters}/>
     )
   }
 }
 
-export default class ReservationOverviewInMinutes extends React.Component {
+export default class TimePicker extends React.Component {
   constructor() {
     super();
 
@@ -184,7 +181,6 @@ export default class ReservationOverviewInMinutes extends React.Component {
 
       case 'desc':
         for(let i = numberLines; i >= 0; i--) {
-          console.log(numberLines, i)
           const lineIndex = i + this.state.startPoint;
           activeLines.push(lineIndex);
         }
@@ -201,7 +197,7 @@ export default class ReservationOverviewInMinutes extends React.Component {
   }
 
   render() {
-    const reservations = resolveArrayLikeObject(this.state.reservations);
+    const reservations = resolveArrayLikeObject(this.props.reservations);
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
 

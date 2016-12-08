@@ -10,7 +10,7 @@ import Input from './Input';
 import Title from './Title';
 import Button from './Button';
 import Notice from './Notice';
-import ReservationOverviewInMinutes from './ReservationOverviewInMinutes';
+import TimePicker from './TimePicker';
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 const ReservationFormTitle = styled(Title)`
@@ -45,6 +45,7 @@ const CustomerLabel = styled.label`
   font-family: sans-serif;
   font-weight: 100;
   font-size: 1.8em;
+  display: inline-block;
   margin-left: 1.5em;
   cursor: pointer;
 
@@ -61,6 +62,17 @@ const CustomerLabel = styled.label`
      cursor: pointer;
      background-color: rgba(0,0,0,0);
      transition: all 0.2s ease-out;
+  }
+
+  &:after {
+    content: '';
+
+    height: 1px;
+    display: inline-block;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 `;
 
@@ -184,7 +196,7 @@ export default class RoomReservationForm extends React.Component {
 
           <ReservationFormDivider dir='right'>
             <h2 className='res-form__title'>Pick a time:</h2>
-            <ReservationOverviewInMinutes date={this.props.date} type={this.props.type} reservations={this.state.reservations}/>
+            <TimePicker date={this.props.date} type={this.props.type} reservations={this.state.reservations}/>
           </ReservationFormDivider>
         </ReservationForm>
       </div>

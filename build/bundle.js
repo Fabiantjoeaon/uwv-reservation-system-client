@@ -85419,7 +85419,7 @@
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin: 6em auto 4em auto;\n'], ['\n  margin: 6em auto 4em auto;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n'], ['\n  width: 50%;\n  display: inline-block;\n  vertical-align:top;\n\n  @media(max-width: 950px) {\n    display: block;\n    width: 100%;\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  margin-bottom: 5em;\n  display: block;\n'], ['\n  margin-bottom: 5em;\n  display: block;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  display: inline-block;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n\n  &:after {\n    content: \'\';\n\n    height: 1px;\n    display: inline-block;\n    background-color: #fff;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  display: inline-block;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n\n  &:after {\n    content: \'\';\n\n    height: 1px;\n    display: inline-block;\n    background-color: #fff;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n'], ['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n']),
 	    _templateObject7 = _taggedTemplateLiteral(['\n  display: none;\n'], ['\n  display: none;\n']);
 
@@ -85451,9 +85451,9 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
-	var _ReservationOverviewInMinutes = __webpack_require__(699);
+	var _TimePicker = __webpack_require__(860);
 
-	var _ReservationOverviewInMinutes2 = _interopRequireDefault(_ReservationOverviewInMinutes);
+	var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
 	var _ResolveArrayLikeObject = __webpack_require__(700);
 
@@ -85658,7 +85658,7 @@
 	              { className: 'res-form__title' },
 	              'Pick a time:'
 	            ),
-	            _react2.default.createElement(_ReservationOverviewInMinutes2.default, { date: this.props.date, type: this.props.type, reservations: this.state.reservations })
+	            _react2.default.createElement(_TimePicker2.default, { date: this.props.date, type: this.props.type, reservations: this.state.reservations })
 	          )
 	        )
 	      );
@@ -85671,292 +85671,7 @@
 	exports.default = RoomReservationForm;
 
 /***/ },
-/* 699 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
-
-	var _react = __webpack_require__(299);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(331);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	var _ResolveArrayLikeObject = __webpack_require__(700);
-
-	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var dateFns = __webpack_require__(701);
-	var _ = __webpack_require__(591);
-
-	/* ------------------------------ START STYLES ----------------------------- */
-	var TimePickerWrapper = _styledComponents2.default.div(_templateObject);
-
-	var MinuteOverview = _styledComponents2.default.div(_templateObject2);
-
-	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
-	  return props.totalQuarters;
-	}, function (props) {
-	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
-	}, function (props) {
-	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
-	});
-
-	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
-
-	var TimeIndicator = _styledComponents2.default.h3(_templateObject5);
-	/* ------------------------------ END STYLES ----------------------------- */
-
-	var QuarterLine = function (_React$Component) {
-	  _inherits(QuarterLine, _React$Component);
-
-	  function QuarterLine() {
-	    _classCallCheck(this, QuarterLine);
-
-	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
-
-	    _this.state = {
-	      reserved: false
-	    };
-
-	    _.bindAll(_this, '_handleClick');
-	    return _this;
-	  }
-
-	  _createClass(QuarterLine, [{
-	    key: '_handleClick',
-	    value: function _handleClick() {
-	      this.props.setCurrentIndex(this.props.index);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, 'data-time': this.props.timeSlot, reserved: this.state.reserved, selected: this.props.selected, totalQuarters: this.props.totalQuarters });
-	    }
-	  }]);
-
-	  return QuarterLine;
-	}(_react2.default.Component);
-
-	var ReservationOverviewInMinutes = function (_React$Component2) {
-	  _inherits(ReservationOverviewInMinutes, _React$Component2);
-
-	  function ReservationOverviewInMinutes() {
-	    _classCallCheck(this, ReservationOverviewInMinutes);
-
-	    var _this2 = _possibleConstructorReturn(this, (ReservationOverviewInMinutes.__proto__ || Object.getPrototypeOf(ReservationOverviewInMinutes)).call(this));
-
-	    _this2.startTime = '8:00';
-	    _this2.endTime = '18:00';
-	    _this2.timeMultiplier = 15;
-	    _this2.startInHours = parseInt(_this2.startTime.slice(0, -2));
-	    _this2.minutesFromStartTime = _this2.startInHours * 60;
-	    var totalHours = Math.abs(_this2.startInHours - parseInt(_this2.endTime.slice(0, -2)));
-	    var totalMinutes = totalHours * 60;
-	    // Add 1 for last time slot
-	    var quarters = Array(totalHours * 4 + 1);
-
-	    _this2.state = {
-	      reservations: {},
-	      quarters: quarters,
-	      currentIndex: 0,
-	      startPoint: -1,
-	      startTime: null,
-	      endPoint: -1,
-	      endTime: null,
-	      activeLines: []
-	    };
-
-	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_toDate', '_reset');
-	    return _this2;
-	  }
-
-	  _createClass(ReservationOverviewInMinutes, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({
-	        reservations: nextProps.reservations
-	      });
-	    }
-	  }, {
-	    key: '_setCurrentIndex',
-	    value: function _setCurrentIndex(index) {
-	      var _this3 = this;
-
-	      // First click, set start point
-	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
-	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
-	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
-	      }
-	      // Second click, set start point to click before, and end point to this one
-	      // TODO: Check if index is before so that you can handle going backwards!
-	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
-	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
-	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
-
-	        // If beginpoint is selected first, count lines up
-	        if (this.state.currentIndex < index) {
-	          this.setState({
-	            currentIndex: index,
-	            startPoint: this.state.currentIndex,
-	            startTime: _startTime,
-	            endPoint: index,
-	            endTime: endTime
-	          }, function () {
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
-	          });
-	        } else {
-	          this.setState({
-	            currentIndex: index,
-	            startPoint: index,
-	            startTime: endTime,
-	            endPoint: this.state.currentIndex,
-	            endTime: _startTime
-	          }, function () {
-	            // console.log(this.state.startPoint, this.state.endPoint);
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'desc');
-	          });
-	        }
-	      }
-	      // Third click, reset
-	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
-	        this._reset();
-	      }
-	    }
-	  }, {
-	    key: '_reset',
-	    value: function _reset() {
-	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
-	    }
-	  }, {
-	    key: '_fillLines',
-	    value: function _fillLines(numberLines, dir) {
-	      var activeLines = [];
-	      switch (dir) {
-	        case 'asc':
-	          for (var i = 0; i <= numberLines; i++) {
-	            var lineIndex = i + this.state.startPoint;
-	            activeLines.push(lineIndex);
-	          }
-	          break;
-
-	        case 'desc':
-	          for (var _i = numberLines; _i >= 0; _i--) {
-	            console.log(numberLines, _i);
-	            var _lineIndex = _i + this.state.startPoint;
-	            activeLines.push(_lineIndex);
-	          }
-	          break;
-	      }
-	      this.setState({
-	        activeLines: activeLines
-	      });
-	    }
-	  }, {
-	    key: '_toDate',
-	    value: function _toDate(dateStr) {
-	      var parts = dateStr.split("-");
-	      return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
-	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
-	      var date = this._toDate(this.props.date);
-
-	      return _react2.default.createElement(
-	        TimePickerWrapper,
-	        null,
-	        _react2.default.createElement(
-	          CurrentReservationDataWrapper,
-	          null,
-	          !(this.state.startPoint == -1) ? _react2.default.createElement(
-	            TimeIndicator,
-	            null,
-	            'Start time: ',
-	            this.state.startTime
-	          ) : null,
-	          !(this.state.endPoint == -1) ? _react2.default.createElement(
-	            TimeIndicator,
-	            null,
-	            'End time: ',
-	            this.state.endTime
-	          ) : null
-	        ),
-	        _react2.default.createElement(
-	          MinuteOverview,
-	          null,
-	          quarters.map(function (quarter, i) {
-	            //TODO: Move this to renderLines function
-	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
-	            var addedInminutes = addedTime.getMinutes();
-	            var minutes = addedInminutes < 10 ? '0' + addedInminutes : addedInminutes;
-	            var timeSlot = addedTime.getHours() + ':' + minutes;
-
-	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
-	              return _react2.default.createElement(QuarterLine, {
-	                key: i,
-	                index: i,
-	                selected: true,
-	                timeSlot: timeSlot,
-	                ref: 'line_' + i,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
-	                totalQuarters: quarters.length });
-	            } else {
-	              return _react2.default.createElement(QuarterLine, {
-	                key: i,
-	                index: i,
-	                selected: false,
-	                timeSlot: timeSlot,
-	                ref: 'line_' + i,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
-	                totalQuarters: quarters.length });
-	            }
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return ReservationOverviewInMinutes;
-	}(_react2.default.Component);
-
-	exports.default = ReservationOverviewInMinutes;
-
-/***/ },
+/* 699 */,
 /* 700 */
 /***/ function(module, exports) {
 
@@ -93119,6 +92834,287 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 860 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    left:-10%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _ResolveArrayLikeObject = __webpack_require__(700);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var dateFns = __webpack_require__(701);
+	var _ = __webpack_require__(591);
+
+	/* ------------------------------ START STYLES ----------------------------- */
+	var TimePickerWrapper = _styledComponents2.default.div(_templateObject);
+
+	var MinuteOverview = _styledComponents2.default.div(_templateObject2);
+
+	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
+	  return props.totalQuarters;
+	}, function (props) {
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
+	}, function (props) {
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
+	});
+
+	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
+
+	var TimeIndicator = _styledComponents2.default.h3(_templateObject5);
+	/* ------------------------------ END STYLES ----------------------------- */
+
+	var QuarterLine = function (_React$Component) {
+	  _inherits(QuarterLine, _React$Component);
+
+	  function QuarterLine() {
+	    _classCallCheck(this, QuarterLine);
+
+	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
+
+	    _.bindAll(_this, '_handleClick');
+	    return _this;
+	  }
+
+	  _createClass(QuarterLine, [{
+	    key: '_handleClick',
+	    value: function _handleClick() {
+	      this.props.setCurrentIndex(this.props.index);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, 'data-time': this.props.timeSlot, reserved: this.props.reserved, selected: this.props.selected, totalQuarters: this.props.totalQuarters });
+	    }
+	  }]);
+
+	  return QuarterLine;
+	}(_react2.default.Component);
+
+	var TimePicker = function (_React$Component2) {
+	  _inherits(TimePicker, _React$Component2);
+
+	  function TimePicker() {
+	    _classCallCheck(this, TimePicker);
+
+	    var _this2 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this));
+
+	    _this2.startTime = '8:00';
+	    _this2.endTime = '18:00';
+	    _this2.timeMultiplier = 15;
+	    _this2.startInHours = parseInt(_this2.startTime.slice(0, -2));
+	    _this2.minutesFromStartTime = _this2.startInHours * 60;
+	    var totalHours = Math.abs(_this2.startInHours - parseInt(_this2.endTime.slice(0, -2)));
+	    var totalMinutes = totalHours * 60;
+	    // Add 1 for last time slot
+	    var quarters = Array(totalHours * 4 + 1);
+
+	    _this2.state = {
+	      reservations: {},
+	      quarters: quarters,
+	      currentIndex: 0,
+	      startPoint: -1,
+	      startTime: null,
+	      endPoint: -1,
+	      endTime: null,
+	      activeLines: []
+	    };
+
+	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_toDate', '_reset');
+	    return _this2;
+	  }
+
+	  _createClass(TimePicker, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        reservations: nextProps.reservations
+	      });
+	    }
+	  }, {
+	    key: '_setCurrentIndex',
+	    value: function _setCurrentIndex(index) {
+	      var _this3 = this;
+
+	      // First click, set start point
+	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
+	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
+	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
+	      }
+	      // Second click, set start point to click before, and end point to this one
+	      // TODO: Check if index is before so that you can handle going backwards!
+	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
+	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
+	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
+
+	        // If beginpoint is selected first, count lines up
+	        if (this.state.currentIndex < index) {
+	          this.setState({
+	            currentIndex: index,
+	            startPoint: this.state.currentIndex,
+	            startTime: _startTime,
+	            endPoint: index,
+	            endTime: endTime
+	          }, function () {
+	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
+	          });
+	        } else {
+	          this.setState({
+	            currentIndex: index,
+	            startPoint: index,
+	            startTime: endTime,
+	            endPoint: this.state.currentIndex,
+	            endTime: _startTime
+	          }, function () {
+	            // console.log(this.state.startPoint, this.state.endPoint);
+	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'desc');
+	          });
+	        }
+	      }
+	      // Third click, reset
+	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
+	        this._reset();
+	      }
+	    }
+	  }, {
+	    key: '_reset',
+	    value: function _reset() {
+	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
+	    }
+	  }, {
+	    key: '_fillLines',
+	    value: function _fillLines(numberLines, dir) {
+	      var activeLines = [];
+	      switch (dir) {
+	        case 'asc':
+	          for (var i = 0; i <= numberLines; i++) {
+	            var lineIndex = i + this.state.startPoint;
+	            activeLines.push(lineIndex);
+	          }
+	          break;
+
+	        case 'desc':
+	          for (var _i = numberLines; _i >= 0; _i--) {
+	            var _lineIndex = _i + this.state.startPoint;
+	            activeLines.push(_lineIndex);
+	          }
+	          break;
+	      }
+	      this.setState({
+	        activeLines: activeLines
+	      });
+	    }
+	  }, {
+	    key: '_toDate',
+	    value: function _toDate(dateStr) {
+	      var parts = dateStr.split("-");
+	      return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.props.reservations);
+	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
+	      var date = this._toDate(this.props.date);
+
+	      return _react2.default.createElement(
+	        TimePickerWrapper,
+	        null,
+	        _react2.default.createElement(
+	          CurrentReservationDataWrapper,
+	          null,
+	          !(this.state.startPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'Start time: ',
+	            this.state.startTime
+	          ) : null,
+	          !(this.state.endPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'End time: ',
+	            this.state.endTime
+	          ) : null
+	        ),
+	        _react2.default.createElement(
+	          MinuteOverview,
+	          null,
+	          quarters.map(function (quarter, i) {
+	            //TODO: Move this to renderLines function
+	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
+	            var addedInminutes = addedTime.getMinutes();
+	            var minutes = addedInminutes < 10 ? '0' + addedInminutes : addedInminutes;
+	            var timeSlot = addedTime.getHours() + ':' + minutes;
+
+	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                selected: true,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            } else {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                selected: false,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            }
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TimePicker;
+	}(_react2.default.Component);
+
+	exports.default = TimePicker;
 
 /***/ }
 /******/ ]);
