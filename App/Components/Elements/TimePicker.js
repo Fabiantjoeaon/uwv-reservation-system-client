@@ -55,7 +55,7 @@ const StyledLine = styled.span`
   }
 
   &:hover::before {
-    color: rgb(120, 120, 120);
+    color: ${props => props.reserved ? 'rgb(221,82,82)' : 'rgb(120, 120, 120)'}
   }
 `;
 
@@ -78,46 +78,21 @@ class QuarterLine extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_handleClick', '_setReserved');
+    _.bindAll(this, '_handleClick');
 
     this.hour = false;
-
-    this.state = {
-      reserved: false
-    }
   }
 
   _handleClick() {
-    if(this.state.reserved) return;
+    if(this.props.reserved) return;
     this.props.setCurrentIndex(this.props.index);
-  }
-
-  _setReserved(nextProps) {
-    if(!nextProps.reservations) return;
-    let reserved =  false;
-    nextProps.reservations.map((res) => {
-      const startInt = parseInt(res.startTime.replace(':', ''));
-      const endInt = parseInt(res.endTime.replace(':', ''));
-      const timeSlotInt = parseInt(this.props.timeSlot.replace(':', ''));
-
-      if(timeSlotInt >= startInt  && timeSlotInt <= endInt) {
-        reserved = true;
-      }
-    });
-    this.setState({
-      reserved: reserved
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this._setReserved(nextProps);
   }
 
   render() {
     const {timeSlot, reserved, selected, totalQuarters, reservations} = this.props;
     this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
     return(
-      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={this.state.reserved} selected={selected} totalQuarters={totalQuarters}/>
+      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={reserved} selected={selected} totalQuarters={totalQuarters}/>
     )
   }
 }
@@ -148,7 +123,8 @@ export default class TimePicker extends React.Component {
       activeLines: []
     };
 
-    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_toDate', '_makeHoursAndMinutes', '_reset');
+    _.bindAll(this, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved',
+    '_checkReservedLinesForFilling', '_toDate', '_makeHoursAndMinutes', '_reset');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -202,20 +178,34 @@ export default class TimePicker extends React.Component {
     this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: []});
   }
 
+  _checkReservedLinesForFilling(i) {
+    return eval(`this.refs.line_${i}`).props.reserved;
+  }
+
   _fillLines(numberLines, dir) {
     const activeLines = [];
     switch(dir) {
       case 'asc':
         for(let i = 0; i <= numberLines; i++) {
           const lineIndex = i + this.state.startPoint;
-          activeLines.push(lineIndex);
+          if(this._checkReservedLinesForFilling(lineIndex)) {
+            this._reset();
+            return;
+          } else {
+            activeLines.push(lineIndex);
+          }
         }
         break;
 
       case 'desc':
         for(let i = numberLines; i >= 0; i--) {
           const lineIndex = i + this.state.startPoint;
-          activeLines.push(lineIndex);
+          if(this._checkReservedLinesForFilling(lineIndex)) {
+            this._reset();
+            return;
+          } else {
+            activeLines.push(lineIndex);
+          }
         }
         break;
     }
@@ -254,6 +244,23 @@ export default class TimePicker extends React.Component {
     return reservationTimesArray;
   }
 
+
+  _checkIfLineIsReserved(reservations, timeSlot) {
+    if(!reservations) return;
+    let reserved =  false;
+    reservations.map((res) => {
+      const startInt = parseInt(res.startTime.replace(':', ''));
+      const endInt = parseInt(res.endTime.replace(':', ''));
+      const timeSlotInt = parseInt(timeSlot.replace(':', ''));
+
+      if(timeSlotInt >= startInt  && timeSlotInt <= endInt) {
+        reserved = true;
+      }
+    });
+
+    return reserved;
+  }
+
   render() {
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
@@ -270,7 +277,7 @@ export default class TimePicker extends React.Component {
             //TODO: Move this to renderLines function
             const addedTime = dateFns.addMinutes(date, (i * this.timeMultiplier));
             const timeSlot = this._makeHoursAndMinutes(addedTime);
-
+            const isReserved = this._checkIfLineIsReserved(reservations, timeSlot)
             if(!(_.indexOf(this.state.activeLines, i) == -1)) {
               return <QuarterLine
                         key={i}
@@ -289,6 +296,7 @@ export default class TimePicker extends React.Component {
                         selected={false}
                         timeSlot={timeSlot}
                         ref={`line_${i}`}
+                        reserved={isReserved}
                         setCurrentIndex={this._setCurrentIndex}
                         currentIndex={this.state.currentIndex}
                         totalQuarters={quarters.length}/>

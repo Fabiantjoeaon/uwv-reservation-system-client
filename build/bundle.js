@@ -85691,7 +85691,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
 
@@ -85739,6 +85739,8 @@
 	  return props.hour ? 900 : 100;
 	}, function (props) {
 	  return props.reserved ? 'rgb(221,82,82)' : 'rgb(120, 120, 120)';
+	}, function (props) {
+	  return props.reserved ? 'rgb(221,82,82)' : 'rgb(120, 120, 120)';
 	});
 
 	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
@@ -85754,46 +85756,17 @@
 
 	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
 
-	    _.bindAll(_this, '_handleClick', '_setReserved');
+	    _.bindAll(_this, '_handleClick');
 
 	    _this.hour = false;
-
-	    _this.state = {
-	      reserved: false
-	    };
 	    return _this;
 	  }
 
 	  _createClass(QuarterLine, [{
 	    key: '_handleClick',
 	    value: function _handleClick() {
-	      if (this.state.reserved) return;
+	      if (this.props.reserved) return;
 	      this.props.setCurrentIndex(this.props.index);
-	    }
-	  }, {
-	    key: '_setReserved',
-	    value: function _setReserved(nextProps) {
-	      var _this2 = this;
-
-	      if (!nextProps.reservations) return;
-	      var reserved = false;
-	      nextProps.reservations.map(function (res) {
-	        var startInt = parseInt(res.startTime.replace(':', ''));
-	        var endInt = parseInt(res.endTime.replace(':', ''));
-	        var timeSlotInt = parseInt(_this2.props.timeSlot.replace(':', ''));
-
-	        if (timeSlotInt >= startInt && timeSlotInt <= endInt) {
-	          reserved = true;
-	        }
-	      });
-	      this.setState({
-	        reserved: reserved
-	      });
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this._setReserved(nextProps);
 	    }
 	  }, {
 	    key: 'render',
@@ -85806,7 +85779,7 @@
 	          reservations = _props.reservations;
 
 	      this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
-	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: this.hour, 'data-time': timeSlot, reserved: this.state.reserved, selected: selected, totalQuarters: totalQuarters });
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: this.hour, 'data-time': timeSlot, reserved: reserved, selected: selected, totalQuarters: totalQuarters });
 	    }
 	  }]);
 
@@ -85822,19 +85795,19 @@
 	  function TimePicker() {
 	    _classCallCheck(this, TimePicker);
 
-	    var _this3 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this));
+	    var _this2 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this));
 
-	    _this3.startTime = '8:00';
-	    _this3.endTime = '18:00';
-	    _this3.timeMultiplier = 15;
-	    _this3.startInHours = parseInt(_this3.startTime.slice(0, -2));
-	    _this3.minutesFromStartTime = _this3.startInHours * 60;
-	    var totalHours = Math.abs(_this3.startInHours - parseInt(_this3.endTime.slice(0, -2)));
+	    _this2.startTime = '8:00';
+	    _this2.endTime = '18:00';
+	    _this2.timeMultiplier = 15;
+	    _this2.startInHours = parseInt(_this2.startTime.slice(0, -2));
+	    _this2.minutesFromStartTime = _this2.startInHours * 60;
+	    var totalHours = Math.abs(_this2.startInHours - parseInt(_this2.endTime.slice(0, -2)));
 	    var totalMinutes = totalHours * 60;
 	    // Add 1 for last time slot
 	    var quarters = Array(totalHours * 4 + 1);
 
-	    _this3.state = {
+	    _this2.state = {
 	      reservations: {},
 	      quarters: quarters,
 	      currentIndex: 0,
@@ -85845,8 +85818,8 @@
 	      activeLines: []
 	    };
 
-	    _.bindAll(_this3, '_setCurrentIndex', '_fillLines', '_toDate', '_makeHoursAndMinutes', '_reset');
-	    return _this3;
+	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved', '_checkReservedLinesForFilling', '_toDate', '_makeHoursAndMinutes', '_reset');
+	    return _this2;
 	  }
 
 	  _createClass(TimePicker, [{
@@ -85859,7 +85832,7 @@
 	  }, {
 	    key: '_setCurrentIndex',
 	    value: function _setCurrentIndex(index) {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      // Click 1: set start point
 	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
@@ -85880,7 +85853,7 @@
 	            endPoint: index,
 	            endTime: endTime
 	          }, function () {
-	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'asc');
+	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
 	          });
 	          // Endpoint is selected first, count lines down
 	        } else {
@@ -85891,7 +85864,7 @@
 	            endPoint: this.state.currentIndex,
 	            endTime: _startTime
 	          }, function () {
-	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'desc');
+	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'desc');
 	          });
 	        }
 	      }
@@ -85906,6 +85879,11 @@
 	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
 	    }
 	  }, {
+	    key: '_checkReservedLinesForFilling',
+	    value: function _checkReservedLinesForFilling(i) {
+	      return eval('this.refs.line_' + i).props.reserved;
+	    }
+	  }, {
 	    key: '_fillLines',
 	    value: function _fillLines(numberLines, dir) {
 	      var activeLines = [];
@@ -85913,14 +85891,24 @@
 	        case 'asc':
 	          for (var i = 0; i <= numberLines; i++) {
 	            var lineIndex = i + this.state.startPoint;
-	            activeLines.push(lineIndex);
+	            if (this._checkReservedLinesForFilling(lineIndex)) {
+	              this._reset();
+	              return;
+	            } else {
+	              activeLines.push(lineIndex);
+	            }
 	          }
 	          break;
 
 	        case 'desc':
 	          for (var _i = numberLines; _i >= 0; _i--) {
 	            var _lineIndex = _i + this.state.startPoint;
-	            activeLines.push(_lineIndex);
+	            if (this._checkReservedLinesForFilling(_lineIndex)) {
+	              this._reset();
+	              return;
+	            } else {
+	              activeLines.push(_lineIndex);
+	            }
 	          }
 	          break;
 	      }
@@ -85948,7 +85936,7 @@
 	  }, {
 	    key: '_returnReservationTimes',
 	    value: function _returnReservationTimes(reservations) {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      var resolvedReservations = (0, _ResolveArrayLikeObject2.default)(reservations);
 	      var reservationTimesArray = [];
@@ -85956,17 +85944,34 @@
 	        var reservationTimes = {
 	          id: i,
 	          activity: res.activity,
-	          startTime: _this5._makeHoursAndMinutes(res.start_date_time),
-	          endTime: _this5._makeHoursAndMinutes(res.end_date_time)
+	          startTime: _this4._makeHoursAndMinutes(res.start_date_time),
+	          endTime: _this4._makeHoursAndMinutes(res.end_date_time)
 	        };
 	        reservationTimesArray.push(reservationTimes);
 	      });
 	      return reservationTimesArray;
 	    }
 	  }, {
+	    key: '_checkIfLineIsReserved',
+	    value: function _checkIfLineIsReserved(reservations, timeSlot) {
+	      if (!reservations) return;
+	      var reserved = false;
+	      reservations.map(function (res) {
+	        var startInt = parseInt(res.startTime.replace(':', ''));
+	        var endInt = parseInt(res.endTime.replace(':', ''));
+	        var timeSlotInt = parseInt(timeSlot.replace(':', ''));
+
+	        if (timeSlotInt >= startInt && timeSlotInt <= endInt) {
+	          reserved = true;
+	        }
+	      });
+
+	      return reserved;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this6 = this;
+	      var _this5 = this;
 
 	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
 	      var date = this._toDate(this.props.date);
@@ -85996,18 +86001,18 @@
 	          null,
 	          quarters.map(function (quarter, i) {
 	            //TODO: Move this to renderLines function
-	            var addedTime = dateFns.addMinutes(date, i * _this6.timeMultiplier);
-	            var timeSlot = _this6._makeHoursAndMinutes(addedTime);
-
-	            if (!(_.indexOf(_this6.state.activeLines, i) == -1)) {
+	            var addedTime = dateFns.addMinutes(date, i * _this5.timeMultiplier);
+	            var timeSlot = _this5._makeHoursAndMinutes(addedTime);
+	            var isReserved = _this5._checkIfLineIsReserved(reservations, timeSlot);
+	            if (!(_.indexOf(_this5.state.activeLines, i) == -1)) {
 	              return _react2.default.createElement(QuarterLine, {
 	                key: i,
 	                index: i,
 	                selected: true,
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
-	                setCurrentIndex: _this6._setCurrentIndex,
-	                currentIndex: _this6.state.currentIndex,
+	                setCurrentIndex: _this5._setCurrentIndex,
+	                currentIndex: _this5.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            } else {
 	              return _react2.default.createElement(QuarterLine, {
@@ -86017,8 +86022,9 @@
 	                selected: false,
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
-	                setCurrentIndex: _this6._setCurrentIndex,
-	                currentIndex: _this6.state.currentIndex,
+	                reserved: isReserved,
+	                setCurrentIndex: _this5._setCurrentIndex,
+	                currentIndex: _this5.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            }
 	          })
