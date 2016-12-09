@@ -73,6 +73,10 @@ export default class Room extends React.Component {
   _renderFutureReservations() {
       if (!_.isEmpty(this.props.futureReservation)){
         const total = this.props.futureReservation.length;
+        // Ensure you always return the first reservation, so that index 0 in array is the first one
+        this.props.futureReservation.sort((a, b) => {
+          return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
+        });
         const time = convertDateTimeToTime(this.props.futureReservation[0].start_date_time);
         return (
           <h3 className='room__meta room__not-free'>

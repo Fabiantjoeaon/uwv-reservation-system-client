@@ -69124,6 +69124,10 @@
 	    value: function _renderFutureReservations() {
 	      if (!_.isEmpty(this.props.futureReservation)) {
 	        var total = this.props.futureReservation.length;
+	        // Ensure you always return the first reservation, so that index 0 in array is the first one
+	        this.props.futureReservation.sort(function (a, b) {
+	          return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
+	        });
 	        var time = (0, _DateUtils.convertDateTimeToTime)(this.props.futureReservation[0].start_date_time);
 	        return _react2.default.createElement(
 	          'h3',
@@ -85454,7 +85458,7 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
-	var _TimePicker = __webpack_require__(860);
+	var _TimePicker = __webpack_require__(699);
 
 	var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
@@ -85674,7 +85678,361 @@
 	exports.default = RoomReservationForm;
 
 /***/ },
-/* 699 */,
+/* 699 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	var _ResolveArrayLikeObject = __webpack_require__(700);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var dateFns = __webpack_require__(701);
+	var _ = __webpack_require__(591);
+
+	/* ------------------------------ START STYLES ----------------------------- */
+	var TimePickerWrapper = _styledComponents2.default.div(_templateObject);
+
+	var MinuteOverview = _styledComponents2.default.div(_templateObject2);
+
+	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
+	  return props.totalQuarters;
+	}, function (props) {
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)';
+	}, function (props) {
+	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)';
+	}, function (props) {
+	  return props.hour ? 900 : 100;
+	}, function (props) {
+	  return props.reserved ? 'rgb(221,82,82)' : 'rgb(120, 120, 120)';
+	});
+
+	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
+
+	var TimeIndicator = _styledComponents2.default.h3(_templateObject5);
+	/* ------------------------------ END STYLES ----------------------------- */
+
+	var QuarterLine = function (_React$Component) {
+	  _inherits(QuarterLine, _React$Component);
+
+	  function QuarterLine() {
+	    _classCallCheck(this, QuarterLine);
+
+	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
+
+	    _.bindAll(_this, '_handleClick', '_setReserved');
+
+	    _this.hour = false;
+
+	    _this.state = {
+	      reserved: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(QuarterLine, [{
+	    key: '_handleClick',
+	    value: function _handleClick() {
+	      if (this.state.reserved) return;
+	      this.props.setCurrentIndex(this.props.index);
+	    }
+	  }, {
+	    key: '_setReserved',
+	    value: function _setReserved(nextProps) {
+	      var _this2 = this;
+
+	      if (!nextProps.reservations) return;
+	      var reserved = false;
+	      nextProps.reservations.map(function (res) {
+	        var startInt = parseInt(res.startTime.replace(':', ''));
+	        var endInt = parseInt(res.endTime.replace(':', ''));
+	        var timeSlotInt = parseInt(_this2.props.timeSlot.replace(':', ''));
+
+	        if (timeSlotInt >= startInt && timeSlotInt <= endInt) {
+	          reserved = true;
+	        }
+	      });
+	      this.setState({
+	        reserved: reserved
+	      });
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this._setReserved(nextProps);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          timeSlot = _props.timeSlot,
+	          reserved = _props.reserved,
+	          selected = _props.selected,
+	          totalQuarters = _props.totalQuarters,
+	          reservations = _props.reservations;
+
+	      this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: this.hour, 'data-time': timeSlot, reserved: this.state.reserved, selected: selected, totalQuarters: totalQuarters });
+	    }
+	  }]);
+
+	  return QuarterLine;
+	}(_react2.default.Component);
+
+	// Set up start times and times of reservations, and check if every line falls in between these times (maybe to epoch for easy calcs)
+
+
+	var TimePicker = function (_React$Component2) {
+	  _inherits(TimePicker, _React$Component2);
+
+	  function TimePicker() {
+	    _classCallCheck(this, TimePicker);
+
+	    var _this3 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this));
+
+	    _this3.startTime = '8:00';
+	    _this3.endTime = '18:00';
+	    _this3.timeMultiplier = 15;
+	    _this3.startInHours = parseInt(_this3.startTime.slice(0, -2));
+	    _this3.minutesFromStartTime = _this3.startInHours * 60;
+	    var totalHours = Math.abs(_this3.startInHours - parseInt(_this3.endTime.slice(0, -2)));
+	    var totalMinutes = totalHours * 60;
+	    // Add 1 for last time slot
+	    var quarters = Array(totalHours * 4 + 1);
+
+	    _this3.state = {
+	      reservations: {},
+	      quarters: quarters,
+	      currentIndex: 0,
+	      startPoint: -1,
+	      startTime: null,
+	      endPoint: -1,
+	      endTime: null,
+	      activeLines: []
+	    };
+
+	    _.bindAll(_this3, '_setCurrentIndex', '_fillLines', '_toDate', '_makeHoursAndMinutes', '_reset');
+	    return _this3;
+	  }
+
+	  _createClass(TimePicker, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        reservations: nextProps.reservations
+	      });
+	    }
+	  }, {
+	    key: '_setCurrentIndex',
+	    value: function _setCurrentIndex(index) {
+	      var _this4 = this;
+
+	      // Click 1: set start point
+	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
+	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
+	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
+	      }
+	      // Click 2: set start point to click before, and end point to this one
+	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
+	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
+	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
+
+	        // If beginpoint is selected first, count lines up
+	        if (this.state.currentIndex < index) {
+	          this.setState({
+	            currentIndex: index,
+	            startPoint: this.state.currentIndex,
+	            startTime: _startTime,
+	            endPoint: index,
+	            endTime: endTime
+	          }, function () {
+	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'asc');
+	          });
+	          // Endpoint is selected first, count lines down
+	        } else {
+	          this.setState({
+	            currentIndex: index,
+	            startPoint: index,
+	            startTime: endTime,
+	            endPoint: this.state.currentIndex,
+	            endTime: _startTime
+	          }, function () {
+	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'desc');
+	          });
+	        }
+	      }
+	      // Click 3: reset
+	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
+	        this._reset();
+	      }
+	    }
+	  }, {
+	    key: '_reset',
+	    value: function _reset() {
+	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
+	    }
+	  }, {
+	    key: '_fillLines',
+	    value: function _fillLines(numberLines, dir) {
+	      var activeLines = [];
+	      switch (dir) {
+	        case 'asc':
+	          for (var i = 0; i <= numberLines; i++) {
+	            var lineIndex = i + this.state.startPoint;
+	            activeLines.push(lineIndex);
+	          }
+	          break;
+
+	        case 'desc':
+	          for (var _i = numberLines; _i >= 0; _i--) {
+	            var _lineIndex = _i + this.state.startPoint;
+	            activeLines.push(_lineIndex);
+	          }
+	          break;
+	      }
+	      this.setState({
+	        activeLines: activeLines
+	      });
+	    }
+	  }, {
+	    key: '_toDate',
+	    value: function _toDate(dateStr) {
+	      var parts = dateStr.split("-");
+	      return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
+	    }
+	  }, {
+	    key: '_makeHoursAndMinutes',
+	    value: function _makeHoursAndMinutes(time) {
+	      var timeObj = new Date(time);
+	      var minutesWithoutZero = timeObj.getMinutes();
+	      var minutes = minutesWithoutZero < 10 ? '0' + minutesWithoutZero : minutesWithoutZero;
+	      var hours = timeObj.getHours();
+	      var string = hours + ':' + minutes;
+
+	      return string;
+	    }
+	  }, {
+	    key: '_returnReservationTimes',
+	    value: function _returnReservationTimes(reservations) {
+	      var _this5 = this;
+
+	      var resolvedReservations = (0, _ResolveArrayLikeObject2.default)(reservations);
+	      var reservationTimesArray = [];
+	      resolvedReservations.map(function (res, i) {
+	        var reservationTimes = {
+	          id: i,
+	          activity: res.activity,
+	          startTime: _this5._makeHoursAndMinutes(res.start_date_time),
+	          endTime: _this5._makeHoursAndMinutes(res.end_date_time)
+	        };
+	        reservationTimesArray.push(reservationTimes);
+	      });
+	      return reservationTimesArray;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this6 = this;
+
+	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
+	      var date = this._toDate(this.props.date);
+	      var reservations = this._returnReservationTimes(this.props.reservations);
+
+	      return _react2.default.createElement(
+	        TimePickerWrapper,
+	        null,
+	        _react2.default.createElement(
+	          CurrentReservationDataWrapper,
+	          null,
+	          !(this.state.startPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'Start time: ',
+	            this.state.startTime
+	          ) : null,
+	          !(this.state.endPoint == -1) ? _react2.default.createElement(
+	            TimeIndicator,
+	            null,
+	            'End time: ',
+	            this.state.endTime
+	          ) : null
+	        ),
+	        _react2.default.createElement(
+	          MinuteOverview,
+	          null,
+	          quarters.map(function (quarter, i) {
+	            //TODO: Move this to renderLines function
+	            var addedTime = dateFns.addMinutes(date, i * _this6.timeMultiplier);
+	            var timeSlot = _this6._makeHoursAndMinutes(addedTime);
+
+	            if (!(_.indexOf(_this6.state.activeLines, i) == -1)) {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                selected: true,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this6._setCurrentIndex,
+	                currentIndex: _this6.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            } else {
+	              return _react2.default.createElement(QuarterLine, {
+	                key: i,
+	                index: i,
+	                reservations: reservations,
+	                selected: false,
+	                timeSlot: timeSlot,
+	                ref: 'line_' + i,
+	                setCurrentIndex: _this6._setCurrentIndex,
+	                currentIndex: _this6.state.currentIndex,
+	                totalQuarters: quarters.length });
+	            }
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TimePicker;
+	}(_react2.default.Component);
+
+	exports.default = TimePicker;
+
+/***/ },
 /* 700 */
 /***/ function(module, exports) {
 
@@ -92837,313 +93195,6 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
-
-/***/ },
-/* 860 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:rgb(120, 120, 120);\n  }\n\n  &:hover::before {\n    color: rgb(120, 120, 120);\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
-
-	var _react = __webpack_require__(299);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(331);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	var _ResolveArrayLikeObject = __webpack_require__(700);
-
-	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var dateFns = __webpack_require__(701);
-	var _ = __webpack_require__(591);
-
-	/* ------------------------------ START STYLES ----------------------------- */
-	var TimePickerWrapper = _styledComponents2.default.div(_templateObject);
-
-	var MinuteOverview = _styledComponents2.default.div(_templateObject2);
-
-	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
-	  return props.totalQuarters;
-	}, function (props) {
-	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
-	}, function (props) {
-	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)';
-	}, function (props) {
-	  return props.hour ? 900 : 100;
-	});
-
-	var CurrentReservationDataWrapper = _styledComponents2.default.div(_templateObject4);
-
-	var TimeIndicator = _styledComponents2.default.h3(_templateObject5);
-	/* ------------------------------ END STYLES ----------------------------- */
-
-	var QuarterLine = function (_React$Component) {
-	  _inherits(QuarterLine, _React$Component);
-
-	  function QuarterLine() {
-	    _classCallCheck(this, QuarterLine);
-
-	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
-
-	    _.bindAll(_this, '_handleClick');
-
-	    _this.hour = false;
-	    return _this;
-	  }
-
-	  _createClass(QuarterLine, [{
-	    key: '_handleClick',
-	    value: function _handleClick() {
-	      this.props.setCurrentIndex(this.props.index);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props,
-	          timeSlot = _props.timeSlot,
-	          reserved = _props.reserved,
-	          selected = _props.selected,
-	          totalQuarters = _props.totalQuarters;
-
-	      if (timeSlot.indexOf('00') !== -1) {
-	        this.hour = true;
-	      }
-	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: this.hour, 'data-time': timeSlot, reserved: reserved, selected: selected, totalQuarters: totalQuarters });
-	    }
-	  }]);
-
-	  return QuarterLine;
-	}(_react2.default.Component);
-
-	var TimePicker = function (_React$Component2) {
-	  _inherits(TimePicker, _React$Component2);
-
-	  function TimePicker() {
-	    _classCallCheck(this, TimePicker);
-
-	    var _this2 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this));
-
-	    _this2.startTime = '8:00';
-	    _this2.endTime = '18:00';
-	    _this2.timeMultiplier = 15;
-	    _this2.startInHours = parseInt(_this2.startTime.slice(0, -2));
-	    _this2.minutesFromStartTime = _this2.startInHours * 60;
-	    var totalHours = Math.abs(_this2.startInHours - parseInt(_this2.endTime.slice(0, -2)));
-	    var totalMinutes = totalHours * 60;
-	    // Add 1 for last time slot
-	    var quarters = Array(totalHours * 4 + 1);
-
-	    _this2.state = {
-	      reservations: {},
-	      quarters: quarters,
-	      currentIndex: 0,
-	      startPoint: -1,
-	      startTime: null,
-	      endPoint: -1,
-	      endTime: null,
-	      activeLines: []
-	    };
-
-	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_toDate', '_makeHoursAndMinutes', '_reset');
-	    return _this2;
-	  }
-
-	  _createClass(TimePicker, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({
-	        reservations: nextProps.reservations
-	      });
-	    }
-	  }, {
-	    key: '_setCurrentIndex',
-	    value: function _setCurrentIndex(index) {
-	      var _this3 = this;
-
-	      // Click 1: set start point
-	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
-	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
-	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
-	      }
-	      // Click 2: set start point to click before, and end point to this one
-	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
-	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
-	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
-
-	        // If beginpoint is selected first, count lines up
-	        if (this.state.currentIndex < index) {
-	          this.setState({
-	            currentIndex: index,
-	            startPoint: this.state.currentIndex,
-	            startTime: _startTime,
-	            endPoint: index,
-	            endTime: endTime
-	          }, function () {
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
-	          });
-	          // Endpoint is selected first, count lines down
-	        } else {
-	          this.setState({
-	            currentIndex: index,
-	            startPoint: index,
-	            startTime: endTime,
-	            endPoint: this.state.currentIndex,
-	            endTime: _startTime
-	          }, function () {
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'desc');
-	          });
-	        }
-	      }
-	      // Click 3: reset
-	      if (this.state.startPoint >= 0 && this.state.endPoint >= 0) {
-	        this._reset();
-	      }
-	    }
-	  }, {
-	    key: '_reset',
-	    value: function _reset() {
-	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
-	    }
-	  }, {
-	    key: '_fillLines',
-	    value: function _fillLines(numberLines, dir) {
-	      var activeLines = [];
-	      switch (dir) {
-	        case 'asc':
-	          for (var i = 0; i <= numberLines; i++) {
-	            var lineIndex = i + this.state.startPoint;
-	            activeLines.push(lineIndex);
-	          }
-	          break;
-
-	        case 'desc':
-	          for (var _i = numberLines; _i >= 0; _i--) {
-	            var _lineIndex = _i + this.state.startPoint;
-	            activeLines.push(_lineIndex);
-	          }
-	          break;
-	      }
-	      this.setState({
-	        activeLines: activeLines
-	      });
-	    }
-	  }, {
-	    key: '_toDate',
-	    value: function _toDate(dateStr) {
-	      var parts = dateStr.split("-");
-	      return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
-	    }
-	  }, {
-	    key: '_makeHoursAndMinutes',
-	    value: function _makeHoursAndMinutes(time) {
-	      var timeObj = new Date(time);
-	      var minutesWithoutZero = timeObj.getMinutes();
-	      var minutes = minutesWithoutZero < 10 ? '0' + minutesWithoutZero : minutesWithoutZero;
-	      var hours = timeObj.getHours();
-	      var string = hours + ':' + minutes;
-
-	      return string;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.props.reservations);
-	      reservations.map(function (res) {
-	        var startTime = _this4._makeHoursAndMinutes(res.start_date_time);
-	        var endTime = _this4._makeHoursAndMinutes(res.end_date_time);
-	        console.log(startTime, endTime);
-	      });
-	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
-	      var date = this._toDate(this.props.date);
-
-	      return _react2.default.createElement(
-	        TimePickerWrapper,
-	        null,
-	        _react2.default.createElement(
-	          CurrentReservationDataWrapper,
-	          null,
-	          !(this.state.startPoint == -1) ? _react2.default.createElement(
-	            TimeIndicator,
-	            null,
-	            'Start time: ',
-	            this.state.startTime
-	          ) : null,
-	          !(this.state.endPoint == -1) ? _react2.default.createElement(
-	            TimeIndicator,
-	            null,
-	            'End time: ',
-	            this.state.endTime
-	          ) : null
-	        ),
-	        _react2.default.createElement(
-	          MinuteOverview,
-	          null,
-	          quarters.map(function (quarter, i) {
-	            //TODO: Move this to renderLines function
-	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
-	            var timeSlot = _this4._makeHoursAndMinutes(addedTime);
-
-	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
-	              return _react2.default.createElement(QuarterLine, {
-	                key: i,
-	                index: i,
-	                selected: true,
-	                timeSlot: timeSlot,
-	                ref: 'line_' + i,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
-	                totalQuarters: quarters.length });
-	            } else {
-	              return _react2.default.createElement(QuarterLine, {
-	                key: i,
-	                index: i,
-	                selected: false,
-	                timeSlot: timeSlot,
-	                ref: 'line_' + i,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
-	                totalQuarters: quarters.length });
-	            }
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TimePicker;
-	}(_react2.default.Component);
-
-	exports.default = TimePicker;
 
 /***/ }
 /******/ ]);

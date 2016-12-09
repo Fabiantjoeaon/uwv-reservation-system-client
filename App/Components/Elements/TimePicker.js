@@ -34,11 +34,11 @@ const StyledLine = styled.span`
   border-top: 1px solid rgba(222, 222, 222, 0.7);
   transition: 0.2s ease-out;
   cursor: pointer;
-  background-color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
+  background-color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)'};
   position: relative;
   &:before {
     content: attr(data-time);
-    color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.5)' : 'rgb(255,255,255)'};
+    color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)'};
     position: absolute;
     font-weight: ${props => props.hour ? 900 : 100};
     display: block;
@@ -51,7 +51,7 @@ const StyledLine = styled.span`
   }
 
   &:hover {
-    background-color:rgb(120, 120, 120);
+    background-color:${props => props.reserved ? 'rgb(221,82,82)' : 'rgb(120, 120, 120)'}
   }
 
   &:hover::before {
@@ -78,26 +78,51 @@ class QuarterLine extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_handleClick');
+    _.bindAll(this, '_handleClick', '_setReserved');
 
     this.hour = false;
+
+    this.state = {
+      reserved: false
+    }
   }
 
   _handleClick() {
+    if(this.state.reserved) return;
     this.props.setCurrentIndex(this.props.index);
   }
 
+  _setReserved(nextProps) {
+    if(!nextProps.reservations) return;
+    let reserved =  false;
+    nextProps.reservations.map((res) => {
+      const startInt = parseInt(res.startTime.replace(':', ''));
+      const endInt = parseInt(res.endTime.replace(':', ''));
+      const timeSlotInt = parseInt(this.props.timeSlot.replace(':', ''));
+
+      if(timeSlotInt >= startInt  && timeSlotInt <= endInt) {
+        reserved = true;
+      }
+    });
+    this.setState({
+      reserved: reserved
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this._setReserved(nextProps);
+  }
+
   render() {
-    const {timeSlot, reserved, selected, totalQuarters} = this.props;
-    if(timeSlot.indexOf('00') !== -1) {
-      this.hour = true;
-    }
+    const {timeSlot, reserved, selected, totalQuarters, reservations} = this.props;
+    this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
     return(
-      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={reserved} selected={selected} totalQuarters={totalQuarters}/>
+      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={this.state.reserved} selected={selected} totalQuarters={totalQuarters}/>
     )
   }
 }
 
+// Set up start times and times of reservations, and check if every line falls in between these times (maybe to epoch for easy calcs)
 export default class TimePicker extends React.Component {
   constructor() {
     super();
@@ -214,15 +239,25 @@ export default class TimePicker extends React.Component {
     return string;
   }
 
+  _returnReservationTimes(reservations) {
+    const resolvedReservations = resolveArrayLikeObject(reservations);
+    const reservationTimesArray = [];
+    resolvedReservations.map((res, i) => {
+      const reservationTimes = {
+        id: i,
+        activity: res.activity,
+        startTime: this._makeHoursAndMinutes(res.start_date_time),
+        endTime: this._makeHoursAndMinutes(res.end_date_time)
+      }
+      reservationTimesArray.push(reservationTimes);
+    });
+    return reservationTimesArray;
+  }
+
   render() {
-    const reservations = resolveArrayLikeObject(this.props.reservations);
-    reservations.map((res) => {
-      const startTime = this._makeHoursAndMinutes(res.start_date_time);
-      const endTime = this._makeHoursAndMinutes(res.end_date_time);
-      console.log(startTime, endTime);
-    })
     const quarters = resolveArrayLikeObject(this.state.quarters);
     const date = this._toDate(this.props.date);
+    const reservations = this._returnReservationTimes(this.props.reservations);
 
     return (
       <TimePickerWrapper>
@@ -250,6 +285,7 @@ export default class TimePicker extends React.Component {
               return <QuarterLine
                         key={i}
                         index={i}
+                        reservations={reservations}
                         selected={false}
                         timeSlot={timeSlot}
                         ref={`line_${i}`}
