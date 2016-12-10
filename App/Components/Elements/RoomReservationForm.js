@@ -89,13 +89,24 @@ const CustomerOption = styled.input`
   display: none;
 `;
 
+const ReservationSubmitButton = styled(Button)`
+  display: block;
+  margin: 3em auto 0em auto;
+
+  &:hover {
+    color: ${props => props.type == 'Onderzoekkamer' ? '#b5d0ff !important' : '#C4B7FF !important'};
+  }
+`;
+
+
+
 export default class RoomReservationForm extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_showCustomerForm');
+    _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-    this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} };
+    this.state = { isLoading: false, addCustomer: false, reservations: {}, error: '', customers: {}, startTime: '', endTime: ''};
   }
 
   componentWillMount() {
@@ -135,13 +146,23 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _handleSubmit(e) {
-    const data = {};
+    e.preventDefault();
+    const data = {
+      start_date_time: `${this.props.date} ${this.state.startTime}:00`,
+      length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+      end_date_time: `${this.props.date} ${this.state.endTime}:00`
+    };
+    console.log(data);
   }
 
   _showCustomerForm(e) {
     this.setState({
       addCustomer: e.target.value == 'on' ? 1 : 0
     });
+  }
+
+  _setReservationTimes(start, end) {
+    this.setState({startTime: start, endTime: end});
   }
 
   _renderCustomersSelect() {
@@ -170,6 +191,8 @@ export default class RoomReservationForm extends React.Component {
     return (
       <div className={className}>
         <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
+        <h2 className='res-form__date'>Reservation on {this.props.date}</h2>
+        {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
         <ReservationForm onSubmit={this._handleSubmit}>
           <ReservationFormDivider dir='left'>
             <CustomerOptionWrapper>
@@ -195,8 +218,21 @@ export default class RoomReservationForm extends React.Component {
 
           <ReservationFormDivider dir='right'>
             <h2 className='res-form__title'>Pick a time:</h2>
-            <TimePicker date={this.props.date} type={this.props.type} reservations={this.state.reservations}/>
+            <TimePicker
+              date={this.props.date}
+              type={this.props.type}
+              setReservationTimes={this._setReservationTimes}
+              reservations={this.state.reservations}/>
           </ReservationFormDivider>
+
+          <ReservationSubmitButton
+            name='submit'
+            type='submit'
+            width='75%'
+            height='4em'
+            fontSize='1.7em'
+            type={this.props.room.type}
+            color='#fff'>Submit reservation</ReservationSubmitButton>
         </ReservationForm>
       </div>
     )

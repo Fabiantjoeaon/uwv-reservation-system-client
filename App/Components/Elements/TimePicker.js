@@ -33,7 +33,7 @@ const StyledLine = styled.span`
   padding: 5px 0px;
   border-top: 1px solid rgba(222, 222, 222, 0.7);
   transition: 0.2s ease-out;
-  cursor: pointer;
+  cursor: ${props => props.reserved ? 'not-allowed' : 'pointer'};
   background-color: ${props => props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)'};
   position: relative;
   &:before {
@@ -133,6 +133,9 @@ export default class TimePicker extends React.Component {
     });
   }
 
+  /**
+   * Set index based on nth click
+   */
   _setCurrentIndex(index) {
     // Click 1: set start point
     if(!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
@@ -154,6 +157,8 @@ export default class TimePicker extends React.Component {
           endTime: endTime
         }, () => {
           this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc');
+          // TODO: Times okay, return all values!
+          this.props.setReservationTimes(this.state.startTime, this.state.endTime);
         });
       // Endpoint is selected first, count lines down
       } else {
@@ -174,14 +179,23 @@ export default class TimePicker extends React.Component {
     }
   }
 
+  /**
+   * Resets all relevant data
+   */
   _reset() {
     this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: []});
   }
 
+  /**
+   * Check if a line is reserved
+   */
   _checkReservedLinesForFilling(i) {
     return eval(`this.refs.line_${i}`).props.reserved;
   }
 
+  /**
+   * Fills lines based on directions, except is a line is reserved
+   */
   _fillLines(numberLines, dir) {
     const activeLines = [];
     switch(dir) {
@@ -214,11 +228,17 @@ export default class TimePicker extends React.Component {
     });
   }
 
+  /**
+   * Returns date formatted in yyyy-mm-dd to a new Date object
+   */
   _toDate(dateStr) {
     const parts = dateStr.split("-");
     return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
   }
 
+  /**
+   * Returns time as hours:minutes
+   */
   _makeHoursAndMinutes(time) {
     const timeObj = new Date(time);
     const minutesWithoutZero = timeObj.getMinutes();
@@ -229,6 +249,9 @@ export default class TimePicker extends React.Component {
     return string;
   }
 
+  /**
+   * Returns object with easy to access start and end reservation times
+   */
   _returnReservationTimes(reservations) {
     const resolvedReservations = resolveArrayLikeObject(reservations);
     const reservationTimesArray = [];
@@ -244,7 +267,9 @@ export default class TimePicker extends React.Component {
     return reservationTimesArray;
   }
 
-
+  /**
+   * Checks if current line timeslot falls between start and end times of reservations
+   */
   _checkIfLineIsReserved(reservations, timeSlot) {
     if(!reservations) return;
     let reserved =  false;

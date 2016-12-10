@@ -131,10 +131,8 @@ export default class RoomsOverview extends React.Component {
         });
       })
       .catch((error) => {
-        if(!this.props.token) {
-          this.props.logout();
-        }
         console.log(error);
+        this.props.logout();
       });
   }
 

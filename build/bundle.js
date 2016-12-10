@@ -68878,10 +68878,8 @@
 	          isLoading: false
 	        });
 	      }).catch(function (error) {
-	        if (!_this5.props.token) {
-	          _this5.props.logout();
-	        }
 	        console.log(error);
+	        _this5.props.logout();
 	      });
 	    }
 	  }, {
@@ -85428,7 +85426,8 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  margin-bottom: 5em;\n  display: block;\n'], ['\n  margin-bottom: 5em;\n  display: block;\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  display: inline-block;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n\n  &:after {\n    content: \'\';\n    height: 1px;\n    display: inline-block;\n    background-color: #fff;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n  }\n'], ['\n  color: #fff;\n  font-family: sans-serif;\n  font-weight: 100;\n  font-size: 1.8em;\n  display: inline-block;\n  margin-left: 1.5em;\n  cursor: pointer;\n\n  &:before {\n     content: \'\';\n     display: inline-block;\n     width: 15px;\n     height: 15px;\n     position: absolute;\n     left: 0;\n     bottom: 1px;\n     border: 2px solid #fff;\n     border-radius: 50%;\n     cursor: pointer;\n     background-color: rgba(0,0,0,0);\n     transition: all 0.2s ease-out;\n  }\n\n  &:after {\n    content: \'\';\n    height: 1px;\n    display: inline-block;\n    background-color: #fff;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n'], ['\n  display: block;\n  position: relative;\n  margin: 2em 0em;\n\n  > input[type=\'radio\']:checked + label:before {\n    background-color: #fff;\n  }\n']),
-	    _templateObject7 = _taggedTemplateLiteral(['\n  display: none;\n'], ['\n  display: none;\n']);
+	    _templateObject7 = _taggedTemplateLiteral(['\n  display: none;\n'], ['\n  display: none;\n']),
+	    _templateObject8 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 3em auto 0em auto;\n\n  &:hover {\n    color: ', ';\n  }\n'], ['\n  display: block;\n  margin: 3em auto 0em auto;\n\n  &:hover {\n    color: ', ';\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85468,6 +85467,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -85492,6 +85493,10 @@
 
 	var CustomerOption = _styledComponents2.default.input(_templateObject7);
 
+	var ReservationSubmitButton = (0, _styledComponents2.default)(_Button2.default)(_templateObject8, function (props) {
+	  return props.type == 'Onderzoekkamer' ? '#b5d0ff !important' : '#C4B7FF !important';
+	});
+
 	var RoomReservationForm = function (_React$Component) {
 	  _inherits(RoomReservationForm, _React$Component);
 
@@ -85500,9 +85505,9 @@
 
 	    var _this = _possibleConstructorReturn(this, (RoomReservationForm.__proto__ || Object.getPrototypeOf(RoomReservationForm)).call(this));
 
-	    _.bindAll(_this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_showCustomerForm');
+	    _.bindAll(_this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-	    _this.state = { isLoading: false, addCustomer: false, reservations: {}, customers: {} };
+	    _this.state = { isLoading: false, addCustomer: false, reservations: {}, error: '', customers: {}, startTime: '', endTime: '' };
 	    return _this;
 	  }
 
@@ -85553,7 +85558,13 @@
 	  }, {
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(e) {
-	      var data = {};
+	      e.preventDefault();
+	      var data = {
+	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
+	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+	        end_date_time: this.props.date + ' ' + this.state.endTime + ':00'
+	      };
+	      console.log(data);
 	    }
 	  }, {
 	    key: '_showCustomerForm',
@@ -85561,6 +85572,11 @@
 	      this.setState({
 	        addCustomer: e.target.value == 'on' ? 1 : 0
 	      });
+	    }
+	  }, {
+	    key: '_setReservationTimes',
+	    value: function _setReservationTimes(start, end) {
+	      this.setState({ startTime: start, endTime: end });
 	    }
 	  }, {
 	    key: '_renderCustomersSelect',
@@ -85593,7 +85609,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this5 = this;
+	      var _this5 = this,
+	          _React$createElement;
 
 	      var className = 'res-form__' + this.props.room.type;
 	      // Color label of input based on room type
@@ -85613,6 +85630,13 @@
 	          { color: '#fff', fontSize: '4em' },
 	          this.props.room.name
 	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'res-form__date' },
+	          'Reservation on ',
+	          this.props.date
+	        ),
+	        this.state.error ? _react2.default.createElement(_Notice2.default, { key: 'notice', type: 'error', notice: this.state.error }) : null,
 	        _react2.default.createElement(
 	          ReservationForm,
 	          { onSubmit: this._handleSubmit },
@@ -85665,7 +85689,22 @@
 	              { className: 'res-form__title' },
 	              'Pick a time:'
 	            ),
-	            _react2.default.createElement(_TimePicker2.default, { date: this.props.date, type: this.props.type, reservations: this.state.reservations })
+	            _react2.default.createElement(_TimePicker2.default, {
+	              date: this.props.date,
+	              type: this.props.type,
+	              setReservationTimes: this._setReservationTimes,
+	              reservations: this.state.reservations })
+	          ),
+	          _react2.default.createElement(
+	            ReservationSubmitButton,
+	            (_React$createElement = {
+	              name: 'submit',
+	              type: 'submit',
+	              width: '75%',
+	              height: '4em',
+	              fontSize: '1.7em'
+	            }, _defineProperty(_React$createElement, 'type', this.props.room.type), _defineProperty(_React$createElement, 'color', '#fff'), _React$createElement),
+	            'Submit reservation'
 	          )
 	        )
 	      );
@@ -85691,7 +85730,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n'], ['\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  height: auto;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n'], ['\n  width: 80%;\n  height: 65em;\n  margin-left: 8%;\n  display: inline-block;\n  position: relative;\n  background-color: #fff;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: pointer;\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: ', ';\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n'], ['\n  display: block;\n  height: calc(65em / ', ');\n  box-sizing: border-box;\n  padding: 5px 0px;\n  border-top: 1px solid rgba(222, 222, 222, 0.7);\n  transition: 0.2s ease-out;\n  cursor: ', ';\n  background-color: ', ';\n  position: relative;\n  &:before {\n    content: attr(data-time);\n    color: ', ';\n    position: absolute;\n    font-weight: ', ';\n    display: block;\n    width: 10%;\n    height: 100%;\n    top:0;\n    text-align: right;\n    left:-15%;\n    transition: all 0.2s ease-out;\n  }\n\n  &:hover {\n    background-color:', '\n  }\n\n  &:hover::before {\n    color: ', '\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n'], ['\n  position: absolute;\n  top: -10%;\n  right: 12%;\n  text-align: right;\n  width: 40%;\n  height: 5em;\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n'], ['\n  color: #fff;\n  font-weight: 100;\n']);
 
@@ -85731,6 +85770,8 @@
 
 	var StyledLine = _styledComponents2.default.span(_templateObject3, function (props) {
 	  return props.totalQuarters;
+	}, function (props) {
+	  return props.reserved ? 'not-allowed' : 'pointer';
 	}, function (props) {
 	  return props.selected ? 'rgba(120, 120, 120, 0.7)' : props.reserved ? 'rgba(221, 82, 82, 0.7)' : 'rgb(255,255,255)';
 	}, function (props) {
@@ -85829,6 +85870,11 @@
 	        reservations: nextProps.reservations
 	      });
 	    }
+
+	    /**
+	     * Set index based on nth click
+	     */
+
 	  }, {
 	    key: '_setCurrentIndex',
 	    value: function _setCurrentIndex(index) {
@@ -85854,6 +85900,8 @@
 	            endTime: endTime
 	          }, function () {
 	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
+	            // TODO: Times okay, return all values!
+	            _this3.props.setReservationTimes(_this3.state.startTime, _this3.state.endTime);
 	          });
 	          // Endpoint is selected first, count lines down
 	        } else {
@@ -85873,16 +85921,31 @@
 	        this._reset();
 	      }
 	    }
+
+	    /**
+	     * Resets all relevant data
+	     */
+
 	  }, {
 	    key: '_reset',
 	    value: function _reset() {
 	      this.setState({ currentIndex: 0, startPoint: -1, endPoint: -1, startTime: null, endTime: null, activeLines: [] });
 	    }
+
+	    /**
+	     * Check if a line is reserved
+	     */
+
 	  }, {
 	    key: '_checkReservedLinesForFilling',
 	    value: function _checkReservedLinesForFilling(i) {
 	      return eval('this.refs.line_' + i).props.reserved;
 	    }
+
+	    /**
+	     * Fills lines based on directions, except is a line is reserved
+	     */
+
 	  }, {
 	    key: '_fillLines',
 	    value: function _fillLines(numberLines, dir) {
@@ -85916,12 +85979,22 @@
 	        activeLines: activeLines
 	      });
 	    }
+
+	    /**
+	     * Returns date formatted in yyyy-mm-dd to a new Date object
+	     */
+
 	  }, {
 	    key: '_toDate',
 	    value: function _toDate(dateStr) {
 	      var parts = dateStr.split("-");
 	      return new Date(parts[0], parts[1] - 1, parts[2], this.startInHours);
 	    }
+
+	    /**
+	     * Returns time as hours:minutes
+	     */
+
 	  }, {
 	    key: '_makeHoursAndMinutes',
 	    value: function _makeHoursAndMinutes(time) {
@@ -85933,6 +86006,11 @@
 
 	      return string;
 	    }
+
+	    /**
+	     * Returns object with easy to access start and end reservation times
+	     */
+
 	  }, {
 	    key: '_returnReservationTimes',
 	    value: function _returnReservationTimes(reservations) {
@@ -85951,6 +86029,11 @@
 	      });
 	      return reservationTimesArray;
 	    }
+
+	    /**
+	     * Checks if current line timeslot falls between start and end times of reservations
+	     */
+
 	  }, {
 	    key: '_checkIfLineIsReserved',
 	    value: function _checkIfLineIsReserved(reservations, timeSlot) {
