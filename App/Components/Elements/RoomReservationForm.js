@@ -106,7 +106,7 @@ export default class RoomReservationForm extends React.Component {
 
     _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-    this.state = { isLoading: false, addCustomer: false, reservations: {}, error: '', customers: {}, startTime: '', endTime: ''};
+    this.state = { isLoading: false, addCustomer: false, customerId: null ,reservations: {}, error: '', customers: {}, startTime: '', endTime: ''};
   }
 
   componentWillMount() {
@@ -147,12 +147,20 @@ export default class RoomReservationForm extends React.Component {
 
   _handleSubmit(e) {
     e.preventDefault();
-    const data = {
-      start_date_time: `${this.props.date} ${this.state.startTime}:00`,
-      length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-      end_date_time: `${this.props.date} ${this.state.endTime}:00`
-    };
-    console.log(data);
+    if(!this.state.addCustomer) {
+      const reservationData = {
+        start_date_time: `${this.props.date} ${this.state.startTime}:00`,
+        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+        end_date_time: `${this.props.date} ${this.state.endTime}:00`,
+        activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value,
+        description: ReactDOM.findDOMNode(this.refs.description).children.description.value,
+        number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value,
+        customer_id: this.state.customerId,
+        room_id: this.props.room.id
+      };
+
+      
+    }
   }
 
   _showCustomerForm(e) {
@@ -165,6 +173,10 @@ export default class RoomReservationForm extends React.Component {
     this.setState({startTime: start, endTime: end});
   }
 
+  _setExistingCustomer(id) {
+    this.setState({customerId: id});
+  }
+
   _renderCustomersSelect() {
     const customers = resolveArrayLikeObject(this.props.customers);
     const customerOptions = customers.map((customer, i) => {
@@ -172,7 +184,7 @@ export default class RoomReservationForm extends React.Component {
       return (
         <CustomerItem key={i}>
           <CustomerOption type='radio' id={`customer-${id}`} name='customer-option' value={id} onClick={(e) => {this._showCustomerForm(e)}} />
-          <CustomerLabel htmlFor={`customer-${id}`}>{first_name} {last_name}</CustomerLabel>
+          <CustomerLabel htmlFor={`customer-${id}`} onClick={(e) => {this._setExistingCustomer(id)}}>{first_name} {last_name}</CustomerLabel>
         </CustomerItem>
       );
     });
@@ -200,7 +212,7 @@ export default class RoomReservationForm extends React.Component {
               {customerList}
               <CustomerItem>
                 <CustomerOption id='customer-add' type='radio' name='customer-option' onClick={(e) => {this._showCustomerForm(e)}} />
-                <CustomerLabel htmlFor='customer-add'>Add a customer</CustomerLabel>
+                <CustomerLabel htmlFor='customer-add' onClick={(e) => {this._setExistingCustomer(null)}}>Add a customer</CustomerLabel>
               </CustomerItem>
             </CustomerOptionWrapper>
             {this.state.addCustomer ?
@@ -212,6 +224,7 @@ export default class RoomReservationForm extends React.Component {
               </div>
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
+              <Input color='#fff' secondColor={inputColor} name='number_persons' ref='number_persons' type='number' max={this.props.room.capacity} label={`Number of persons (max ${this.props.room.capacity})`} />
               <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
               <Input color='#fff' secondColor={inputColor} name='description' ref='description' type='text' label='Description' />
           </ReservationFormDivider>

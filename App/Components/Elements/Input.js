@@ -95,7 +95,7 @@ export default class Input extends React.Component {
 
     return (
       <StyledInputWrapper color={this.props.color} className='input__wrapper'>
-        <StyledInput color={this.props.color} className='input__input' value={value} autoComplete='off' name={name} type={type}/>
+        <StyledInput color={this.props.color} max={this.props.max} className='input__input' value={value} autoComplete='off' name={name} type={type}/>
         <StyledLabel color={this.props.color} secondColor={this.props.secondColor} className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
       </StyledInputWrapper>
     );

@@ -144,6 +144,11 @@ export default class TimePicker extends React.Component {
     }
     // Click 2: set start point to click before, and end point to this one
     if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
+      //TODO: Set error here
+      if(index == this.state.currentIndex) {
+        this._reset();
+        return;
+      };
       const startTime = eval(`this.refs.line_${this.state.currentIndex}`).props.timeSlot;
       const endTime = eval(`this.refs.line_${index}`).props.timeSlot;
 
@@ -300,6 +305,7 @@ export default class TimePicker extends React.Component {
         <MinuteOverview>
           {quarters.map((quarter, i) => {
             //TODO: Move this to renderLines function
+            //TODO: Add errors
             const addedTime = dateFns.addMinutes(date, (i * this.timeMultiplier));
             const timeSlot = this._makeHoursAndMinutes(addedTime);
             const isReserved = this._checkIfLineIsReserved(reservations, timeSlot)

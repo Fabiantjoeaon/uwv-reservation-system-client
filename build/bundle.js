@@ -43379,7 +43379,7 @@
 	      return _react2.default.createElement(
 	        StyledInputWrapper,
 	        { color: this.props.color, className: 'input__wrapper' },
-	        _react2.default.createElement(StyledInput, { color: this.props.color, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
+	        _react2.default.createElement(StyledInput, { color: this.props.color, max: this.props.max, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
 	        _react2.default.createElement(
 	          StyledLabel,
 	          { color: this.props.color, secondColor: this.props.secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
@@ -85507,7 +85507,7 @@
 
 	    _.bindAll(_this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-	    _this.state = { isLoading: false, addCustomer: false, reservations: {}, error: '', customers: {}, startTime: '', endTime: '' };
+	    _this.state = { isLoading: false, addCustomer: false, customerId: null, reservations: {}, error: '', customers: {}, startTime: '', endTime: '' };
 	    return _this;
 	  }
 
@@ -85559,12 +85559,18 @@
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
-	      var data = {
-	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
-	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-	        end_date_time: this.props.date + ' ' + this.state.endTime + ':00'
-	      };
-	      console.log(data);
+	      if (!this.state.addCustomer) {
+	        var reservationData = {
+	          start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
+	          length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+	          end_date_time: this.props.date + ' ' + this.state.endTime + ':00',
+	          activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value,
+	          description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value,
+	          number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value,
+	          customer_id: this.state.customerId,
+	          room_id: this.props.room.id
+	        };
+	      }
 	    }
 	  }, {
 	    key: '_showCustomerForm',
@@ -85577,6 +85583,11 @@
 	    key: '_setReservationTimes',
 	    value: function _setReservationTimes(start, end) {
 	      this.setState({ startTime: start, endTime: end });
+	    }
+	  }, {
+	    key: '_setExistingCustomer',
+	    value: function _setExistingCustomer(id) {
+	      this.setState({ customerId: id });
 	    }
 	  }, {
 	    key: '_renderCustomersSelect',
@@ -85597,7 +85608,9 @@
 	            } }),
 	          _react2.default.createElement(
 	            CustomerLabel,
-	            { htmlFor: 'customer-' + id },
+	            { htmlFor: 'customer-' + id, onClick: function onClick(e) {
+	                _this4._setExistingCustomer(id);
+	              } },
 	            first_name,
 	            ' ',
 	            last_name
@@ -85660,7 +85673,9 @@
 	                  } }),
 	                _react2.default.createElement(
 	                  CustomerLabel,
-	                  { htmlFor: 'customer-add' },
+	                  { htmlFor: 'customer-add', onClick: function onClick(e) {
+	                      _this5._setExistingCustomer(null);
+	                    } },
 	                  'Add a customer'
 	                )
 	              )
@@ -85678,6 +85693,7 @@
 	              { className: 'res-form__title' },
 	              'Reservation data:'
 	            ),
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'number_persons', ref: 'number_persons', type: 'number', max: this.props.room.capacity, label: 'Number of persons (max ' + this.props.room.capacity + ')' }),
 	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' }),
 	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'description', ref: 'description', type: 'text', label: 'Description' })
 	          ),
@@ -85887,6 +85903,11 @@
 	      }
 	      // Click 2: set start point to click before, and end point to this one
 	      if (this.state.startPoint >= 0 && !(this.state.endPoint >= 0)) {
+	        //TODO: Set error here
+	        if (index == this.state.currentIndex) {
+	          this._reset();
+	          return;
+	        };
 	        var _startTime = eval('this.refs.line_' + this.state.currentIndex).props.timeSlot;
 	        var endTime = eval('this.refs.line_' + index).props.timeSlot;
 
@@ -86084,6 +86105,7 @@
 	          null,
 	          quarters.map(function (quarter, i) {
 	            //TODO: Move this to renderLines function
+	            //TODO: Add errors
 	            var addedTime = dateFns.addMinutes(date, i * _this5.timeMultiplier);
 	            var timeSlot = _this5._makeHoursAndMinutes(addedTime);
 	            var isReserved = _this5._checkIfLineIsReserved(reservations, timeSlot);
