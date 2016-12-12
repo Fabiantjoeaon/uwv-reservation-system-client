@@ -85261,6 +85261,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 10%;\n'], ['\n  width: 100%;\n  height: 10%;\n']);
+
 	var _react = __webpack_require__(299);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -85277,6 +85279,10 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+	var _ResolveArrayLikeObject = __webpack_require__(700);
+
+	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85285,27 +85291,71 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var Reservation = _styledComponents2.default.div(_templateObject);
+
 	var ReservationsOverview = function (_React$Component) {
 	  _inherits(ReservationsOverview, _React$Component);
 
 	  function ReservationsOverview() {
 	    _classCallCheck(this, ReservationsOverview);
 
-	    return _possibleConstructorReturn(this, (ReservationsOverview.__proto__ || Object.getPrototypeOf(ReservationsOverview)).call(this));
+	    var _this = _possibleConstructorReturn(this, (ReservationsOverview.__proto__ || Object.getPrototypeOf(ReservationsOverview)).call(this));
+
+	    _this.state = {
+	      reservations: {},
+	      isLoading: false
+	    };
+	    return _this;
 	  }
 
 	  _createClass(ReservationsOverview, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      var _this2 = this;
+
 	      this.props.setCurrentPage('My Reservations');
+	      this.setState({ isLoading: true });
+	      this.props.fetcher.getRequestWithToken('/me/reservations', this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        var _ref;
+
+	        var reservations = [];
+	        data.data.map(function (reservation) {
+	          reservations.push(reservation);
+	        });
+	        _this2.setState({
+	          reservations: (_ref = []).concat.apply(_ref, reservations),
+	          isLoading: false
+	        });
+	      });
+	    }
+	  }, {
+	    key: '_renderReservations',
+	    value: function _renderReservations() {
+	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
+	      return reservations.map(function (reservation, i) {
+	        return _react2.default.createElement(
+	          Reservation,
+	          { key: i },
+	          reservation.activity
+	        );
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'h1',
+	        'div',
 	        null,
-	        'My Reservations'
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'My Reservations'
+	        ),
+	        !this.state.isLoading ? this._renderReservations() : null
 	      );
 	    }
 	  }]);
@@ -85781,10 +85831,10 @@
 	            this.state.addCustomer ? _react2.default.createElement(
 	              'div',
 	              null,
-	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'first_name', secondColor: inputColor, name: 'first_name', type: 'text', label: 'Customers first name' }),
-	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'last_name', secondColor: inputColor, name: 'last_name', type: 'text', label: 'Customers last name' }),
-	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'email', secondColor: inputColor, name: 'email', type: 'text', label: 'Customers E-mail' }),
-	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'bsn', secondColor: inputColor, name: 'bsn', type: 'text', label: 'Customers BSN' })
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'first_name', secondColor: inputColor, error: errors.first_name ? errors.first_name : null, name: 'first_name', type: 'text', label: 'Customers first name' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'last_name', secondColor: inputColor, error: errors.last_name ? errors.last_name : null, name: 'last_name', type: 'text', label: 'Customers last name' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'email', secondColor: inputColor, error: errors.email ? errors.email : null, name: 'email', type: 'text', label: 'Customers E-mail' }),
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'bsn', secondColor: inputColor, error: errors.BSN ? errors.BSN : null, name: 'bsn', type: 'text', label: 'Customers BSN' })
 	            ) : null,
 	            _react2.default.createElement(
 	              'h2',

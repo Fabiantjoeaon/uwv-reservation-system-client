@@ -283,10 +283,10 @@ export default class RoomReservationForm extends React.Component {
             </CustomerOptionWrapper>
             {this.state.addCustomer ?
               <div>
-                <Input color='#fff' ref='first_name' secondColor={inputColor} name='first_name' type='text' label='Customers first name' />
-                <Input color='#fff' ref='last_name' secondColor={inputColor} name='last_name' type='text' label='Customers last name' />
-                <Input color='#fff' ref='email' secondColor={inputColor} name='email' type='text' label='Customers E-mail' />
-                <Input color='#fff' ref='bsn' secondColor={inputColor} name='bsn' type='text' label='Customers BSN' />
+                <Input color='#fff' ref='first_name' secondColor={inputColor} error={errors.first_name ? errors.first_name : null} name='first_name' type='text' label='Customers first name' />
+                <Input color='#fff' ref='last_name' secondColor={inputColor} error={errors.last_name ? errors.last_name : null} name='last_name' type='text' label='Customers last name' />
+                <Input color='#fff' ref='email' secondColor={inputColor} error={errors.email ? errors.email : null} name='email' type='text' label='Customers E-mail' />
+                <Input color='#fff' ref='bsn' secondColor={inputColor} error={errors.BSN ? errors.BSN : null} name='bsn' type='text' label='Customers BSN' />
               </div>
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
