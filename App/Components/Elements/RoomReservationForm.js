@@ -11,6 +11,7 @@ import Title from './Title';
 import Button from './Button';
 import Notice from './Notice';
 import TimePicker from './TimePicker';
+import SuccessfulReservationWrapper from './SuccessfulReservationWrapper';
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 const ReservationFormTitle = styled(Title)`
@@ -99,14 +100,24 @@ const ReservationSubmitButton = styled(Button)`
 `;
 
 
-
 export default class RoomReservationForm extends React.Component {
   constructor() {
     super();
 
     _.bindAll(this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-    this.state = { isLoading: false, addCustomer: false, customerId: null ,reservations: {}, error: '', customers: {}, startTime: '', endTime: ''};
+    this.state = {
+      isLoading: false,
+      addCustomer: false,
+      customerId: null,
+      reservations: {},
+      errors: {},
+      customers: {},
+      startTime: '',
+      endTime: '',
+      success: false,
+      addedReservation: {}
+    };
   }
 
   componentWillMount() {
@@ -145,22 +156,74 @@ export default class RoomReservationForm extends React.Component {
       });
   }
 
+  _collectReservationData(id = this.state.customerId) {
+    const reservationData = {
+      start_date_time: `${this.props.date} ${this.state.startTime}:00`,
+      length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+      end_date_time: `${this.props.date} ${this.state.endTime}:00`,
+      activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value,
+      description: ReactDOM.findDOMNode(this.refs.description).children.description.value,
+      number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value,
+      customer_id: id,
+      room_id: this.props.room.id
+    };
+
+    return reservationData;
+  }
+
   _handleSubmit(e) {
     e.preventDefault();
     if(!this.state.addCustomer) {
-      const reservationData = {
-        start_date_time: `${this.props.date} ${this.state.startTime}:00`,
-        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-        end_date_time: `${this.props.date} ${this.state.endTime}:00`,
-        activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value,
-        description: ReactDOM.findDOMNode(this.refs.description).children.description.value,
-        number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value,
-        customer_id: this.state.customerId,
-        room_id: this.props.room.id
-      };
+      const reservationData = this._collectReservationData();
+      this._postReservation(reservationData);
+    } else {
+      const customerData = {
+        first_name: ReactDOM.findDOMNode(this.refs.first_name).children.first_name.value,
+        last_name: ReactDOM.findDOMNode(this.refs.last_name).children.last_name.value,
+        email: ReactDOM.findDOMNode(this.refs.email).children.email.value,
+        bsn: ReactDOM.findDOMNode(this.refs.bsn).children.bsn.value
+      }
 
-      
+      this._postCustomer(customerData);
     }
+  }
+
+  _handleErrors(errors) {
+    this.setState({errors: errors}, () => {console.log(this.state.errors)});
+  }
+
+  _postReservation(data) {
+    console.log(data);
+    this.props.fetcher.postRequestWithToken('/reservations', this.props.token, data)
+      .then((res) => {
+        if(res.status === 400) {
+          Promise.resolve(res.json()).then((data) => {
+            this._handleErrors(data.data);
+          });
+        }
+        if(res.status === 200) {
+          this.setState({success: true, addedReservation: data});
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  _postCustomer(customerData, reservationData) {
+    this.props.fetcher.postRequestWithToken('/customers', this.props.token, customerData)
+      .then((res) => {
+        if(res.status === 400) {
+          Promise.resolve(res.json()).then((data) => {
+            this._handleErrors(data.data);
+          });
+        }
+        if(res.status === 200) {
+          Promise.resolve(res.json()).then((data) => {
+            const reservationData = this._collectReservationData(data.customer_id);
+            this._postReservation(reservationData);
+          });
+        }
+      })
+      .catch((error) => console.log(error));
   }
 
   _showCustomerForm(e) {
@@ -200,11 +263,14 @@ export default class RoomReservationForm extends React.Component {
       this._renderCustomersSelect() :
       <h3 className='res-form__text'>No customers found</h3>;
 
+    const {errors} = this.state;
     return (
       <div className={className}>
         <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
         <h2 className='res-form__date'>Reservation on {this.props.date}</h2>
         {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
+        {this.state.success ?
+          <SuccessfulReservationWrapper reservation={this.state.addedReservation}/> :
         <ReservationForm onSubmit={this._handleSubmit}>
           <ReservationFormDivider dir='left'>
             <CustomerOptionWrapper>
@@ -225,8 +291,8 @@ export default class RoomReservationForm extends React.Component {
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
               <Input color='#fff' secondColor={inputColor} name='number_persons' ref='number_persons' type='number' max={this.props.room.capacity} label={`Number of persons (max ${this.props.room.capacity})`} />
-              <Input color='#fff' secondColor={inputColor} name='activity' ref='activity' type='text' label='Activity' />
-              <Input color='#fff' secondColor={inputColor} name='description' ref='description' type='text' label='Description' />
+              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.activity : null} name='activity' ref='activity' type='text' label='Activity' />
+              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.description : null} name='description' ref='description' type='text' label='Description' />
           </ReservationFormDivider>
 
           <ReservationFormDivider dir='right'>
@@ -246,7 +312,7 @@ export default class RoomReservationForm extends React.Component {
             fontSize='1.7em'
             type={this.props.room.type}
             color='#fff'>Submit reservation</ReservationSubmitButton>
-        </ReservationForm>
+        </ReservationForm>}
       </div>
     )
   }

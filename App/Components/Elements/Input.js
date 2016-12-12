@@ -22,7 +22,7 @@ const StyledInputWrapper = styled.div`
     width: 100%;
     bottom: 0;
     left: 0;
-    background-color: ${props => props.color};
+    background-color: ${props => props.error ? 'rgba(221, 82, 82, 0.7)' : props.color};
   }
 `;
 
@@ -34,7 +34,7 @@ const StyledLabel = styled.label`
   padding: 2px 3px 1px 2px;
   background-color: rgba(0,0,0,0);
   font-family: sans-serif;
-  color: ${props => props.color};
+  color: ${props => props.error ? 'rgba(221, 82, 82, 0.7)' : props.color};
   text-align: left;
   pointer-events: none;
   transition: all 0.3s;
@@ -49,7 +49,7 @@ const StyledLabel = styled.label`
     top:0;
     padding: 2px 3px 1px 3px;
     left:0;
-    background-color: ${props => props.color};
+    background-color: ${props => props.error ? 'rgba(221, 82, 82, 0.7)' : props.color};
     color: ${props => props.secondColor};
   }
 `;
@@ -71,10 +71,6 @@ const StyledInput = styled.input`
     outline: none;
   }
 
-  &:invalid + .input__wrapper::after {
-    background-color: rgb(255, 54, 0);
-  }
-
   &:focus + .input__label::after {
     width: 100%;
     opacity: 1;
@@ -85,18 +81,24 @@ const StyledInput = styled.input`
   }
 `;
 
+const Error = styled.p`
+  margin: 0.5em 0em;
+  color: rgba(221, 82, 82, 0.7);
+`;
+
 export default class Input extends React.Component {
   constructor() {
     super();
   }
 
   render() {
-    const {name, type, label, inputRef, value} = this.props;
+    const {name, type, label, inputRef, value, error, color, secondColor, max} = this.props;
 
     return (
-      <StyledInputWrapper color={this.props.color} className='input__wrapper'>
-        <StyledInput color={this.props.color} max={this.props.max} className='input__input' value={value} autoComplete='off' name={name} type={type}/>
-        <StyledLabel color={this.props.color} secondColor={this.props.secondColor} className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
+      <StyledInputWrapper color={color} error={error} className='input__wrapper'>
+        {error ? <Error>{error}</Error> : null}
+        <StyledInput color={color} max={max} className='input__input' value={value} autoComplete='off' name={name} type={type}/>
+        <StyledLabel color={color} error={error} secondColor={secondColor} className='input__label' data-label={label} htmlFor={name}>{label}</StyledLabel>
       </StyledInputWrapper>
     );
   }

@@ -28,6 +28,23 @@ export default class APIFetcher {
     }
   }
 
+  async postRequestWithToken(resource, token, data) {
+    try {
+      const response = fetch(`${this.apiUrl}${resource}?token=${token}`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      return response;
+    } catch(error) {
+      return error;
+    }
+  }
+
   async getRequestWithToken(resource, token) {
     try {
       const response = await fetch(`${this.apiUrl}${resource}?token=${token}`, {

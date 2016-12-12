@@ -53,6 +53,7 @@ class ReservationClient extends React.Component {
         this._setError('');
       })
       .catch((error) => {
+        //FIXME: how to catch status codes??
         this._setError('Your email and password are incorrect!');
         //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
         this._logout();

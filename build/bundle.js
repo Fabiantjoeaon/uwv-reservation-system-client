@@ -8284,6 +8284,7 @@
 	        _this2.props.router.push('/');
 	        _this2._setError('');
 	      }).catch(function (error) {
+	        //FIXME: how to catch status codes??
 	        _this2._setError('Your email and password are incorrect!');
 	        //FIXME: Maybe logout and check if curr location is login? if not then redirect, could fix login bug
 	        _this2._logout();
@@ -43314,7 +43315,8 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em 4em 0em;\n  display: block;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n'], ['\n  width: 50%;\n  margin: 0 auto;\n  position: relative;\n  margin: 1.75em 0em 4em 0em;\n  display: block;\n\n  &::after {\n    content: \'\';\n    display: block;\n    position: absolute;\n    height: 1px;\n    width: 100%;\n    bottom: 0;\n    left: 0;\n    background-color: ', ';\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n'], ['\n  top: -40%;\n  left: -0.5%;\n  position: absolute;\n  font-size: 1.6em;\n  padding: 2px 3px 1px 2px;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  color: ', ';\n  text-align: left;\n  pointer-events: none;\n  transition: all 0.3s;\n\n  &::after {\n    content: attr(data-label);\n    opacity: 0;\n    transition: all 0.3s;\n    width: 0%;\n    height: 100%;\n    position: absolute;\n    top:0;\n    padding: 2px 3px 1px 3px;\n    left:0;\n    background-color: ', ';\n    color: ', ';\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:invalid + .input__wrapper::after {\n    background-color: rgb(255, 54, 0);\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n'], ['\n  width: 100%;\n  height: 2em;\n  position: relative;\n  background-color: rgba(0,0,0,0);\n  font-family: sans-serif;\n  font-size: 1.5em;\n  margin-top: 0.5em;\n  color: ', ';\n  border: none;\n  padding: 20px 0px;\n  transition: all 0.3s ease-out;\n\n  &:focus {\n    outline: none;\n  }\n\n  &:focus + .input__label::after {\n    width: 100%;\n    opacity: 1;\n  }\n\n  &:focus ~ .input__wrapper::after {\n    height: 2px;\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  margin: 0.5em 0em;\n  color: rgba(221, 82, 82, 0.7);\n'], ['\n  margin: 0.5em 0em;\n  color: rgba(221, 82, 82, 0.7);\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -43341,13 +43343,13 @@
 	var _ = __webpack_require__(591);
 
 	var StyledInputWrapper = _styledComponents2.default.div(_templateObject, function (props) {
-	  return props.color;
+	  return props.error ? 'rgba(221, 82, 82, 0.7)' : props.color;
 	});
 
 	var StyledLabel = _styledComponents2.default.label(_templateObject2, function (props) {
-	  return props.color;
+	  return props.error ? 'rgba(221, 82, 82, 0.7)' : props.color;
 	}, function (props) {
-	  return props.color;
+	  return props.error ? 'rgba(221, 82, 82, 0.7)' : props.color;
 	}, function (props) {
 	  return props.secondColor;
 	});
@@ -43355,6 +43357,8 @@
 	var StyledInput = _styledComponents2.default.input(_templateObject3, function (props) {
 	  return props.color;
 	});
+
+	var Error = _styledComponents2.default.p(_templateObject4);
 
 	var Input = function (_React$Component) {
 	  _inherits(Input, _React$Component);
@@ -43373,16 +43377,25 @@
 	          type = _props.type,
 	          label = _props.label,
 	          inputRef = _props.inputRef,
-	          value = _props.value;
+	          value = _props.value,
+	          error = _props.error,
+	          color = _props.color,
+	          secondColor = _props.secondColor,
+	          max = _props.max;
 
 
 	      return _react2.default.createElement(
 	        StyledInputWrapper,
-	        { color: this.props.color, className: 'input__wrapper' },
-	        _react2.default.createElement(StyledInput, { color: this.props.color, max: this.props.max, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
+	        { color: color, error: error, className: 'input__wrapper' },
+	        error ? _react2.default.createElement(
+	          Error,
+	          null,
+	          error
+	        ) : null,
+	        _react2.default.createElement(StyledInput, { color: color, max: max, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
 	        _react2.default.createElement(
 	          StyledLabel,
-	          { color: this.props.color, secondColor: this.props.secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
+	          { color: color, error: error, secondColor: secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
 	          label
 	        )
 	      );
@@ -85461,6 +85474,10 @@
 
 	var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
+	var _SuccessfulReservationWrapper = __webpack_require__(860);
+
+	var _SuccessfulReservationWrapper2 = _interopRequireDefault(_SuccessfulReservationWrapper);
+
 	var _ResolveArrayLikeObject = __webpack_require__(700);
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
@@ -85507,7 +85524,18 @@
 
 	    _.bindAll(_this, '_handleSubmit', '_getReservationsForDate', '_filterRoomsById', '_setReservationTimes', '_showCustomerForm');
 
-	    _this.state = { isLoading: false, addCustomer: false, customerId: null, reservations: {}, error: '', customers: {}, startTime: '', endTime: '' };
+	    _this.state = {
+	      isLoading: false,
+	      addCustomer: false,
+	      customerId: null,
+	      reservations: {},
+	      errors: {},
+	      customers: {},
+	      startTime: '',
+	      endTime: '',
+	      success: false,
+	      addedReservation: {}
+	    };
 	    return _this;
 	  }
 
@@ -85556,21 +85584,89 @@
 	      });
 	    }
 	  }, {
+	    key: '_collectReservationData',
+	    value: function _collectReservationData() {
+	      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.customerId;
+
+	      var reservationData = {
+	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
+	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
+	        end_date_time: this.props.date + ' ' + this.state.endTime + ':00',
+	        activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value,
+	        description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value,
+	        number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value,
+	        customer_id: id,
+	        room_id: this.props.room.id
+	      };
+
+	      return reservationData;
+	    }
+	  }, {
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
 	      if (!this.state.addCustomer) {
-	        var reservationData = {
-	          start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
-	          length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-	          end_date_time: this.props.date + ' ' + this.state.endTime + ':00',
-	          activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value,
-	          description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value,
-	          number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value,
-	          customer_id: this.state.customerId,
-	          room_id: this.props.room.id
+	        var reservationData = this._collectReservationData();
+	        this._postReservation(reservationData);
+	      } else {
+	        var customerData = {
+	          first_name: _reactDom2.default.findDOMNode(this.refs.first_name).children.first_name.value,
+	          last_name: _reactDom2.default.findDOMNode(this.refs.last_name).children.last_name.value,
+	          email: _reactDom2.default.findDOMNode(this.refs.email).children.email.value,
+	          bsn: _reactDom2.default.findDOMNode(this.refs.bsn).children.bsn.value
 	        };
+
+	        this._postCustomer(customerData);
 	      }
+	    }
+	  }, {
+	    key: '_handleErrors',
+	    value: function _handleErrors(errors) {
+	      var _this4 = this;
+
+	      this.setState({ errors: errors }, function () {
+	        console.log(_this4.state.errors);
+	      });
+	    }
+	  }, {
+	    key: '_postReservation',
+	    value: function _postReservation(data) {
+	      var _this5 = this;
+
+	      console.log(data);
+	      this.props.fetcher.postRequestWithToken('/reservations', this.props.token, data).then(function (res) {
+	        if (res.status === 400) {
+	          Promise.resolve(res.json()).then(function (data) {
+	            _this5._handleErrors(data.data);
+	          });
+	        }
+	        if (res.status === 200) {
+	          _this5.setState({ success: true, addedReservation: data });
+	        }
+	      }).catch(function (error) {
+	        return console.log(error);
+	      });
+	    }
+	  }, {
+	    key: '_postCustomer',
+	    value: function _postCustomer(customerData, reservationData) {
+	      var _this6 = this;
+
+	      this.props.fetcher.postRequestWithToken('/customers', this.props.token, customerData).then(function (res) {
+	        if (res.status === 400) {
+	          Promise.resolve(res.json()).then(function (data) {
+	            _this6._handleErrors(data.data);
+	          });
+	        }
+	        if (res.status === 200) {
+	          Promise.resolve(res.json()).then(function (data) {
+	            var reservationData = _this6._collectReservationData(data.customer_id);
+	            _this6._postReservation(reservationData);
+	          });
+	        }
+	      }).catch(function (error) {
+	        return console.log(error);
+	      });
 	    }
 	  }, {
 	    key: '_showCustomerForm',
@@ -85592,7 +85688,7 @@
 	  }, {
 	    key: '_renderCustomersSelect',
 	    value: function _renderCustomersSelect() {
-	      var _this4 = this;
+	      var _this7 = this;
 
 	      var customers = (0, _ResolveArrayLikeObject2.default)(this.props.customers);
 	      var customerOptions = customers.map(function (customer, i) {
@@ -85604,12 +85700,12 @@
 	          CustomerItem,
 	          { key: i },
 	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, name: 'customer-option', value: id, onClick: function onClick(e) {
-	              _this4._showCustomerForm(e);
+	              _this7._showCustomerForm(e);
 	            } }),
 	          _react2.default.createElement(
 	            CustomerLabel,
 	            { htmlFor: 'customer-' + id, onClick: function onClick(e) {
-	                _this4._setExistingCustomer(id);
+	                _this7._setExistingCustomer(id);
 	              } },
 	            first_name,
 	            ' ',
@@ -85622,7 +85718,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this5 = this,
+	      var _this8 = this,
 	          _React$createElement;
 
 	      var className = 'res-form__' + this.props.room.type;
@@ -85634,6 +85730,8 @@
 	        { className: 'res-form__text' },
 	        'No customers found'
 	      );
+
+	      var errors = this.state.errors;
 
 	      return _react2.default.createElement(
 	        'div',
@@ -85650,7 +85748,7 @@
 	          this.props.date
 	        ),
 	        this.state.error ? _react2.default.createElement(_Notice2.default, { key: 'notice', type: 'error', notice: this.state.error }) : null,
-	        _react2.default.createElement(
+	        this.state.success ? _react2.default.createElement(_SuccessfulReservationWrapper2.default, { reservation: this.state.addedReservation }) : _react2.default.createElement(
 	          ReservationForm,
 	          { onSubmit: this._handleSubmit },
 	          _react2.default.createElement(
@@ -85669,12 +85767,12 @@
 	                CustomerItem,
 	                null,
 	                _react2.default.createElement(CustomerOption, { id: 'customer-add', type: 'radio', name: 'customer-option', onClick: function onClick(e) {
-	                    _this5._showCustomerForm(e);
+	                    _this8._showCustomerForm(e);
 	                  } }),
 	                _react2.default.createElement(
 	                  CustomerLabel,
 	                  { htmlFor: 'customer-add', onClick: function onClick(e) {
-	                      _this5._setExistingCustomer(null);
+	                      _this8._setExistingCustomer(null);
 	                    } },
 	                  'Add a customer'
 	                )
@@ -85694,8 +85792,8 @@
 	              'Reservation data:'
 	            ),
 	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'number_persons', ref: 'number_persons', type: 'number', max: this.props.room.capacity, label: 'Number of persons (max ' + this.props.room.capacity + ')' }),
-	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' }),
-	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'description', ref: 'description', type: 'text', label: 'Description' })
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.activity : null, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' }),
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.description : null, name: 'description', ref: 'description', type: 'text', label: 'Description' })
 	          ),
 	          _react2.default.createElement(
 	            ReservationFormDivider,
@@ -92757,16 +92855,56 @@
 	      return authenticateAndFetchToken;
 	    }()
 	  }, {
-	    key: 'getRequestWithToken',
+	    key: 'postRequestWithToken',
 	    value: function () {
-	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource, token) {
+	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resource, token, data) {
 	        var response;
 	        return regeneratorRuntime.wrap(function _callee2$(_context2) {
 	          while (1) {
 	            switch (_context2.prev = _context2.next) {
 	              case 0:
 	                _context2.prev = 0;
-	                _context2.next = 3;
+	                response = fetch('' + this.apiUrl + resource + '?token=' + token, {
+	                  method: 'POST',
+	                  mode: 'cors',
+	                  headers: {
+	                    'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+	                  },
+	                  body: JSON.stringify(data)
+	                });
+	                return _context2.abrupt('return', response);
+
+	              case 5:
+	                _context2.prev = 5;
+	                _context2.t0 = _context2['catch'](0);
+	                return _context2.abrupt('return', _context2.t0);
+
+	              case 8:
+	              case 'end':
+	                return _context2.stop();
+	            }
+	          }
+	        }, _callee2, this, [[0, 5]]);
+	      }));
+
+	      function postRequestWithToken(_x3, _x4, _x5) {
+	        return _ref2.apply(this, arguments);
+	      }
+
+	      return postRequestWithToken;
+	    }()
+	  }, {
+	    key: 'getRequestWithToken',
+	    value: function () {
+	      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(resource, token) {
+	        var response;
+	        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+	          while (1) {
+	            switch (_context3.prev = _context3.next) {
+	              case 0:
+	                _context3.prev = 0;
+	                _context3.next = 3;
 	                return fetch('' + this.apiUrl + resource + '?token=' + token, {
 	                  method: 'GET',
 	                  mode: 'cors',
@@ -92777,40 +92915,40 @@
 	                });
 
 	              case 3:
-	                response = _context2.sent;
+	                response = _context3.sent;
 
 	                if (!(response.status == 401)) {
-	                  _context2.next = 8;
+	                  _context3.next = 8;
 	                  break;
 	                }
 
 	                // Unauthorized
 	                window.location.href = 'http://localhost:8888/reservation-client';
-	                _context2.next = 9;
+	                _context3.next = 9;
 	                break;
 
 	              case 8:
-	                return _context2.abrupt('return', response);
+	                return _context3.abrupt('return', response);
 
 	              case 9:
-	                _context2.next = 14;
+	                _context3.next = 14;
 	                break;
 
 	              case 11:
-	                _context2.prev = 11;
-	                _context2.t0 = _context2['catch'](0);
-	                return _context2.abrupt('return', _context2.t0);
+	                _context3.prev = 11;
+	                _context3.t0 = _context3['catch'](0);
+	                return _context3.abrupt('return', _context3.t0);
 
 	              case 14:
 	              case 'end':
-	                return _context2.stop();
+	                return _context3.stop();
 	            }
 	          }
-	        }, _callee2, this, [[0, 11]]);
+	        }, _callee3, this, [[0, 11]]);
 	      }));
 
-	      function getRequestWithToken(_x3, _x4) {
-	        return _ref2.apply(this, arguments);
+	      function getRequestWithToken(_x6, _x7) {
+	        return _ref3.apply(this, arguments);
 	      }
 
 	      return getRequestWithToken;
@@ -93306,6 +93444,77 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
+
+/***/ },
+/* 860 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  height: 50%;\n  border: 1px solid #fff;\n  margin: 5em auto 0em auto;\n'], ['\n  width: 50%;\n  height: 50%;\n  border: 1px solid #fff;\n  margin: 5em auto 0em auto;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n  font-size: 1.6em;\n  ', ';\n'], ['\n  color: #fff;\n  font-weight: 100;\n  font-size: 1.6em;\n  ', ';\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n'], ['\n  width: 100%;\n']);
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _styledComponents = __webpack_require__(528);
+
+	var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	var StyledSuccessWrapper = _styledComponents2.default.div(_templateObject);
+
+	var ReservationData = _styledComponents2.default.h3(_templateObject2, function (props) {
+	  return props.center ? 'text-align: center' : 'padding-left: 2em';
+	});
+
+	var Line = _styledComponents2.default.hr(_templateObject3);
+
+	var SuccessfulReservationWrapper = function SuccessfulReservationWrapper(reservationObj) {
+	  var reservation = reservationObj.reservation;
+	  return _react2.default.createElement(
+	    StyledSuccessWrapper,
+	    null,
+	    _react2.default.createElement(
+	      ReservationData,
+	      { center: true },
+	      'Planned ',
+	      reservation.activity,
+	      ' for ',
+	      reservation.number_persons
+	    ),
+	    _react2.default.createElement(Line, null),
+	    _react2.default.createElement(
+	      ReservationData,
+	      null,
+	      'Description: ',
+	      reservation.description
+	    ),
+	    _react2.default.createElement(
+	      ReservationData,
+	      null,
+	      'From ',
+	      reservation.start_date_time,
+	      ' to ',
+	      reservation.end_date_time
+	    )
+	  );
+	};
+
+	exports.default = SuccessfulReservationWrapper;
 
 /***/ }
 /******/ ]);
