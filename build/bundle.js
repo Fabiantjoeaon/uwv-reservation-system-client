@@ -43392,7 +43392,7 @@
 	          null,
 	          error
 	        ) : null,
-	        _react2.default.createElement(StyledInput, { color: color, max: max, className: 'input__input', value: value, autoComplete: 'off', name: name, type: type }),
+	        _react2.default.createElement(StyledInput, { color: color, max: max, className: 'input__input', value: value, placeholder: this.props.placeholder, autoComplete: 'off', name: name, type: type }),
 	        _react2.default.createElement(
 	          StyledLabel,
 	          { color: color, error: error, secondColor: secondColor, className: 'input__label', 'data-label': label, htmlFor: name },
@@ -68898,6 +68898,7 @@
 	  }, {
 	    key: '_filterReservationsByRoom',
 	    value: function _filterReservationsByRoom(reservations, id) {
+	      if (_.isEmpty(reservations)) return;
 	      var reservationForThisRoom = reservations.filter(function (reservation) {
 	        return reservation.room_id == id;
 	      });
@@ -85278,9 +85279,11 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n'], ['\n  width: 100%;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 0.75em auto;\n  &:hover {\n    color: ', ';\n  }\n'], ['\n  display: block;\n  margin: 0.75em auto;\n  &:hover {\n    color: ', ';\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  flex-basis: 85%;\n  display: block;\n  margin-left: 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n'], ['\n  flex-basis: 85%;\n  display: block;\n  margin-left: 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n'], ['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n'], ['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  border: 3px solid rgb(120, 120, 120);\n  text-align: center;\n  color: rgb(120, 120, 120);\n  font-weight: 900;\n  padding: 1em;\n  position: absolute;\n  top: -4%;\n  left: -4%;\n'], ['\n  border: 3px solid rgb(120, 120, 120);\n  text-align: center;\n  color: rgb(120, 120, 120);\n  font-weight: 900;\n  padding: 1em;\n  position: absolute;\n  top: -4%;\n  left: -4%;\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  flex-basis: 85%;\n  display: block;\n  margin: 0.3em 0em 0em 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n'], ['\n  flex-basis: 85%;\n  display: block;\n  margin: 0.3em 0em 0em 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n'], ['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n']),
+	    _templateObject6 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n'], ['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n']),
+	    _templateObject7 = _taggedTemplateLiteral(['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n'], ['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85318,17 +85321,28 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+	Date.prototype.yyyymmdd = function () {
+	  var mm = this.getMonth() + 1;
+	  var dd = this.getDate();
+
+	  return [this.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
+	};
+
 	var ReservationWrapper = _styledComponents2.default.div(_templateObject);
 
 	var ReservationButton = (0, _styledComponents2.default)(_Button2.default)(_templateObject2, function (props) {
 	  return props.type == 'Onderzoekkamer' ? '#b5d0ff !important' : '#C4B7FF !important';
 	});
 
-	var ReservationData = _styledComponents2.default.div(_templateObject3);
+	var NewReservationSticker = _styledComponents2.default.div(_templateObject3);
 
-	var ButtonWrapper = _styledComponents2.default.div(_templateObject4);
+	var ReservationData = _styledComponents2.default.div(_templateObject4);
 
-	var Reservation = _styledComponents2.default.div(_templateObject5);
+	var ButtonWrapper = _styledComponents2.default.div(_templateObject5);
+
+	var Reservation = _styledComponents2.default.div(_templateObject6);
+
+	var DeletedReservation = _styledComponents2.default.h1(_templateObject7);
 
 	var ReservationsOverview = function (_React$Component) {
 	  _inherits(ReservationsOverview, _React$Component);
@@ -85341,10 +85355,11 @@
 	    _this.state = {
 	      reservations: {},
 	      isLoading: false,
-	      deletedReservation: null
+	      deletedReservation: {},
+	      error: ''
 	    };
 
-	    _.bindAll(_this, '_deleteReservation');
+	    _.bindAll(_this, '_deleteReservation', '_redirectToEdit');
 	    return _this;
 	  }
 
@@ -85365,6 +85380,13 @@
 	      }).then(function (data) {
 	        var _ref;
 
+	        if (typeof data.data === 'string') {
+	          _this2.setState({
+	            error: data.data,
+	            isLoading: false
+	          });
+	          return;
+	        }
 	        var reservations = [];
 	        data.data.map(function (reservation) {
 	          reservations.push(reservation);
@@ -85374,8 +85396,7 @@
 	          isLoading: false
 	        });
 	      }).catch(function (error) {
-	        console.log(error);
-	        _this2.setState({ reservations: {} });
+	        _this2.setState({ error: error, isLoading: false });
 	      });
 	    }
 	  }, {
@@ -85383,10 +85404,15 @@
 	    value: function _deleteReservation(id) {
 	      var _this3 = this;
 
-	      this.props.fetcher.deleteRequestWithToken('/reservations/' + id, this.props.token).then(function (data) {
-	        console.log('deleted');
+	      this.props.fetcher.deleteRequestWithToken('/reservations/' + id, this.props.token).then(function (res) {
+	        return res.json();
+	      }).then(function (data) {
+	        console.log(data);
 	        _this3.setState({
-	          deletedReservation: id
+	          deletedReservation: {
+	            id: id,
+	            activity: data.activity
+	          }
 	        }, function () {
 	          _this3._getReservations();
 	        });
@@ -85395,21 +85421,23 @@
 	      });
 	    }
 	  }, {
+	    key: '_redirectToEdit',
+	    value: function _redirectToEdit(reservationId, roomId, date) {
+	      var dateString = new Date(date).yyyymmdd();
+	      this.props.router.push('/room/' + roomId + '/?date=' + dateString + '&reservation=' + reservationId);
+	    }
+	  }, {
 	    key: '_renderReservations',
 	    value: function _renderReservations() {
 	      var _this4 = this;
 
-	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
-	      console.log(reservations);
-	      if (_.isEmpty(reservations)) {
-	        console.log('no res');
-	        return _react2.default.createElement(
-	          'h1',
-	          null,
-	          'You have no reservations'
-	        );
-	      }
+	      if (this.state.error) return _react2.default.createElement(
+	        'h1',
+	        null,
+	        this.state.error
+	      );
 
+	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
 	      return reservations.map(function (reservation, i) {
 	        var date = new Date(reservation.start_date_time).toGMTString().slice(0, -13);
 	        var startTime = (0, _DateUtils.makeHoursAndMinutes)(reservation.start_date_time);
@@ -85418,6 +85446,11 @@
 	        return _react2.default.createElement(
 	          Reservation,
 	          { className: reservation.room.type, key: i },
+	          _this4.props.router.location.query.new == reservation.id ? _react2.default.createElement(
+	            NewReservationSticker,
+	            null,
+	            'NEW'
+	          ) : null,
 	          _react2.default.createElement(
 	            ReservationData,
 	            null,
@@ -85462,6 +85495,9 @@
 	                height: '2.5em',
 	                fontSize: '1.2em',
 	                type: reservation.room.type,
+	                onClick: function onClick() {
+	                  _this4._redirectToEdit(reservation.id, reservation.room.id, reservation.start_date_time);
+	                },
 	                color: '#fff'
 	              },
 	              'Edit'
@@ -85491,7 +85527,14 @@
 	      return _react2.default.createElement(
 	        ReservationWrapper,
 	        null,
-	        this.state.deletedReservation ? 'Deleted ' + this.state.deletedReservation : null,
+	        !_.isEmpty(this.state.deletedReservation) ? _react2.default.createElement(
+	          DeletedReservation,
+	          null,
+	          'Deleted activity ',
+	          this.state.deletedReservation.activity,
+	          ' with ID ',
+	          this.state.deletedReservation.id
+	        ) : null,
 	        !this.state.isLoading ? this._renderReservations() : null
 	      );
 	    }
@@ -85621,7 +85664,15 @@
 	      return this.state.isLoading ? _react2.default.createElement(_LoadingScreen2.default, null) : _react2.default.createElement(
 	        RoomReservationWrapper,
 	        { className: className },
-	        _react2.default.createElement(_RoomReservationForm2.default, { type: type, fetcher: this.props.fetcher, customers: this.props.customers, date: this.props.location.query.date, roomId: this.props.routeParams.id, token: this.props.token, room: this.state.room })
+	        _react2.default.createElement(_RoomReservationForm2.default, {
+	          type: type,
+	          fetcher: this.props.fetcher,
+	          customers: this.props.customers,
+	          date: this.props.location.query.date,
+	          roomId: this.props.routeParams.id,
+	          token: this.props.token,
+	          router: this.props.router,
+	          room: this.state.room })
 	      );
 	    }
 	  }]);
@@ -85741,8 +85792,9 @@
 	      customers: {},
 	      startTime: '',
 	      endTime: '',
-	      success: false,
-	      addedReservation: {}
+	      activity: '',
+	      description: '',
+	      number_persons: 1
 	    };
 	    return _this;
 	  }
@@ -85753,12 +85805,34 @@
 	      this._getReservationsForDate();
 	    }
 	  }, {
-	    key: '_filterRoomsById',
-	    value: function _filterRoomsById(reservations) {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
 	      var _this2 = this;
 
+	      if (this.props.router.location.query.reservation) {
+	        var id = this.props.router.location.query.reservation;
+	        this.props.fetcher.getRequestWithToken('/reservations/' + id, this.props.token).then(function (res) {
+	          return res.json();
+	        }).then(function (data) {
+	          var reservation = data.data;
+	          _this2.setState({
+	            customerId: reservation.customer.id,
+	            number_persons: reservation.number_persons,
+	            activity: reservation.activity,
+	            description: reservation.description
+	          });
+	        }).catch(function (error) {
+	          console.log(error);
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_filterRoomsById',
+	    value: function _filterRoomsById(reservations) {
+	      var _this3 = this;
+
 	      var filteredReservations = reservations.filter(function (res) {
-	        return _this2.props.roomId == res.room_id;
+	        return _this3.props.roomId == res.room_id;
 	      });
 
 	      return filteredReservations;
@@ -85766,7 +85840,7 @@
 	  }, {
 	    key: '_getReservationsForDate',
 	    value: function _getReservationsForDate() {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      this.setState({
 	        isLoading: true
@@ -85780,12 +85854,12 @@
 	        data.data.map(function (reservation) {
 	          reservations.push(reservation);
 	        });
-	        _this3.setState({
-	          reservations: _this3._filterRoomsById((_ref = []).concat.apply(_ref, reservations)),
+	        _this4.setState({
+	          reservations: _this4._filterRoomsById((_ref = []).concat.apply(_ref, reservations)),
 	          isLoading: false
 	        });
 	      }).catch(function (error) {
-	        _this3.setState({
+	        _this4.setState({
 	          reservations: {},
 	          isLoading: false
 	        });
@@ -85800,9 +85874,9 @@
 	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
 	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
 	        end_date_time: this.props.date + ' ' + this.state.endTime + ':00',
-	        activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value,
-	        description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value,
-	        number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value,
+	        activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value || _reactDom2.default.findDOMNode(this.refs.activity).children.activity.placeholder,
+	        description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value || _reactDom2.default.findDOMNode(this.refs.description).children.description.placeholder,
+	        number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value || _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.placeholder,
 	        customer_id: id,
 	        room_id: this.props.room.id
 	      };
@@ -85830,26 +85904,28 @@
 	  }, {
 	    key: '_handleErrors',
 	    value: function _handleErrors(errors) {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      this.setState({ errors: errors }, function () {
-	        console.log(_this4.state.errors);
+	        console.log(_this5.state.errors);
 	      });
 	    }
 	  }, {
 	    key: '_postReservation',
 	    value: function _postReservation(data) {
-	      var _this5 = this;
+	      var _this6 = this;
 
 	      console.log(data);
 	      this.props.fetcher.postRequestWithToken('/reservations', this.props.token, data).then(function (res) {
 	        if (res.status === 400) {
 	          Promise.resolve(res.json()).then(function (data) {
-	            _this5._handleErrors(data.data);
+	            _this6._handleErrors(data.data);
 	          });
 	        }
 	        if (res.status === 200) {
-	          _this5.setState({ success: true, addedReservation: data });
+	          Promise.resolve(res.json()).then(function (data) {
+	            _this6.props.router.push('/reservations?new=' + data.id);
+	          });
 	        }
 	      }).catch(function (error) {
 	        return console.log(error);
@@ -85858,18 +85934,18 @@
 	  }, {
 	    key: '_postCustomer',
 	    value: function _postCustomer(customerData, reservationData) {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      this.props.fetcher.postRequestWithToken('/customers', this.props.token, customerData).then(function (res) {
 	        if (res.status === 400) {
 	          Promise.resolve(res.json()).then(function (data) {
-	            _this6._handleErrors(data.data);
+	            _this7._handleErrors(data.data);
 	          });
 	        }
 	        if (res.status === 200) {
 	          Promise.resolve(res.json()).then(function (data) {
-	            var reservationData = _this6._collectReservationData(data.customer_id);
-	            _this6._postReservation(reservationData);
+	            var reservationData = _this7._collectReservationData(data.customer_id);
+	            _this7._postReservation(reservationData);
 	          });
 	        }
 	      }).catch(function (error) {
@@ -85896,7 +85972,7 @@
 	  }, {
 	    key: '_renderCustomersSelect',
 	    value: function _renderCustomersSelect() {
-	      var _this7 = this;
+	      var _this8 = this;
 
 	      var customers = (0, _ResolveArrayLikeObject2.default)(this.props.customers);
 	      var customerOptions = customers.map(function (customer, i) {
@@ -85904,16 +85980,17 @@
 	            first_name = customer.first_name,
 	            last_name = customer.last_name;
 
+
 	        return _react2.default.createElement(
 	          CustomerItem,
 	          { key: i },
-	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, name: 'customer-option', value: id, onClick: function onClick(e) {
-	              _this7._showCustomerForm(e);
+	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, checked: _this8.state.customerId == id, name: 'customer-option', value: id, onClick: function onClick(e) {
+	              _this8._showCustomerForm(e);
 	            } }),
 	          _react2.default.createElement(
 	            CustomerLabel,
 	            { htmlFor: 'customer-' + id, onClick: function onClick(e) {
-	                _this7._setExistingCustomer(id);
+	                _this8._setExistingCustomer(id);
 	              } },
 	            first_name,
 	            ' ',
@@ -85926,7 +86003,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this8 = this,
+	      var _this9 = this,
 	          _React$createElement;
 
 	      var className = 'res-form__' + this.props.room.type;
@@ -85975,12 +86052,12 @@
 	                CustomerItem,
 	                null,
 	                _react2.default.createElement(CustomerOption, { id: 'customer-add', type: 'radio', name: 'customer-option', onClick: function onClick(e) {
-	                    _this8._showCustomerForm(e);
+	                    _this9._showCustomerForm(e);
 	                  } }),
 	                _react2.default.createElement(
 	                  CustomerLabel,
 	                  { htmlFor: 'customer-add', onClick: function onClick(e) {
-	                      _this8._setExistingCustomer(null);
+	                      _this9._setExistingCustomer(null);
 	                    } },
 	                  'Add a customer'
 	                )
@@ -85999,9 +86076,9 @@
 	              { className: 'res-form__title' },
 	              'Reservation data:'
 	            ),
-	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'number_persons', ref: 'number_persons', type: 'number', max: this.props.room.capacity, label: 'Number of persons (max ' + this.props.room.capacity + ')' }),
-	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.activity : null, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' }),
-	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.description : null, name: 'description', ref: 'description', type: 'text', label: 'Description' })
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, name: 'number_persons', ref: 'number_persons', placeholder: this.state.number_persons, type: 'number', max: this.props.room.capacity, label: 'Number of persons (max ' + this.props.room.capacity + ')' }),
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.activity : null, placeholder: this.state.activity, name: 'activity', ref: 'activity', type: 'text', label: 'Activity' }),
+	            _react2.default.createElement(_Input2.default, { color: '#fff', secondColor: inputColor, error: errors.activity ? errors.description : null, placeholder: this.state.description, name: 'description', ref: 'description', type: 'text', label: 'Description' })
 	          ),
 	          _react2.default.createElement(
 	            ReservationFormDivider,

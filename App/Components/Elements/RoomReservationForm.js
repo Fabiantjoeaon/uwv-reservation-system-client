@@ -114,13 +114,34 @@ export default class RoomReservationForm extends React.Component {
       customers: {},
       startTime: '',
       endTime: '',
-      success: false,
-      addedReservation: {}
+      activity: '',
+      description: '',
+      number_persons: 1
     };
   }
 
   componentWillMount() {
     this._getReservationsForDate();
+  }
+
+  componentDidMount() {
+    if(this.props.router.location.query.reservation) {
+      const id = this.props.router.location.query.reservation;
+      this.props.fetcher.getRequestWithToken(`/reservations/${id}`, this.props.token)
+        .then((res) => res.json())
+        .then((data) => {
+          const reservation = data.data;
+          this.setState({
+            customerId: reservation.customer.id,
+            number_persons: reservation.number_persons,
+            activity: reservation.activity,
+            description: reservation.description
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   _filterRoomsById(reservations) {
@@ -160,9 +181,9 @@ export default class RoomReservationForm extends React.Component {
       start_date_time: `${this.props.date} ${this.state.startTime}:00`,
       length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
       end_date_time: `${this.props.date} ${this.state.endTime}:00`,
-      activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value,
-      description: ReactDOM.findDOMNode(this.refs.description).children.description.value,
-      number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value,
+      activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value || ReactDOM.findDOMNode(this.refs.activity).children.activity.placeholder,
+      description: ReactDOM.findDOMNode(this.refs.description).children.description.value || ReactDOM.findDOMNode(this.refs.description).children.description.placeholder,
+      number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value || ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.placeholder,
       customer_id: id,
       room_id: this.props.room.id
     };
@@ -201,7 +222,9 @@ export default class RoomReservationForm extends React.Component {
           });
         }
         if(res.status === 200) {
-          this.setState({success: true, addedReservation: data});
+          Promise.resolve(res.json()).then((data) => {
+            this.props.router.push(`/reservations?new=${data.id}`);
+          });
         }
       })
       .catch((error) => console.log(error));
@@ -243,9 +266,10 @@ export default class RoomReservationForm extends React.Component {
     const customers = resolveArrayLikeObject(this.props.customers);
     const customerOptions = customers.map((customer, i) => {
       const {id, first_name, last_name} = customer;
+
       return (
         <CustomerItem key={i}>
-          <CustomerOption type='radio' id={`customer-${id}`} name='customer-option' value={id} onClick={(e) => {this._showCustomerForm(e)}} />
+          <CustomerOption type='radio' id={`customer-${id}`} checked={this.state.customerId == id} name='customer-option' value={id} onClick={(e) => {this._showCustomerForm(e)}} />
           <CustomerLabel htmlFor={`customer-${id}`} onClick={(e) => {this._setExistingCustomer(id)}}>{first_name} {last_name}</CustomerLabel>
         </CustomerItem>
       );
@@ -254,6 +278,7 @@ export default class RoomReservationForm extends React.Component {
   }
 
   render() {
+
     const className = `res-form__${this.props.room.type}`;
     // Color label of input based on room type
     const inputColor = this.props.room.type == 'Onderzoekkamer' ? '#b5d0ff' : '#C4B7FF';
@@ -268,7 +293,7 @@ export default class RoomReservationForm extends React.Component {
         <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
         <h2 className='res-form__date'>Reservation on {this.props.date}</h2>
         {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
-        
+
         <ReservationForm onSubmit={this._handleSubmit}>
           <ReservationFormDivider dir='left'>
             <CustomerOptionWrapper>
@@ -288,9 +313,9 @@ export default class RoomReservationForm extends React.Component {
               </div>
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
-              <Input color='#fff' secondColor={inputColor} name='number_persons' ref='number_persons' type='number' max={this.props.room.capacity} label={`Number of persons (max ${this.props.room.capacity})`} />
-              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.activity : null} name='activity' ref='activity' type='text' label='Activity' />
-              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.description : null} name='description' ref='description' type='text' label='Description' />
+              <Input color='#fff' secondColor={inputColor} name='number_persons' ref='number_persons' placeholder={this.state.number_persons} type='number' max={this.props.room.capacity} label={`Number of persons (max ${this.props.room.capacity})`} />
+              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.activity : null} placeholder={this.state.activity} name='activity' ref='activity' type='text' label='Activity' />
+              <Input color='#fff' secondColor={inputColor} error={errors.activity ? errors.description : null} placeholder={this.state.description} name='description' ref='description' type='text' label='Description' />
           </ReservationFormDivider>
 
           <ReservationFormDivider dir='right'>

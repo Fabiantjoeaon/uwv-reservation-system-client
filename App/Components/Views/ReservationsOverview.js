@@ -11,6 +11,16 @@ import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 import Button from '../Elements/Button';
 
+Date.prototype.yyyymmdd = function() {
+  const mm = this.getMonth() + 1;
+  const dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+        ].join('-');
+};
+
 const ReservationWrapper = styled.div`
   width: 100%;
 `;
@@ -23,10 +33,21 @@ const ReservationButton = styled(Button)`
   }
 `;
 
+const NewReservationSticker = styled.div`
+  border: 3px solid rgb(120, 120, 120);
+  text-align: center;
+  color: rgb(120, 120, 120);
+  font-weight: 900;
+  padding: 1em;
+  position: absolute;
+  top: -4%;
+  left: -4%;
+`;
+
 const ReservationData = styled.div`
   flex-basis: 85%;
   display: block;
-  margin-left: 3em;
+  margin: 0.3em 0em 0em 3em;
   color: #fff;
 
   h1 {
@@ -60,6 +81,13 @@ const Reservation = styled.div`
   }
 `;
 
+const DeletedReservation = styled.h1`
+  padding: 10px;
+  font-weight: 100;
+  background-color: #a6a6a6;
+  color: rgb(120, 120, 120);
+`;
+
 export default class ReservationsOverview extends React.Component {
   constructor() {
     super();
@@ -67,10 +95,11 @@ export default class ReservationsOverview extends React.Component {
     this.state = {
       reservations: {},
       isLoading: false,
-      deletedReservation: null
+      deletedReservation: {},
+      error: ''
     }
 
-    _.bindAll(this, '_deleteReservation');
+    _.bindAll(this, '_deleteReservation', '_redirectToEdit');
   }
 
   componentWillMount() {
@@ -83,6 +112,13 @@ export default class ReservationsOverview extends React.Component {
     this.props.fetcher.getRequestWithToken('/me/reservations', this.props.token)
       .then((res) => res.json())
       .then((data) => {
+        if(typeof data.data === 'string') {
+          this.setState({
+            error: data.data,
+            isLoading: false
+          });
+          return;
+        }
         const reservations = [];
         data.data.map((reservation) => {
           reservations.push(reservation);
@@ -93,17 +129,20 @@ export default class ReservationsOverview extends React.Component {
         });
       })
       .catch((error) => {
-        console.log(error);
-        this.setState({reservations: {}})
+        this.setState({error: error, isLoading: false})
       });
   }
 
   _deleteReservation(id) {
     this.props.fetcher.deleteRequestWithToken(`/reservations/${id}`, this.props.token)
+      .then((res) => res.json())
       .then((data) => {
-        console.log('deleted')
+        console.log(data);
         this.setState({
-          deletedReservation: id
+          deletedReservation: {
+            id: id,
+            activity: data.activity
+          }
         }, () => {
           this._getReservations();
         });
@@ -113,14 +152,15 @@ export default class ReservationsOverview extends React.Component {
       })
   }
 
-  _renderReservations() {
-    const reservations = resolveArrayLikeObject(this.state.reservations);
-    console.log(reservations);
-    if(_.isEmpty(reservations)) {
-      console.log('no res');
-      return <h1>You have no reservations</h1>;
-    }
+  _redirectToEdit(reservationId, roomId, date) {
+    const dateString = new Date(date).yyyymmdd();
+    this.props.router.push(`/room/${roomId}/?date=${dateString}&reservation=${reservationId}`);
+  }
 
+  _renderReservations() {
+    if(this.state.error) return <h1>{this.state.error}</h1>;
+
+    const reservations = resolveArrayLikeObject(this.state.reservations);
     return reservations.map((reservation, i) => {
       const date = new Date(reservation.start_date_time).toGMTString().slice(0, -13);
       const startTime = makeHoursAndMinutes(reservation.start_date_time);
@@ -128,6 +168,7 @@ export default class ReservationsOverview extends React.Component {
 
       return (
         <Reservation className={reservation.room.type} key={i}>
+          {this.props.router.location.query.new == reservation.id ? <NewReservationSticker>NEW</NewReservationSticker> : null}
           <ReservationData>
             <h1>{reservation.activity} on {date} with {reservation.customer.first_name} {reservation.customer.last_name}</h1>
             <h2>{reservation.description}</h2>
@@ -140,6 +181,7 @@ export default class ReservationsOverview extends React.Component {
               height='2.5em'
               fontSize='1.2em'
               type={reservation.room.type}
+              onClick={() => {this._redirectToEdit(reservation.id, reservation.room.id, reservation.start_date_time)}}
               color='#fff'
               >Edit</ReservationButton>
             <ReservationButton
@@ -160,7 +202,7 @@ export default class ReservationsOverview extends React.Component {
   render() {
     return (
       <ReservationWrapper>
-        {this.state.deletedReservation ? `Deleted ${this.state.deletedReservation}` : null}
+        {!_.isEmpty(this.state.deletedReservation) ? <DeletedReservation>Deleted activity {this.state.deletedReservation.activity} with ID {this.state.deletedReservation.id}</DeletedReservation> : null}
         {!this.state.isLoading ? this._renderReservations() : null}
       </ReservationWrapper>
     )

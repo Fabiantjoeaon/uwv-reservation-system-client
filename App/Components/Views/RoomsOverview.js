@@ -137,10 +137,11 @@ export default class RoomsOverview extends React.Component {
   }
 
   _filterReservationsByRoom(reservations, id) {
+    if(_.isEmpty(reservations)) return;
     const reservationForThisRoom = reservations.filter((reservation) => {
       return reservation.room_id == id;
     });
-  
+
     return reservationForThisRoom;
   }
 
