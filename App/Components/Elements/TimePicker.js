@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
+import {makeHoursAndMinutes} from '../../Utils/DateUtils';
 
 const dateFns = require('date-fns');
 const _ = require('lodash');
@@ -124,7 +125,7 @@ export default class TimePicker extends React.Component {
     };
 
     _.bindAll(this, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved',
-    '_checkReservedLinesForFilling', '_toDate', '_makeHoursAndMinutes', '_reset');
+    '_checkReservedLinesForFilling', '_toDate', '_reset');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -242,19 +243,6 @@ export default class TimePicker extends React.Component {
   }
 
   /**
-   * Returns time as hours:minutes
-   */
-  _makeHoursAndMinutes(time) {
-    const timeObj = new Date(time);
-    const minutesWithoutZero = timeObj.getMinutes();
-    const minutes = minutesWithoutZero < 10 ? `0${minutesWithoutZero}` : minutesWithoutZero;
-    const hours = timeObj.getHours();
-    const string = `${hours}:${minutes}`;
-
-    return string;
-  }
-
-  /**
    * Returns object with easy to access start and end reservation times
    */
   _returnReservationTimes(reservations) {
@@ -264,8 +252,8 @@ export default class TimePicker extends React.Component {
       const reservationTimes = {
         id: i,
         activity: res.activity,
-        startTime: this._makeHoursAndMinutes(res.start_date_time),
-        endTime: this._makeHoursAndMinutes(res.end_date_time)
+        startTime: makeHoursAndMinutes(res.start_date_time),
+        endTime: makeHoursAndMinutes(res.end_date_time)
       }
       reservationTimesArray.push(reservationTimes);
     });
@@ -307,7 +295,7 @@ export default class TimePicker extends React.Component {
             //TODO: Move this to renderLines function
             //TODO: Add errors
             const addedTime = dateFns.addMinutes(date, (i * this.timeMultiplier));
-            const timeSlot = this._makeHoursAndMinutes(addedTime);
+            const timeSlot = makeHoursAndMinutes(addedTime);
             const isReserved = this._checkIfLineIsReserved(reservations, timeSlot)
             if(!(_.indexOf(this.state.activeLines, i) == -1)) {
               return <QuarterLine

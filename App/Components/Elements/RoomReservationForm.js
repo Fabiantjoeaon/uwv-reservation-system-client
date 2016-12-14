@@ -11,7 +11,6 @@ import Title from './Title';
 import Button from './Button';
 import Notice from './Notice';
 import TimePicker from './TimePicker';
-import SuccessfulReservationWrapper from './SuccessfulReservationWrapper';
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 
 const ReservationFormTitle = styled(Title)`
@@ -181,7 +180,7 @@ export default class RoomReservationForm extends React.Component {
         first_name: ReactDOM.findDOMNode(this.refs.first_name).children.first_name.value,
         last_name: ReactDOM.findDOMNode(this.refs.last_name).children.last_name.value,
         email: ReactDOM.findDOMNode(this.refs.email).children.email.value,
-        bsn: ReactDOM.findDOMNode(this.refs.bsn).children.bsn.value
+        BSN: ReactDOM.findDOMNode(this.refs.BSN).children.BSN.value
       }
 
       this._postCustomer(customerData);
@@ -269,8 +268,7 @@ export default class RoomReservationForm extends React.Component {
         <ReservationFormTitle color='#fff' fontSize='4em'>{this.props.room.name}</ReservationFormTitle>
         <h2 className='res-form__date'>Reservation on {this.props.date}</h2>
         {this.state.error ? <Notice key='notice' type='error' notice={this.state.error}/> : null}
-        {this.state.success ?
-          <SuccessfulReservationWrapper reservation={this.state.addedReservation}/> :
+        
         <ReservationForm onSubmit={this._handleSubmit}>
           <ReservationFormDivider dir='left'>
             <CustomerOptionWrapper>
@@ -286,7 +284,7 @@ export default class RoomReservationForm extends React.Component {
                 <Input color='#fff' ref='first_name' secondColor={inputColor} error={errors.first_name ? errors.first_name : null} name='first_name' type='text' label='Customers first name' />
                 <Input color='#fff' ref='last_name' secondColor={inputColor} error={errors.last_name ? errors.last_name : null} name='last_name' type='text' label='Customers last name' />
                 <Input color='#fff' ref='email' secondColor={inputColor} error={errors.email ? errors.email : null} name='email' type='text' label='Customers E-mail' />
-                <Input color='#fff' ref='bsn' secondColor={inputColor} error={errors.BSN ? errors.BSN : null} name='bsn' type='text' label='Customers BSN' />
+                <Input color='#fff' ref='BSN' secondColor={inputColor} error={errors.BSN ? errors.BSN : null} name='BSN' type='text' label='Customers BSN' />
               </div>
                : null}
               <h2 className='res-form__title'>Reservation data:</h2>
@@ -312,7 +310,7 @@ export default class RoomReservationForm extends React.Component {
             fontSize='1.7em'
             type={this.props.room.type}
             color='#fff'>Submit reservation</ReservationSubmitButton>
-        </ReservationForm>}
+        </ReservationForm>
       </div>
     )
   }

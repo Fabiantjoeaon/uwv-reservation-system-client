@@ -425,7 +425,8 @@ body {
   margin: 0px; }
 
 .onderzoekkamer, .spreekkamer {
-  background-size: 1px 300px; }
+  background-size: 1px 300px;
+  position: relative; }
   .onderzoekkamer::before, .spreekkamer::before {
     content: '';
     width: 100%;

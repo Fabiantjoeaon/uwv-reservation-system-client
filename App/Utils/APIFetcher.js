@@ -65,4 +65,20 @@ export default class APIFetcher {
       return error;
     }
   }
+
+  async deleteRequestWithToken(resource, token) {
+    try {
+      const response = fetch(`${this.apiUrl}${resource}?token=${token}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      return response;
+    } catch(error) {
+      return error;
+    }
+  }
 }

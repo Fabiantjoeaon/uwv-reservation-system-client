@@ -7,6 +7,19 @@ export function convertDateTimeToTime(date) {
   return time;
 }
 
+/**
+ * Returns time as hours:minutes
+ */
+export function makeHoursAndMinutes(time) {
+  const timeObj = new Date(time);
+  const minutesWithoutZero = timeObj.getMinutes();
+  const minutes = minutesWithoutZero < 10 ? `0${minutesWithoutZero}` : minutesWithoutZero;
+  const hours = timeObj.getHours();
+  const string = `${hours}:${minutes}`;
+
+  return string;
+}
+
 // Date.prototype.yyyymmdd = function() {
 //   const mm = this.getMonth() + 1;
 //   const dd = this.getDate();

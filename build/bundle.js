@@ -8216,15 +8216,15 @@
 
 	var _ReservationsOverview2 = _interopRequireDefault(_ReservationsOverview);
 
-	var _RoomReservationScreen = __webpack_require__(697);
+	var _RoomReservationScreen = __webpack_require__(698);
 
 	var _RoomReservationScreen2 = _interopRequireDefault(_RoomReservationScreen);
 
-	var _APIFetcher = __webpack_require__(857);
+	var _APIFetcher = __webpack_require__(858);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
-	var _AuthHandlers = __webpack_require__(859);
+	var _AuthHandlers = __webpack_require__(860);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43155,7 +43155,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:15%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:17%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n'], ['\n  padding-top: 5em;\n  position: absolute;\n  top:10%;\n  left:17%;\n  width: 65%;\n  height: 60em;\n  background-color: rgba(255,255,255,1);\n  opacity: 0;\n  transform: translateY(160px);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n'], ['\n  margin-top: 2.5em;\n  font-size: 1.7em;\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  display: flex;\n  margin-top: 6.5em;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n'], ['\n  display: flex;\n  margin-top: 6.5em;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n']);
 
@@ -68449,7 +68449,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n'], ['\n  width: 100%;\n  height: 100%;\n  background-color: rgba(255,255,255,1);\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  height: 15%;\n  width: 100%;\n'], ['\n  height: 15%;\n  width: 100%;\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  min-height: 100%;\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n'], ['\n  margin: 2em auto 6em auto;\n  width: calc(90% - 6em);\n  height: auto;\n  position: relative;\n  padding: 3em;\n  background-color: rgb(240, 240, 240);\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n'], ['\n  position: absolute;\n  top: 5%;\n  right: 5%;\n\n  @media(max-width: 950px) {\n    top: 3%;\n    flex-direction: column;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n'], ['\n  @media(max-width: 950px) {\n    display: inline;\n    flex-direction: column;\n    text-align: right;\n    padding: 0.3em 0em;\n\n    &::before {\n      display: none;\n    }\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  padding-top: 2%;\n  margin-left: 5%;\n'], ['\n  padding-top: 2%;\n  margin-left: 5%;\n']),
@@ -68901,6 +68901,7 @@
 	      var reservationForThisRoom = reservations.filter(function (reservation) {
 	        return reservation.room_id == id;
 	      });
+
 	      return reservationForThisRoom;
 	    }
 	  }, {
@@ -68925,7 +68926,7 @@
 	            fetcher: _this6.props.fetcher,
 	            token: _this6.props.token,
 	            room: room,
-	            futureReservation: _this6.state.futureReservation ? _this6._filterReservationsByRoom(_this6.state.futureReservations, room.id) : null });
+	            futureReservation: _this6.state.futureReservations ? _this6._filterReservationsByRoom(_this6.state.futureReservations, room.id) : null });
 	        });
 	      } else {
 	        roomsList = this.state.rooms.map(function (room, i) {
@@ -69359,6 +69360,7 @@
 	  value: true
 	});
 	exports.convertDateTimeToTime = convertDateTimeToTime;
+	exports.makeHoursAndMinutes = makeHoursAndMinutes;
 	function convertDateTimeToTime(date) {
 	  var endDate = new Date(date);
 	  var h = endDate.getHours();
@@ -69366,6 +69368,19 @@
 	  var time = h + ':' + m;
 
 	  return time;
+	}
+
+	/**
+	 * Returns time as hours:minutes
+	 */
+	function makeHoursAndMinutes(time) {
+	  var timeObj = new Date(time);
+	  var minutesWithoutZero = timeObj.getMinutes();
+	  var minutes = minutesWithoutZero < 10 ? '0' + minutesWithoutZero : minutesWithoutZero;
+	  var hours = timeObj.getHours();
+	  var string = hours + ':' + minutes;
+
+	  return string;
 	}
 
 	// Date.prototype.yyyymmdd = function() {
@@ -85261,7 +85276,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 10%;\n'], ['\n  width: 100%;\n  height: 10%;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  width: 100%;\n'], ['\n  width: 100%;\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  display: block;\n  margin: 0.75em auto;\n  &:hover {\n    color: ', ';\n  }\n'], ['\n  display: block;\n  margin: 0.75em auto;\n  &:hover {\n    color: ', ';\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  flex-basis: 85%;\n  display: block;\n  margin-left: 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n'], ['\n  flex-basis: 85%;\n  display: block;\n  margin-left: 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n'], ['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n']),
+	    _templateObject5 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n'], ['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85279,9 +85298,15 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _ResolveArrayLikeObject = __webpack_require__(700);
+	var _DateUtils = __webpack_require__(606);
+
+	var _ResolveArrayLikeObject = __webpack_require__(697);
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	var _Button = __webpack_require__(594);
+
+	var _Button2 = _interopRequireDefault(_Button);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85293,7 +85318,17 @@
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var Reservation = _styledComponents2.default.div(_templateObject);
+	var ReservationWrapper = _styledComponents2.default.div(_templateObject);
+
+	var ReservationButton = (0, _styledComponents2.default)(_Button2.default)(_templateObject2, function (props) {
+	  return props.type == 'Onderzoekkamer' ? '#b5d0ff !important' : '#C4B7FF !important';
+	});
+
+	var ReservationData = _styledComponents2.default.div(_templateObject3);
+
+	var ButtonWrapper = _styledComponents2.default.div(_templateObject4);
+
+	var Reservation = _styledComponents2.default.div(_templateObject5);
 
 	var ReservationsOverview = function (_React$Component) {
 	  _inherits(ReservationsOverview, _React$Component);
@@ -85305,17 +85340,25 @@
 
 	    _this.state = {
 	      reservations: {},
-	      isLoading: false
+	      isLoading: false,
+	      deletedReservation: null
 	    };
+
+	    _.bindAll(_this, '_deleteReservation');
 	    return _this;
 	  }
 
 	  _createClass(ReservationsOverview, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      this.props.setCurrentPage('My Reservations');
+	      this._getReservations();
+	    }
+	  }, {
+	    key: '_getReservations',
+	    value: function _getReservations() {
 	      var _this2 = this;
 
-	      this.props.setCurrentPage('My Reservations');
 	      this.setState({ isLoading: true });
 	      this.props.fetcher.getRequestWithToken('/me/reservations', this.props.token).then(function (res) {
 	        return res.json();
@@ -85330,17 +85373,115 @@
 	          reservations: (_ref = []).concat.apply(_ref, reservations),
 	          isLoading: false
 	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	        _this2.setState({ reservations: {} });
+	      });
+	    }
+	  }, {
+	    key: '_deleteReservation',
+	    value: function _deleteReservation(id) {
+	      var _this3 = this;
+
+	      this.props.fetcher.deleteRequestWithToken('/reservations/' + id, this.props.token).then(function (data) {
+	        console.log('deleted');
+	        _this3.setState({
+	          deletedReservation: id
+	        }, function () {
+	          _this3._getReservations();
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
 	      });
 	    }
 	  }, {
 	    key: '_renderReservations',
 	    value: function _renderReservations() {
+	      var _this4 = this;
+
 	      var reservations = (0, _ResolveArrayLikeObject2.default)(this.state.reservations);
+	      console.log(reservations);
+	      if (_.isEmpty(reservations)) {
+	        console.log('no res');
+	        return _react2.default.createElement(
+	          'h1',
+	          null,
+	          'You have no reservations'
+	        );
+	      }
+
 	      return reservations.map(function (reservation, i) {
+	        var date = new Date(reservation.start_date_time).toGMTString().slice(0, -13);
+	        var startTime = (0, _DateUtils.makeHoursAndMinutes)(reservation.start_date_time);
+	        var endTime = (0, _DateUtils.makeHoursAndMinutes)(reservation.end_date_time);
+
 	        return _react2.default.createElement(
 	          Reservation,
-	          { key: i },
-	          reservation.activity
+	          { className: reservation.room.type, key: i },
+	          _react2.default.createElement(
+	            ReservationData,
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              reservation.activity,
+	              ' on ',
+	              date,
+	              ' with ',
+	              reservation.customer.first_name,
+	              ' ',
+	              reservation.customer.last_name
+	            ),
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              reservation.description
+	            ),
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              reservation.room.location,
+	              ' on floor ',
+	              reservation.room.floor,
+	              ' with ',
+	              reservation.number_persons,
+	              ' persons. From ',
+	              startTime,
+	              ' till ',
+	              endTime
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ButtonWrapper,
+	            null,
+	            _react2.default.createElement(
+	              ReservationButton,
+	              {
+	                name: 'edit',
+	                width: '7em',
+	                height: '2.5em',
+	                fontSize: '1.2em',
+	                type: reservation.room.type,
+	                color: '#fff'
+	              },
+	              'Edit'
+	            ),
+	            _react2.default.createElement(
+	              ReservationButton,
+	              {
+	                name: 'delete',
+	                width: '7em',
+	                height: '2.5em',
+	                fontSize: '1.2em',
+	                onClick: function onClick() {
+	                  _this4._deleteReservation(reservation.id);
+	                },
+	                type: reservation.room.type,
+	                color: '#fff'
+	              },
+	              'Delete'
+	            )
+	          )
 	        );
 	      });
 	    }
@@ -85348,13 +85489,9 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
+	        ReservationWrapper,
 	        null,
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'My Reservations'
-	        ),
+	        this.state.deletedReservation ? 'Deleted ' + this.state.deletedReservation : null,
 	        !this.state.isLoading ? this._renderReservations() : null
 	      );
 	    }
@@ -85367,6 +85504,31 @@
 
 /***/ },
 /* 697 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports.default = resolveArrayLikeObject;
+	// Weird array object bug hack..??
+	function resolveArrayLikeObject(arrayLikeObject) {
+	  var array = void 0;
+	  if ((typeof arrayLikeObject === 'undefined' ? 'undefined' : _typeof(arrayLikeObject)) === 'object') {
+	    array = Array.from(arrayLikeObject);
+	  } else {
+	    array = arrayLikeObject;
+	  }
+
+	  return array;
+	}
+
+/***/ },
+/* 698 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85391,7 +85553,7 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _RoomReservationForm = __webpack_require__(698);
+	var _RoomReservationForm = __webpack_require__(699);
 
 	var _RoomReservationForm2 = _interopRequireDefault(_RoomReservationForm);
 
@@ -85470,7 +85632,7 @@
 	exports.default = RoomReservationScreen;
 
 /***/ },
-/* 698 */
+/* 699 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85520,15 +85682,11 @@
 
 	var _Notice2 = _interopRequireDefault(_Notice);
 
-	var _TimePicker = __webpack_require__(699);
+	var _TimePicker = __webpack_require__(700);
 
 	var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
-	var _SuccessfulReservationWrapper = __webpack_require__(860);
-
-	var _SuccessfulReservationWrapper2 = _interopRequireDefault(_SuccessfulReservationWrapper);
-
-	var _ResolveArrayLikeObject = __webpack_require__(700);
+	var _ResolveArrayLikeObject = __webpack_require__(697);
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
 
@@ -85663,7 +85821,7 @@
 	          first_name: _reactDom2.default.findDOMNode(this.refs.first_name).children.first_name.value,
 	          last_name: _reactDom2.default.findDOMNode(this.refs.last_name).children.last_name.value,
 	          email: _reactDom2.default.findDOMNode(this.refs.email).children.email.value,
-	          bsn: _reactDom2.default.findDOMNode(this.refs.bsn).children.bsn.value
+	          BSN: _reactDom2.default.findDOMNode(this.refs.BSN).children.BSN.value
 	        };
 
 	        this._postCustomer(customerData);
@@ -85798,7 +85956,7 @@
 	          this.props.date
 	        ),
 	        this.state.error ? _react2.default.createElement(_Notice2.default, { key: 'notice', type: 'error', notice: this.state.error }) : null,
-	        this.state.success ? _react2.default.createElement(_SuccessfulReservationWrapper2.default, { reservation: this.state.addedReservation }) : _react2.default.createElement(
+	        _react2.default.createElement(
 	          ReservationForm,
 	          { onSubmit: this._handleSubmit },
 	          _react2.default.createElement(
@@ -85834,7 +85992,7 @@
 	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'first_name', secondColor: inputColor, error: errors.first_name ? errors.first_name : null, name: 'first_name', type: 'text', label: 'Customers first name' }),
 	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'last_name', secondColor: inputColor, error: errors.last_name ? errors.last_name : null, name: 'last_name', type: 'text', label: 'Customers last name' }),
 	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'email', secondColor: inputColor, error: errors.email ? errors.email : null, name: 'email', type: 'text', label: 'Customers E-mail' }),
-	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'bsn', secondColor: inputColor, error: errors.BSN ? errors.BSN : null, name: 'bsn', type: 'text', label: 'Customers BSN' })
+	              _react2.default.createElement(_Input2.default, { color: '#fff', ref: 'BSN', secondColor: inputColor, error: errors.BSN ? errors.BSN : null, name: 'BSN', type: 'text', label: 'Customers BSN' })
 	            ) : null,
 	            _react2.default.createElement(
 	              'h2',
@@ -85881,7 +86039,7 @@
 	exports.default = RoomReservationForm;
 
 /***/ },
-/* 699 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85910,9 +86068,11 @@
 
 	var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-	var _ResolveArrayLikeObject = __webpack_require__(700);
+	var _ResolveArrayLikeObject = __webpack_require__(697);
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
+
+	var _DateUtils = __webpack_require__(606);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86023,7 +86183,7 @@
 	      activeLines: []
 	    };
 
-	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved', '_checkReservedLinesForFilling', '_toDate', '_makeHoursAndMinutes', '_reset');
+	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved', '_checkReservedLinesForFilling', '_toDate', '_reset');
 	    return _this2;
 	  }
 
@@ -86161,38 +86321,20 @@
 	    }
 
 	    /**
-	     * Returns time as hours:minutes
-	     */
-
-	  }, {
-	    key: '_makeHoursAndMinutes',
-	    value: function _makeHoursAndMinutes(time) {
-	      var timeObj = new Date(time);
-	      var minutesWithoutZero = timeObj.getMinutes();
-	      var minutes = minutesWithoutZero < 10 ? '0' + minutesWithoutZero : minutesWithoutZero;
-	      var hours = timeObj.getHours();
-	      var string = hours + ':' + minutes;
-
-	      return string;
-	    }
-
-	    /**
 	     * Returns object with easy to access start and end reservation times
 	     */
 
 	  }, {
 	    key: '_returnReservationTimes',
 	    value: function _returnReservationTimes(reservations) {
-	      var _this4 = this;
-
 	      var resolvedReservations = (0, _ResolveArrayLikeObject2.default)(reservations);
 	      var reservationTimesArray = [];
 	      resolvedReservations.map(function (res, i) {
 	        var reservationTimes = {
 	          id: i,
 	          activity: res.activity,
-	          startTime: _this4._makeHoursAndMinutes(res.start_date_time),
-	          endTime: _this4._makeHoursAndMinutes(res.end_date_time)
+	          startTime: (0, _DateUtils.makeHoursAndMinutes)(res.start_date_time),
+	          endTime: (0, _DateUtils.makeHoursAndMinutes)(res.end_date_time)
 	        };
 	        reservationTimesArray.push(reservationTimes);
 	      });
@@ -86223,7 +86365,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
 	      var date = this._toDate(this.props.date);
@@ -86254,18 +86396,18 @@
 	          quarters.map(function (quarter, i) {
 	            //TODO: Move this to renderLines function
 	            //TODO: Add errors
-	            var addedTime = dateFns.addMinutes(date, i * _this5.timeMultiplier);
-	            var timeSlot = _this5._makeHoursAndMinutes(addedTime);
-	            var isReserved = _this5._checkIfLineIsReserved(reservations, timeSlot);
-	            if (!(_.indexOf(_this5.state.activeLines, i) == -1)) {
+	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
+	            var timeSlot = (0, _DateUtils.makeHoursAndMinutes)(addedTime);
+	            var isReserved = _this4._checkIfLineIsReserved(reservations, timeSlot);
+	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
 	              return _react2.default.createElement(QuarterLine, {
 	                key: i,
 	                index: i,
 	                selected: true,
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
-	                setCurrentIndex: _this5._setCurrentIndex,
-	                currentIndex: _this5.state.currentIndex,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            } else {
 	              return _react2.default.createElement(QuarterLine, {
@@ -86276,8 +86418,8 @@
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
 	                reserved: isReserved,
-	                setCurrentIndex: _this5._setCurrentIndex,
-	                currentIndex: _this5.state.currentIndex,
+	                setCurrentIndex: _this4._setCurrentIndex,
+	                currentIndex: _this4.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            }
 	          })
@@ -86290,31 +86432,6 @@
 	}(_react2.default.Component);
 
 	exports.default = TimePicker;
-
-/***/ },
-/* 700 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports.default = resolveArrayLikeObject;
-	// Weird array object bug hack..??
-	function resolveArrayLikeObject(arrayLikeObject) {
-	  var array = void 0;
-	  if ((typeof arrayLikeObject === 'undefined' ? 'undefined' : _typeof(arrayLikeObject)) === 'object') {
-	    array = Array.from(arrayLikeObject);
-	  } else {
-	    array = arrayLikeObject;
-	  }
-
-	  return array;
-	}
 
 /***/ },
 /* 701 */
@@ -92833,7 +92950,8 @@
 
 
 /***/ },
-/* 857 */
+/* 857 */,
+/* 858 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -92844,7 +92962,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(858);
+	__webpack_require__(859);
 
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -93003,6 +93121,45 @@
 
 	      return getRequestWithToken;
 	    }()
+	  }, {
+	    key: 'deleteRequestWithToken',
+	    value: function () {
+	      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(resource, token) {
+	        var response;
+	        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+	          while (1) {
+	            switch (_context4.prev = _context4.next) {
+	              case 0:
+	                _context4.prev = 0;
+	                response = fetch('' + this.apiUrl + resource + '?token=' + token, {
+	                  method: 'DELETE',
+	                  mode: 'cors',
+	                  headers: {
+	                    'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+	                  }
+	                });
+	                return _context4.abrupt('return', response);
+
+	              case 5:
+	                _context4.prev = 5;
+	                _context4.t0 = _context4['catch'](0);
+	                return _context4.abrupt('return', _context4.t0);
+
+	              case 8:
+	              case 'end':
+	                return _context4.stop();
+	            }
+	          }
+	        }, _callee4, this, [[0, 5]]);
+	      }));
+
+	      function deleteRequestWithToken(_x8, _x9) {
+	        return _ref4.apply(this, arguments);
+	      }
+
+	      return deleteRequestWithToken;
+	    }()
 	  }]);
 
 	  return APIFetcher;
@@ -93011,7 +93168,7 @@
 	exports.default = APIFetcher;
 
 /***/ },
-/* 858 */
+/* 859 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -93469,7 +93626,7 @@
 
 
 /***/ },
-/* 859 */
+/* 860 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -93494,77 +93651,6 @@
 	    window.location.href = 'http://localhost:8888/reservation-client';
 	  }
 	}
-
-/***/ },
-/* 860 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _templateObject = _taggedTemplateLiteral(['\n  width: 50%;\n  height: 50%;\n  border: 1px solid #fff;\n  margin: 5em auto 0em auto;\n'], ['\n  width: 50%;\n  height: 50%;\n  border: 1px solid #fff;\n  margin: 5em auto 0em auto;\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  color: #fff;\n  font-weight: 100;\n  font-size: 1.6em;\n  ', ';\n'], ['\n  color: #fff;\n  font-weight: 100;\n  font-size: 1.6em;\n  ', ';\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  width: 100%;\n'], ['\n  width: 100%;\n']);
-
-	var _react = __webpack_require__(299);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(331);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _styledComponents = __webpack_require__(528);
-
-	var _styledComponents2 = _interopRequireDefault(_styledComponents);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	var StyledSuccessWrapper = _styledComponents2.default.div(_templateObject);
-
-	var ReservationData = _styledComponents2.default.h3(_templateObject2, function (props) {
-	  return props.center ? 'text-align: center' : 'padding-left: 2em';
-	});
-
-	var Line = _styledComponents2.default.hr(_templateObject3);
-
-	var SuccessfulReservationWrapper = function SuccessfulReservationWrapper(reservationObj) {
-	  var reservation = reservationObj.reservation;
-	  return _react2.default.createElement(
-	    StyledSuccessWrapper,
-	    null,
-	    _react2.default.createElement(
-	      ReservationData,
-	      { center: true },
-	      'Planned ',
-	      reservation.activity,
-	      ' for ',
-	      reservation.number_persons
-	    ),
-	    _react2.default.createElement(Line, null),
-	    _react2.default.createElement(
-	      ReservationData,
-	      null,
-	      'Description: ',
-	      reservation.description
-	    ),
-	    _react2.default.createElement(
-	      ReservationData,
-	      null,
-	      'From ',
-	      reservation.start_date_time,
-	      ' to ',
-	      reservation.end_date_time
-	    )
-	  );
-	};
-
-	exports.default = SuccessfulReservationWrapper;
 
 /***/ }
 /******/ ]);

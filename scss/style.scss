@@ -26,7 +26,7 @@ body {
 
 .onderzoekkamer, .spreekkamer {
   background-size: 1px 300px;
-
+  position: relative;
   &::before {
     content: '';
     width: 100%;

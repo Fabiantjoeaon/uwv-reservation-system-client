@@ -17,7 +17,7 @@ const LoginFormWrapper = styled.div`
   padding-top: 5em;
   position: absolute;
   top:10%;
-  left:15%;
+  left:17%;
   width: 65%;
   height: 60em;
   background-color: rgba(255,255,255,1);

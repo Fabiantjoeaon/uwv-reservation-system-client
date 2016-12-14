@@ -140,6 +140,7 @@ export default class RoomsOverview extends React.Component {
     const reservationForThisRoom = reservations.filter((reservation) => {
       return reservation.room_id == id;
     });
+  
     return reservationForThisRoom;
   }
 
@@ -161,7 +162,7 @@ export default class RoomsOverview extends React.Component {
                   fetcher={this.props.fetcher}
                   token={this.props.token}
                   room={room}
-                  futureReservation={this.state.futureReservation ? this._filterReservationsByRoom(this.state.futureReservations, room.id) : null}/>
+                  futureReservation={this.state.futureReservations ? this._filterReservationsByRoom(this.state.futureReservations, room.id) : null}/>
       });
     } else {
       roomsList = this.state.rooms.map((room, i) => {
