@@ -119,42 +119,46 @@ export default class TimePicker extends React.Component {
       startTime: null,
       endPoint: -1,
       endTime: null,
-      activeLines: []
+      activeLines: [],
+      checkForUpdateFlag: false
     };
 
     _.bindAll(this, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved',
     '_checkReservedLinesForFilling', '_toDate', '_reset');
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(this.props.editReservationId) {
-      const reservationToEdit = resolveArrayLikeObject(nextProps.reservations)[0];
-      const startTime = makeHoursAndMinutes(reservationToEdit.start_date_time);
-      const endTime = makeHoursAndMinutes(reservationToEdit.end_date_time);
-      // FIXME: WORST CODE EVER :'(
-      let startPoint, endPoint;
-      for (let ref in this.refs) {
-        const timeSlot = this.refs[ref].props.timeSlot;
-        if(timeSlot == startTime) {
-          startPoint = this.refs[ref].props.index;
-        } else if (timeSlot == endTime) {
-          endPoint = this.refs[ref].props.index;
-        }
-      }
-
-      this.setState({
-        startTime: startTime,
-        startPoint: startPoint,
-        endTime: endTime,
-        endPoint: endPoint
-      }, () => {
-        this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc')
-      });
-    } else {
-      this.setState({
-        reservations: nextProps.reservations
-      });
+  componentDidUpdate() {
+    const flag = true;
+    if(this.props.editReservationId && flag !== this.state.checkForUpdateFlag) {
+      this._setReservationTimeForEditing();
     }
+  }
+
+  _setReservationTimeForEditing() {
+    const reservationToEdit = resolveArrayLikeObject(this.props.reservations)[0];
+    const startTime = makeHoursAndMinutes(reservationToEdit.start_date_time);
+    const endTime = makeHoursAndMinutes(reservationToEdit.end_date_time);
+    // FIXME: WORST CODE EVER :'(
+    let startPoint, endPoint;
+    for (let ref in this.refs) {
+      const timeSlot = this.refs[ref].props.timeSlot;
+      if(timeSlot == startTime) {
+        startPoint = this.refs[ref].props.index;
+      } else if (timeSlot == endTime) {
+        endPoint = this.refs[ref].props.index;
+      }
+    }
+
+    this.setState({
+      startTime: startTime,
+      startPoint: startPoint,
+      endTime: endTime,
+      endPoint: endPoint,
+      checkForUpdateFlag: true
+    }, () => {
+      this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc');
+      this.props.setReservationTimes(this.state.startTime, this.state.endTime);
+    });
   }
 
   /**
@@ -199,6 +203,7 @@ export default class TimePicker extends React.Component {
           endTime: startTime
         }, () => {
           this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'desc');
+          this.props.setReservationTimes(this.state.startTime, this.state.endTime);
         });
       }
     }

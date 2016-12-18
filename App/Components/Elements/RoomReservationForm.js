@@ -180,6 +180,7 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _collectReservationData(id = this.state.customerId) {
+    // FIXME: length minutes in time!
     const reservationData = {
       start_date_time: `${this.props.date} ${this.state.startTime}:00`,
       length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
@@ -197,10 +198,10 @@ export default class RoomReservationForm extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
     if(!this.state.addCustomer) {
+      const reservationData = this._collectReservationData();
       if(this.props.router.location.query.reservation) {
-        //TODO: EDIT
+        this._editReservation(reservationData);
       } else {
-        const reservationData = this._collectReservationData();
         this._postReservation(reservationData);
       }
     } else {
@@ -256,7 +257,7 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _editReservation(data) {
-
+    console.log(data);
   }
 
   _showCustomerForm(e) {

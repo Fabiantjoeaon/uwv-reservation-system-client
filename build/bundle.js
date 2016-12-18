@@ -85877,6 +85877,7 @@
 	    value: function _collectReservationData() {
 	      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.customerId;
 
+	      // FIXME: length minutes in time!
 	      var reservationData = {
 	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
 	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
@@ -85895,10 +85896,10 @@
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
 	      if (!this.state.addCustomer) {
+	        var reservationData = this._collectReservationData();
 	        if (this.props.router.location.query.reservation) {
-	          //TODO: EDIT
+	          this._editReservation(reservationData);
 	        } else {
-	          var reservationData = this._collectReservationData();
 	          this._postReservation(reservationData);
 	        }
 	      } else {
@@ -85965,7 +85966,9 @@
 	    }
 	  }, {
 	    key: '_editReservation',
-	    value: function _editReservation(data) {}
+	    value: function _editReservation(data) {
+	      console.log(data);
+	    }
 	  }, {
 	    key: '_showCustomerForm',
 	    value: function _showCustomerForm(e) {
@@ -86270,7 +86273,8 @@
 	      startTime: null,
 	      endPoint: -1,
 	      endTime: null,
-	      activeLines: []
+	      activeLines: [],
+	      checkForUpdateFlag: false
 	    };
 
 	    _.bindAll(_this2, '_setCurrentIndex', '_fillLines', '_checkIfLineIsReserved', '_checkReservedLinesForFilling', '_toDate', '_reset');
@@ -86278,39 +86282,43 @@
 	  }
 
 	  _createClass(TimePicker, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var flag = true;
+	      if (this.props.editReservationId && flag !== this.state.checkForUpdateFlag) {
+	        this._setReservationTimeForEditing();
+	      }
+	    }
+	  }, {
+	    key: '_setReservationTimeForEditing',
+	    value: function _setReservationTimeForEditing() {
 	      var _this3 = this;
 
-	      if (this.props.editReservationId) {
-	        var reservationToEdit = (0, _ResolveArrayLikeObject2.default)(nextProps.reservations)[0];
-	        var startTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.start_date_time);
-	        var endTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.end_date_time);
-	        // FIXME: WORST CODE EVER :'(
-	        var startPoint = void 0,
-	            endPoint = void 0;
-	        for (var ref in this.refs) {
-	          var timeSlot = this.refs[ref].props.timeSlot;
-	          if (timeSlot == startTime) {
-	            startPoint = this.refs[ref].props.index;
-	          } else if (timeSlot == endTime) {
-	            endPoint = this.refs[ref].props.index;
-	          }
+	      var reservationToEdit = (0, _ResolveArrayLikeObject2.default)(this.props.reservations)[0];
+	      var startTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.start_date_time);
+	      var endTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.end_date_time);
+	      // FIXME: WORST CODE EVER :'(
+	      var startPoint = void 0,
+	          endPoint = void 0;
+	      for (var ref in this.refs) {
+	        var timeSlot = this.refs[ref].props.timeSlot;
+	        if (timeSlot == startTime) {
+	          startPoint = this.refs[ref].props.index;
+	        } else if (timeSlot == endTime) {
+	          endPoint = this.refs[ref].props.index;
 	        }
-
-	        this.setState({
-	          startTime: startTime,
-	          startPoint: startPoint,
-	          endTime: endTime,
-	          endPoint: endPoint
-	        }, function () {
-	          _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
-	        });
-	      } else {
-	        this.setState({
-	          reservations: nextProps.reservations
-	        });
 	      }
+
+	      this.setState({
+	        startTime: startTime,
+	        startPoint: startPoint,
+	        endTime: endTime,
+	        endPoint: endPoint,
+	        checkForUpdateFlag: true
+	      }, function () {
+	        _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
+	        _this3.props.setReservationTimes(_this3.state.startTime, _this3.state.endTime);
+	      });
 	    }
 
 	    /**
@@ -86360,6 +86368,7 @@
 	            endTime: _startTime
 	          }, function () {
 	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'desc');
+	            _this4.props.setReservationTimes(_this4.state.startTime, _this4.state.endTime);
 	          });
 	        }
 	      }
