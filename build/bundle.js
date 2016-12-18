@@ -85957,7 +85957,11 @@
 	        if (res.status === 200) {
 	          Promise.resolve(res.json()).then(function (data) {
 	            var reservationData = _this7._collectReservationData(data.customer_id);
-	            _this7._postReservation(reservationData);
+	            if (_this7.props.router.location.query.reservation) {
+	              _this7._editReservation(reservationData);
+	            } else {
+	              _this7._postReservation(reservationData);
+	            }
 	          });
 	        }
 	      }).catch(function (error) {
@@ -85967,7 +85971,23 @@
 	  }, {
 	    key: '_editReservation',
 	    value: function _editReservation(data) {
-	      console.log(data);
+	      var _this8 = this;
+
+	      var id = this.props.router.location.query.reservation;
+	      this.props.fetcher.editRequestWithToken('/reservations/' + id, this.props.token, data).then(function (res) {
+	        if (res.status === 400) {
+	          Promise.resolve(res.json()).then(function (data) {
+	            _this8._handleErrors(data.data);
+	          });
+	        }
+	        if (res.status === 200) {
+	          Promise.resolve(res.json()).then(function (data) {
+	            _this8.props.router.push('/reservations?new=' + data.id);
+	          });
+	        }
+	      }).catch(function (error) {
+	        return console.log(error);
+	      });
 	    }
 	  }, {
 	    key: '_showCustomerForm',
@@ -85989,7 +86009,7 @@
 	  }, {
 	    key: '_renderCustomersSelect',
 	    value: function _renderCustomersSelect() {
-	      var _this8 = this;
+	      var _this9 = this;
 
 	      var customers = (0, _ResolveArrayLikeObject2.default)(this.props.customers);
 	      var customerOptions = customers.map(function (customer, i) {
@@ -86001,13 +86021,13 @@
 	        return _react2.default.createElement(
 	          CustomerItem,
 	          { key: i },
-	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, checked: _this8.state.customerId == id, name: 'customer-option', value: id, onClick: function onClick(e) {
-	              _this8._showCustomerForm(e);
+	          _react2.default.createElement(CustomerOption, { type: 'radio', id: 'customer-' + id, checked: _this9.state.customerId == id, name: 'customer-option', value: id, onClick: function onClick(e) {
+	              _this9._showCustomerForm(e);
 	            } }),
 	          _react2.default.createElement(
 	            CustomerLabel,
 	            { htmlFor: 'customer-' + id, onClick: function onClick(e) {
-	                _this8._setExistingCustomer(id);
+	                _this9._setExistingCustomer(id);
 	              } },
 	            first_name,
 	            ' ',
@@ -86020,7 +86040,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this9 = this,
+	      var _this10 = this,
 	          _React$createElement;
 
 	      var className = 'res-form__' + this.props.room.type;
@@ -86069,12 +86089,12 @@
 	                CustomerItem,
 	                null,
 	                _react2.default.createElement(CustomerOption, { id: 'customer-add', type: 'radio', name: 'customer-option', onClick: function onClick(e) {
-	                    _this9._showCustomerForm(e);
+	                    _this10._showCustomerForm(e);
 	                  } }),
 	                _react2.default.createElement(
 	                  CustomerLabel,
 	                  { htmlFor: 'customer-add', onClick: function onClick(e) {
-	                      _this9._setExistingCustomer(null);
+	                      _this10._setExistingCustomer(null);
 	                    } },
 	                  'Add a customer'
 	                )
@@ -93097,13 +93117,16 @@
 	var _ = __webpack_require__(591);
 
 	var APIFetcher = function () {
-	  function APIFetcher(apiUrl, logoutFn) {
+	  function APIFetcher(apiUrl) {
 	    _classCallCheck(this, APIFetcher);
-
-	    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
 
 	    this.apiUrl = apiUrl;
 	  }
+
+	  /**
+	   * POST user data and fetch token
+	   */
+
 
 	  _createClass(APIFetcher, [{
 	    key: 'authenticateAndFetchToken',
@@ -93148,6 +93171,11 @@
 
 	      return authenticateAndFetchToken;
 	    }()
+
+	    /**
+	     * POST request to API with authenticated user token
+	     */
+
 	  }, {
 	    key: 'postRequestWithToken',
 	    value: function () {
@@ -93188,6 +93216,11 @@
 
 	      return postRequestWithToken;
 	    }()
+
+	    /**
+	      * GET request to API with authenticated user token
+	      */
+
 	  }, {
 	    key: 'getRequestWithToken',
 	    value: function () {
@@ -93247,6 +93280,11 @@
 
 	      return getRequestWithToken;
 	    }()
+
+	    /**
+	      * DELETE request to API with authenticated user token and resource id
+	      */
+
 	  }, {
 	    key: 'deleteRequestWithToken',
 	    value: function () {
@@ -93285,6 +93323,51 @@
 	      }
 
 	      return deleteRequestWithToken;
+	    }()
+
+	    /**
+	      * EDIT request to API with authenticated user token and resource id
+	      */
+
+	  }, {
+	    key: 'editRequestWithToken',
+	    value: function () {
+	      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(resource, token, data) {
+	        var response;
+	        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+	          while (1) {
+	            switch (_context5.prev = _context5.next) {
+	              case 0:
+	                _context5.prev = 0;
+	                response = fetch('' + this.apiUrl + resource + '?token=' + token, {
+	                  method: 'PUT',
+	                  mode: 'cors',
+	                  headers: {
+	                    'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+	                  },
+	                  body: JSON.stringify(data)
+	                });
+	                return _context5.abrupt('return', response);
+
+	              case 5:
+	                _context5.prev = 5;
+	                _context5.t0 = _context5['catch'](0);
+	                return _context5.abrupt('return', _context5.t0);
+
+	              case 8:
+	              case 'end':
+	                return _context5.stop();
+	            }
+	          }
+	        }, _callee5, this, [[0, 5]]);
+	      }));
+
+	      function editRequestWithToken(_x10, _x11, _x12) {
+	        return _ref5.apply(this, arguments);
+	      }
+
+	      return editRequestWithToken;
 	    }()
 	  }]);
 

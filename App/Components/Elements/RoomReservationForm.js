@@ -249,7 +249,11 @@ export default class RoomReservationForm extends React.Component {
         if(res.status === 200) {
           Promise.resolve(res.json()).then((data) => {
             const reservationData = this._collectReservationData(data.customer_id);
-            this._postReservation(reservationData);
+            if(this.props.router.location.query.reservation) {
+              this._editReservation(reservationData);
+            } else {
+              this._postReservation(reservationData);
+            }
           });
         }
       })
@@ -257,7 +261,21 @@ export default class RoomReservationForm extends React.Component {
   }
 
   _editReservation(data) {
-    console.log(data);
+    const id = this.props.router.location.query.reservation;
+    this.props.fetcher.editRequestWithToken(`/reservations/${id}`, this.props.token, data)
+      .then((res) => {
+        if(res.status === 400) {
+          Promise.resolve(res.json()).then((data) => {
+            this._handleErrors(data.data);
+          });
+        }
+        if(res.status === 200) {
+          Promise.resolve(res.json()).then((data) => {
+            this.props.router.push(`/reservations?new=${data.id}`);
+          });
+        }
+      })
+      .catch((error) => console.log(error));
   }
 
   _showCustomerForm(e) {

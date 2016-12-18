@@ -2,12 +2,13 @@ import 'whatwg-fetch';
 const _ = require('lodash');
 
 export default class APIFetcher {
-  constructor(apiUrl, logoutFn) {
-    _.bindAll(this, 'authenticateAndFetchToken', 'getRequestWithToken');
-
+  constructor(apiUrl) {
     this.apiUrl = apiUrl;
   }
 
+  /**
+   * POST user data and fetch token
+   */
   async authenticateAndFetchToken(email, password) {
     try {
       const response = fetch(`${this.apiUrl}/login`, {
@@ -28,6 +29,9 @@ export default class APIFetcher {
     }
   }
 
+  /**
+   * POST request to API with authenticated user token
+   */
   async postRequestWithToken(resource, token, data) {
     try {
       const response = fetch(`${this.apiUrl}${resource}?token=${token}`, {
@@ -45,6 +49,9 @@ export default class APIFetcher {
     }
   }
 
+  /**
+    * GET request to API with authenticated user token
+    */
   async getRequestWithToken(resource, token) {
     try {
       const response = await fetch(`${this.apiUrl}${resource}?token=${token}`, {
@@ -66,6 +73,9 @@ export default class APIFetcher {
     }
   }
 
+  /**
+    * DELETE request to API with authenticated user token and resource id
+    */
   async deleteRequestWithToken(resource, token) {
     try {
       const response = fetch(`${this.apiUrl}${resource}?token=${token}`, {
@@ -75,6 +85,26 @@ export default class APIFetcher {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
+      })
+      return response;
+    } catch(error) {
+      return error;
+    }
+  }
+
+  /**
+    * EDIT request to API with authenticated user token and resource id
+    */
+  async editRequestWithToken(resource, token, data) {
+    try {
+      const response = fetch(`${this.apiUrl}${resource}?token=${token}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
       return response;
     } catch(error) {
