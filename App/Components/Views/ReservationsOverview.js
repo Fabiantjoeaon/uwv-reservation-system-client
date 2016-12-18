@@ -88,6 +88,10 @@ const DeletedReservation = styled.h1`
   color: rgb(120, 120, 120);
 `;
 
+const NoReservationText = styled.h2`
+  font-weight: 100;
+`;
+
 export default class ReservationsOverview extends React.Component {
   constructor() {
     super();
@@ -158,7 +162,7 @@ export default class ReservationsOverview extends React.Component {
   }
 
   _renderReservations() {
-    if(this.state.error) return <h1>{this.state.error}</h1>;
+    if(this.state.error) return <NoReservationText>{this.state.error}</NoReservationText>;
 
     const reservations = resolveArrayLikeObject(this.state.reservations);
     return reservations.map((reservation, i) => {

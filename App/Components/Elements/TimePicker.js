@@ -80,8 +80,6 @@ class QuarterLine extends React.Component {
     super();
 
     _.bindAll(this, '_handleClick');
-
-    this.hour = false;
   }
 
   _handleClick() {
@@ -91,9 +89,9 @@ class QuarterLine extends React.Component {
 
   render() {
     const {timeSlot, reserved, selected, totalQuarters, reservations} = this.props;
-    this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
+
     return(
-      <StyledLine onClick={this._handleClick} hour={this.hour} data-time={timeSlot} reserved={reserved} selected={selected} totalQuarters={totalQuarters}/>
+      <StyledLine onClick={this._handleClick} hour={timeSlot.indexOf('00') !== -1} ref={`timeslot_${timeSlot}`} data-time={timeSlot} reserved={reserved} selected={selected} totalQuarters={totalQuarters}/>
     )
   }
 }
@@ -129,9 +127,34 @@ export default class TimePicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      reservations: nextProps.reservations
-    });
+    if(this.props.editReservationId) {
+      const reservationToEdit = resolveArrayLikeObject(nextProps.reservations)[0];
+      const startTime = makeHoursAndMinutes(reservationToEdit.start_date_time);
+      const endTime = makeHoursAndMinutes(reservationToEdit.end_date_time);
+      // FIXME: WORST CODE EVER :'(
+      let startPoint, endPoint;
+      for (let ref in this.refs) {
+        const timeSlot = this.refs[ref].props.timeSlot;
+        if(timeSlot == startTime) {
+          startPoint = this.refs[ref].props.index;
+        } else if (timeSlot == endTime) {
+          endPoint = this.refs[ref].props.index;
+        }
+      }
+
+      this.setState({
+        startTime: startTime,
+        startPoint: startPoint,
+        endTime: endTime,
+        endPoint: endPoint
+      }, () => {
+        this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc')
+      });
+    } else {
+      this.setState({
+        reservations: nextProps.reservations
+      });
+    }
   }
 
   /**
@@ -140,6 +163,7 @@ export default class TimePicker extends React.Component {
   _setCurrentIndex(index) {
     // Click 1: set start point
     if(!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
+      // JS eval :'(
       const startTime = eval(`this.refs.line_${index}`).props.timeSlot;
       this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
     }
@@ -163,7 +187,6 @@ export default class TimePicker extends React.Component {
           endTime: endTime
         }, () => {
           this._fillLines(Math.abs(this.state.startPoint - this.state.endPoint), 'asc');
-          // TODO: Times okay, return all values!
           this.props.setReservationTimes(this.state.startTime, this.state.endTime);
         });
       // Endpoint is selected first, count lines down
@@ -264,8 +287,8 @@ export default class TimePicker extends React.Component {
    * Checks if current line timeslot falls between start and end times of reservations
    */
   _checkIfLineIsReserved(reservations, timeSlot) {
-    if(!reservations) return;
-    let reserved =  false;
+    if(!reservations || this.props.editReservationId) return;
+    let reserved = false;
     reservations.map((res) => {
       const startInt = parseInt(res.startTime.replace(':', ''));
       const endInt = parseInt(res.endTime.replace(':', ''));

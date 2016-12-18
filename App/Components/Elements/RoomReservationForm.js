@@ -12,6 +12,7 @@ import Button from './Button';
 import Notice from './Notice';
 import TimePicker from './TimePicker';
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
+import {makeHoursAndMinutes} from '../../Utils/DateUtils';
 
 const ReservationFormTitle = styled(Title)`
   margin-top: 0.5em;
@@ -116,7 +117,7 @@ export default class RoomReservationForm extends React.Component {
       endTime: '',
       activity: '',
       description: '',
-      number_persons: 1
+      number_persons: 0
     };
   }
 
@@ -131,12 +132,14 @@ export default class RoomReservationForm extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           const reservation = data.data;
+          //TODO: Set start and end time
           this.setState({
+            reservations: [reservation],
             customerId: reservation.customer.id,
             number_persons: reservation.number_persons,
             activity: reservation.activity,
             description: reservation.description
-          })
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -194,8 +197,12 @@ export default class RoomReservationForm extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
     if(!this.state.addCustomer) {
-      const reservationData = this._collectReservationData();
-      this._postReservation(reservationData);
+      if(this.props.router.location.query.reservation) {
+        //TODO: EDIT
+      } else {
+        const reservationData = this._collectReservationData();
+        this._postReservation(reservationData);
+      }
     } else {
       const customerData = {
         first_name: ReactDOM.findDOMNode(this.refs.first_name).children.first_name.value,
@@ -246,6 +253,10 @@ export default class RoomReservationForm extends React.Component {
         }
       })
       .catch((error) => console.log(error));
+  }
+
+  _editReservation(data) {
+
   }
 
   _showCustomerForm(e) {
@@ -321,6 +332,7 @@ export default class RoomReservationForm extends React.Component {
           <ReservationFormDivider dir='right'>
             <h2 className='res-form__title'>Pick a time:</h2>
             <TimePicker
+              editReservationId={this.props.router.location.query.reservation}
               date={this.props.date}
               type={this.props.type}
               setReservationTimes={this._setReservationTimes}
@@ -334,7 +346,7 @@ export default class RoomReservationForm extends React.Component {
             height='4em'
             fontSize='1.7em'
             type={this.props.room.type}
-            color='#fff'>Submit reservation</ReservationSubmitButton>
+            color='#fff'>{this.props.router.location.query.reservation ? 'Edit reservation' : 'Submit reservation'}</ReservationSubmitButton>
         </ReservationForm>
       </div>
     )

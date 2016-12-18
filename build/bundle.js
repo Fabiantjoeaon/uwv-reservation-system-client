@@ -8220,11 +8220,11 @@
 
 	var _RoomReservationScreen2 = _interopRequireDefault(_RoomReservationScreen);
 
-	var _APIFetcher = __webpack_require__(858);
+	var _APIFetcher = __webpack_require__(857);
 
 	var _APIFetcher2 = _interopRequireDefault(_APIFetcher);
 
-	var _AuthHandlers = __webpack_require__(860);
+	var _AuthHandlers = __webpack_require__(859);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85283,7 +85283,8 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  flex-basis: 85%;\n  display: block;\n  margin: 0.3em 0em 0em 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n'], ['\n  flex-basis: 85%;\n  display: block;\n  margin: 0.3em 0em 0em 3em;\n  color: #fff;\n\n  h1 {\n    font-family: \'Crimson Text\', serif;\n    font-weight: 100;\n  }\n\n  h2 {\n    font-family: sans-serif;\n    font-weight: 100;\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n'], ['\n  height:100%;\n  flex-basis: 15%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n'], ['\n  width: 100%;\n  height: 12.5em;\n  margin: 1em 0em;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  &::before {\n    display: none;\n  }\n']),
-	    _templateObject7 = _taggedTemplateLiteral(['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n'], ['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n']);
+	    _templateObject7 = _taggedTemplateLiteral(['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n'], ['\n  padding: 10px;\n  font-weight: 100;\n  background-color: #a6a6a6;\n  color: rgb(120, 120, 120);\n']),
+	    _templateObject8 = _taggedTemplateLiteral(['\n  font-weight: 100;\n'], ['\n  font-weight: 100;\n']);
 
 	var _react = __webpack_require__(299);
 
@@ -85343,6 +85344,8 @@
 	var Reservation = _styledComponents2.default.div(_templateObject6);
 
 	var DeletedReservation = _styledComponents2.default.h1(_templateObject7);
+
+	var NoReservationText = _styledComponents2.default.h2(_templateObject8);
 
 	var ReservationsOverview = function (_React$Component) {
 	  _inherits(ReservationsOverview, _React$Component);
@@ -85432,7 +85435,7 @@
 	      var _this4 = this;
 
 	      if (this.state.error) return _react2.default.createElement(
-	        'h1',
+	        NoReservationText,
 	        null,
 	        this.state.error
 	      );
@@ -85638,7 +85641,7 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      this.props.setCurrentPage('Place a reservation');
+	      this.props.router.location.query.reservation ? this.props.setCurrentPage('Edit reservation ' + this.props.router.location.query.reservation) : this.props.setCurrentPage('Place a reservation');
 	      this.setState({
 	        isLoading: true
 	      });
@@ -85741,6 +85744,8 @@
 
 	var _ResolveArrayLikeObject2 = _interopRequireDefault(_ResolveArrayLikeObject);
 
+	var _DateUtils = __webpack_require__(606);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -85794,7 +85799,7 @@
 	      endTime: '',
 	      activity: '',
 	      description: '',
-	      number_persons: 1
+	      number_persons: 0
 	    };
 	    return _this;
 	  }
@@ -85815,7 +85820,9 @@
 	          return res.json();
 	        }).then(function (data) {
 	          var reservation = data.data;
+	          //TODO: Set start and end time
 	          _this2.setState({
+	            reservations: [reservation],
 	            customerId: reservation.customer.id,
 	            number_persons: reservation.number_persons,
 	            activity: reservation.activity,
@@ -85888,8 +85895,12 @@
 	    value: function _handleSubmit(e) {
 	      e.preventDefault();
 	      if (!this.state.addCustomer) {
-	        var reservationData = this._collectReservationData();
-	        this._postReservation(reservationData);
+	        if (this.props.router.location.query.reservation) {
+	          //TODO: EDIT
+	        } else {
+	          var reservationData = this._collectReservationData();
+	          this._postReservation(reservationData);
+	        }
 	      } else {
 	        var customerData = {
 	          first_name: _reactDom2.default.findDOMNode(this.refs.first_name).children.first_name.value,
@@ -85952,6 +85963,9 @@
 	        return console.log(error);
 	      });
 	    }
+	  }, {
+	    key: '_editReservation',
+	    value: function _editReservation(data) {}
 	  }, {
 	    key: '_showCustomerForm',
 	    value: function _showCustomerForm(e) {
@@ -86089,6 +86103,7 @@
 	              'Pick a time:'
 	            ),
 	            _react2.default.createElement(_TimePicker2.default, {
+	              editReservationId: this.props.router.location.query.reservation,
 	              date: this.props.date,
 	              type: this.props.type,
 	              setReservationTimes: this._setReservationTimes,
@@ -86103,7 +86118,7 @@
 	              height: '4em',
 	              fontSize: '1.7em'
 	            }, _defineProperty(_React$createElement, 'type', this.props.room.type), _defineProperty(_React$createElement, 'color', '#fff'), _React$createElement),
-	            'Submit reservation'
+	            this.props.router.location.query.reservation ? 'Edit reservation' : 'Submit reservation'
 	          )
 	        )
 	      );
@@ -86199,8 +86214,6 @@
 	    var _this = _possibleConstructorReturn(this, (QuarterLine.__proto__ || Object.getPrototypeOf(QuarterLine)).call(this));
 
 	    _.bindAll(_this, '_handleClick');
-
-	    _this.hour = false;
 	    return _this;
 	  }
 
@@ -86220,8 +86233,8 @@
 	          totalQuarters = _props.totalQuarters,
 	          reservations = _props.reservations;
 
-	      this.hour = timeSlot.indexOf('00') !== -1 ? 1 : 0;
-	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: this.hour, 'data-time': timeSlot, reserved: reserved, selected: selected, totalQuarters: totalQuarters });
+
+	      return _react2.default.createElement(StyledLine, { onClick: this._handleClick, hour: timeSlot.indexOf('00') !== -1, ref: 'timeslot_' + timeSlot, 'data-time': timeSlot, reserved: reserved, selected: selected, totalQuarters: totalQuarters });
 	    }
 	  }]);
 
@@ -86267,9 +86280,37 @@
 	  _createClass(TimePicker, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({
-	        reservations: nextProps.reservations
-	      });
+	      var _this3 = this;
+
+	      if (this.props.editReservationId) {
+	        var reservationToEdit = (0, _ResolveArrayLikeObject2.default)(nextProps.reservations)[0];
+	        var startTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.start_date_time);
+	        var endTime = (0, _DateUtils.makeHoursAndMinutes)(reservationToEdit.end_date_time);
+	        // FIXME: WORST CODE EVER :'(
+	        var startPoint = void 0,
+	            endPoint = void 0;
+	        for (var ref in this.refs) {
+	          var timeSlot = this.refs[ref].props.timeSlot;
+	          if (timeSlot == startTime) {
+	            startPoint = this.refs[ref].props.index;
+	          } else if (timeSlot == endTime) {
+	            endPoint = this.refs[ref].props.index;
+	          }
+	        }
+
+	        this.setState({
+	          startTime: startTime,
+	          startPoint: startPoint,
+	          endTime: endTime,
+	          endPoint: endPoint
+	        }, function () {
+	          _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
+	        });
+	      } else {
+	        this.setState({
+	          reservations: nextProps.reservations
+	        });
+	      }
 	    }
 
 	    /**
@@ -86279,10 +86320,11 @@
 	  }, {
 	    key: '_setCurrentIndex',
 	    value: function _setCurrentIndex(index) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      // Click 1: set start point
 	      if (!(this.state.startPoint >= 0 && this.state.endPoint >= 0)) {
+	        // JS eval :'(
 	        var startTime = eval('this.refs.line_' + index).props.timeSlot;
 	        this.setState({ currentIndex: index, startPoint: index, startTime: startTime });
 	      }
@@ -86305,9 +86347,8 @@
 	            endPoint: index,
 	            endTime: endTime
 	          }, function () {
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'asc');
-	            // TODO: Times okay, return all values!
-	            _this3.props.setReservationTimes(_this3.state.startTime, _this3.state.endTime);
+	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'asc');
+	            _this4.props.setReservationTimes(_this4.state.startTime, _this4.state.endTime);
 	          });
 	          // Endpoint is selected first, count lines down
 	        } else {
@@ -86318,7 +86359,7 @@
 	            endPoint: this.state.currentIndex,
 	            endTime: _startTime
 	          }, function () {
-	            _this3._fillLines(Math.abs(_this3.state.startPoint - _this3.state.endPoint), 'desc');
+	            _this4._fillLines(Math.abs(_this4.state.startPoint - _this4.state.endPoint), 'desc');
 	          });
 	        }
 	      }
@@ -86425,7 +86466,7 @@
 	  }, {
 	    key: '_checkIfLineIsReserved',
 	    value: function _checkIfLineIsReserved(reservations, timeSlot) {
-	      if (!reservations) return;
+	      if (!reservations || this.props.editReservationId) return;
 	      var reserved = false;
 	      reservations.map(function (res) {
 	        var startInt = parseInt(res.startTime.replace(':', ''));
@@ -86442,7 +86483,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      var quarters = (0, _ResolveArrayLikeObject2.default)(this.state.quarters);
 	      var date = this._toDate(this.props.date);
@@ -86473,18 +86514,18 @@
 	          quarters.map(function (quarter, i) {
 	            //TODO: Move this to renderLines function
 	            //TODO: Add errors
-	            var addedTime = dateFns.addMinutes(date, i * _this4.timeMultiplier);
+	            var addedTime = dateFns.addMinutes(date, i * _this5.timeMultiplier);
 	            var timeSlot = (0, _DateUtils.makeHoursAndMinutes)(addedTime);
-	            var isReserved = _this4._checkIfLineIsReserved(reservations, timeSlot);
-	            if (!(_.indexOf(_this4.state.activeLines, i) == -1)) {
+	            var isReserved = _this5._checkIfLineIsReserved(reservations, timeSlot);
+	            if (!(_.indexOf(_this5.state.activeLines, i) == -1)) {
 	              return _react2.default.createElement(QuarterLine, {
 	                key: i,
 	                index: i,
 	                selected: true,
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
+	                setCurrentIndex: _this5._setCurrentIndex,
+	                currentIndex: _this5.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            } else {
 	              return _react2.default.createElement(QuarterLine, {
@@ -86495,8 +86536,8 @@
 	                timeSlot: timeSlot,
 	                ref: 'line_' + i,
 	                reserved: isReserved,
-	                setCurrentIndex: _this4._setCurrentIndex,
-	                currentIndex: _this4.state.currentIndex,
+	                setCurrentIndex: _this5._setCurrentIndex,
+	                currentIndex: _this5.state.currentIndex,
 	                totalQuarters: quarters.length });
 	            }
 	          })
@@ -93027,8 +93068,7 @@
 
 
 /***/ },
-/* 857 */,
-/* 858 */
+/* 857 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -93039,7 +93079,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(859);
+	__webpack_require__(858);
 
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -93245,7 +93285,7 @@
 	exports.default = APIFetcher;
 
 /***/ },
-/* 859 */
+/* 858 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -93703,7 +93743,7 @@
 
 
 /***/ },
-/* 860 */
+/* 859 */
 /***/ function(module, exports) {
 
 	'use strict';

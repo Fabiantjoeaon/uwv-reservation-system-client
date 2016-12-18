@@ -30,7 +30,7 @@ export default class RoomReservationScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.props.setCurrentPage('Place a reservation');
+    this.props.router.location.query.reservation ? this.props.setCurrentPage(`Edit reservation ${this.props.router.location.query.reservation}`) : this.props.setCurrentPage('Place a reservation');
     this.setState({
       isLoading: true
     });
