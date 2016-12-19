@@ -181,10 +181,13 @@ export default class RoomReservationForm extends React.Component {
 
   _collectReservationData(id = this.state.customerId) {
     // FIXME: length minutes in time!
+    const startDateTime = `${this.props.date} ${this.state.startTime}:00`;
+    const endDateTime = `${this.props.date} ${this.state.endTime}:00`;
+    const difference = (new Date(startDateTime) - new Date(endDateTime));
     const reservationData = {
-      start_date_time: `${this.props.date} ${this.state.startTime}:00`,
-      length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-      end_date_time: `${this.props.date} ${this.state.endTime}:00`,
+      start_date_time: startDateTime,
+      length_minutes: Math.abs(Math.round(((difference % 86400000) % 3600000) / 60000)),
+      end_date_time: endDateTime,
       activity: ReactDOM.findDOMNode(this.refs.activity).children.activity.value || ReactDOM.findDOMNode(this.refs.activity).children.activity.placeholder,
       description: ReactDOM.findDOMNode(this.refs.description).children.description.value || ReactDOM.findDOMNode(this.refs.description).children.description.placeholder,
       number_persons: ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.value || ReactDOM.findDOMNode(this.refs.number_persons).children.number_persons.placeholder,

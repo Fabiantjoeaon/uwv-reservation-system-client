@@ -85878,10 +85878,13 @@
 	      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.customerId;
 
 	      // FIXME: length minutes in time!
+	      var startDateTime = this.props.date + ' ' + this.state.startTime + ':00';
+	      var endDateTime = this.props.date + ' ' + this.state.endTime + ':00';
+	      var difference = new Date(startDateTime) - new Date(endDateTime);
 	      var reservationData = {
-	        start_date_time: this.props.date + ' ' + this.state.startTime + ':00',
-	        length_minutes: Math.abs(parseInt(this.state.startTime.replace(':', '')) - parseInt(this.state.endTime.replace(':', ''))),
-	        end_date_time: this.props.date + ' ' + this.state.endTime + ':00',
+	        start_date_time: startDateTime,
+	        length_minutes: Math.abs(Math.round(difference % 86400000 % 3600000 / 60000)),
+	        end_date_time: endDateTime,
 	        activity: _reactDom2.default.findDOMNode(this.refs.activity).children.activity.value || _reactDom2.default.findDOMNode(this.refs.activity).children.activity.placeholder,
 	        description: _reactDom2.default.findDOMNode(this.refs.description).children.description.value || _reactDom2.default.findDOMNode(this.refs.description).children.description.placeholder,
 	        number_persons: _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.value || _reactDom2.default.findDOMNode(this.refs.number_persons).children.number_persons.placeholder,
