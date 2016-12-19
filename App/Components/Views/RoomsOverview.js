@@ -34,19 +34,25 @@ const PageWrapper = styled.div`
   position: relative;
 `;
 
+const ResetFilterButton = styled.div`
+  padding: 20px;
+  cursor: pointer;
+`;
+
 //TODO: First animate, then load rooms
 export default class RoomsOverview extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getAllRooms', '_switchDay', '_getReservationsForDate', '_filterReservationsByRoom');
+    _.bindAll(this, '_getAllRooms', '_switchDay', '_getReservationsForDate', '_filterReservationsByRoom', '_filterRoomsByOption', '_resetFilters');
 
     this.state = {
       isLoading: false,
       rooms: [],
       futureReservations: [],
       date: new Date,
-      isToday: true
+      isToday: true,
+      filters: {}
     }
   }
 
@@ -145,6 +151,20 @@ export default class RoomsOverview extends React.Component {
     return reservationForThisRoom;
   }
 
+
+  _filterRoomsByOption(key, value) {
+    const filterState = this.state.filters;
+    filterState[key] = value;
+
+    this.setState({filters: filterState}, () => { console.log(this.state) });
+  }
+
+  _resetFilters() {
+    this.setState({
+      filters: {}
+    });
+  }
+
   render() {
     /** TODO Build filter to filter rooms based on props,
      *  add class instead of display none so that its still available in DOM,
@@ -185,7 +205,8 @@ export default class RoomsOverview extends React.Component {
           isToday={this.state.isToday}
           switchDay={this._switchDay}
           currentDate={this.state.date.toGMTString().slice(0, -13)}/>
-        <FilterBar/>
+        {!_.isEmpty(Object.values(this.state.filters)) ? <ResetFilterButton onClick={() => {this._resetFilters()}}>Reset filters</ResetFilterButton> : null}
+        <FilterBar filters={this.state.filters} filterRoomsByOption={this._filterRoomsByOption}/>
         <FlexWrapper direction='row' width='100%'>
           {this.state.isLoading ? <LoadingScreen/> : roomsList}
         </FlexWrapper>
