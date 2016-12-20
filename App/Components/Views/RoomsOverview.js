@@ -133,7 +133,7 @@ export default class RoomsOverview extends React.Component {
         });
         this.setState({
           rooms: [].concat(...rooms),
-          isLoading: false
+          isLoading: false,
         });
       })
       .catch((error) => {

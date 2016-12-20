@@ -44,8 +44,7 @@ export default class Room extends React.Component {
     _.bindAll(this, '_getReservedRoomData', '_renderFutureReservations', '_reduceFilters');
 
     this.state = {
-      reservation: {},
-      shouldRoomBeShowed: true
+      reservation: {}
     }
   }
 
@@ -98,25 +97,20 @@ export default class Room extends React.Component {
           return room[key].toLowerCase() == value ?
             result.concat(key) : result;
         }
-        return room[key] == value ?
-          result.concat(key) : result;
+        if(key == 'capacity') {
+          console.log('capacity')
+          return room[key] >= value ?
+            result.concat(key) : result;
+        } else {
+          return room[key] == value ?
+            result.concat(key) : result;
+        }
     }, []);
-
   }
 
-  componentWillReceiveProps(nextProps) {
-    const filters = this._reduceFilters(nextProps.filters);
-
-    // If amount of props equal to filters, means it fits into search terms, so show the room
-    if(filters.length == Object.keys(nextProps.filters).length) {
-      this.setState({
-        shouldRoomBeShowed: true
-      })
-    } else {
-      this.setState({
-        shouldRoomBeShowed: false
-      })
-    }
+  _checkIfRoomIsFiltered() {
+    const filters = this._reduceFilters(this.props.filters);
+    return filters.length == Object.keys(this.props.filters).length;
   }
 
   // TODO: Only on shouldComponentUpdate (because next state should be different)
@@ -139,7 +133,7 @@ export default class Room extends React.Component {
     const boxClassName = `room__color-box ${color}`;
 
     return (
-      <StyledRoom shouldRoomBeShowed={this.state.shouldRoomBeShowed} className={className} width='calc(100% / 4)' href={url}>
+      <StyledRoom shouldRoomBeShowed={this._checkIfRoomIsFiltered()} className={className} width='calc(100% / 4)' href={url}>
         <h2 className='room__name'>{name}</h2>
         <h3 className='room__meta'>{type}</h3>
         <h3 className='room__meta'>Max {capacity} person(s)</h3>

@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import update from 'immutability-helper';
 
 const FilterBarWrapper = styled.div`
-  width: 80%;
+  width: 100%;
   display: block;
-  margin: 4em auto 2.5em auto;
+  margin: 6em auto 3em auto;
 `;
 
 const FilterBarForm = styled.div`
@@ -18,23 +18,32 @@ const FilterBarForm = styled.div`
 
 const Filter = styled.span`
   display: inline-block;
+
 `;
 
 const FilterLabel = styled.label`
   color: #787878;
-  font-family: sans-serif;
-  display: block;
+  font-family: 'Crimson Text';
   text-align: center;
+  font-size: 1.6em;
   margin-bottom: 0.5em;
 `;
 
 const FilterSelect = styled.select`
   color: #787878;
-  min-width: 4em;
   background-color: rgba(0,0,0,0);
   text-shadow: 0 0 0 #000;
-
-  &:active {
+  border-radius: 0px !important;
+  -webkit-appearance: none;
+  margin-left: 1em;
+  border: none;
+  font-size: 1.4em;
+  font-weight: 100;
+  border-bottom: 1px solid
+  text-align: right;
+  direction: rtl;
+  cursor: pointer;
+  &:focus {
     outline: none;
   }
 `;
@@ -73,7 +82,7 @@ export default class FilterBar extends React.Component {
             </FilterSelect>
           </Filter>
           <Filter>
-            <FilterLabel for='capacity'>Max persons</FilterLabel>
+            <FilterLabel for='capacity'>Min capacity</FilterLabel>
             <FilterSelect name='capacity' ref='select_3' value={this.props.filters.capacity ? this.props.filters.capacity : 'all'} onChange={this._handleChange}>
               <option value='all'>All</option>
               <option value='1'>1</option>

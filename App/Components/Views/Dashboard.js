@@ -34,6 +34,7 @@ const ContentContainer = styled.div`
 
 const NavFlexWrapper = styled(FlexWrapper)`
   position: absolute;
+  justify-content: space-between;
   top: 5%;
   right: 5%;
 
