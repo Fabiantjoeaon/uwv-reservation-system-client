@@ -153,10 +153,14 @@ export default class RoomsOverview extends React.Component {
 
 
   _filterRoomsByOption(key, value) {
-    const filterState = this.state.filters;
-    filterState[key] = value;
-
-    this.setState({filters: filterState}, () => { console.log(this.state) });
+    const filters = this.state.filters;
+    if(value == 'all') {
+      delete filters[key];
+      this.setState({filters: filters});
+    } else {
+      filters[key] = value;
+      this.setState({filters: filters});
+    }
   }
 
   _resetFilters() {
@@ -180,6 +184,7 @@ export default class RoomsOverview extends React.Component {
                   ref={room.id}
                   isToday={this.state.isToday}
                   date={this.state.date.yyyymmdd()}
+                  filters={this.state.filters}
                   fetcher={this.props.fetcher}
                   token={this.props.token}
                   room={room}
@@ -192,6 +197,7 @@ export default class RoomsOverview extends React.Component {
                   ref={room.id}
                   isToday={this.state.isToday}
                   date={this.state.date.yyyymmdd()}
+                  filters={this.state.filters}
                   fetcher={this.props.fetcher}
                   token={this.props.token}
                   room={room}

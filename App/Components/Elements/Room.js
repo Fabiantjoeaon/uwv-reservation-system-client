@@ -11,6 +11,7 @@ import {convertDateTimeToTime} from '../../Utils/DateUtils.js';
 const _ = require('lodash');
 
 const StyledRoom = styled.a`
+  display: ${props => props.shouldRoomBeShowed ? 'block' : 'none'};
   width: ${props => props.width}
   height: calc(${props => props.width} + 10em);
   text-decoration: none;
@@ -40,10 +41,11 @@ export default class Room extends React.Component {
   constructor() {
     super();
 
-    _.bindAll(this, '_getReservedRoomData', '_renderFutureReservations');
+    _.bindAll(this, '_getReservedRoomData', '_renderFutureReservations', '_reduceFilters');
 
     this.state = {
-      reservation: {}
+      reservation: {},
+      shouldRoomBeShowed: true
     }
   }
 
@@ -86,6 +88,37 @@ export default class Room extends React.Component {
       }
   }
 
+  _reduceFilters(nextFilters) {
+    const room = this.props.room;
+    const filters = nextFilters;
+    const equals = []
+
+    return _.reduce(filters, (result, value, key) => {
+        if(typeof room[key] == 'string') {
+          return room[key].toLowerCase() == value ?
+            result.concat(key) : result;
+        }
+        return room[key] == value ?
+          result.concat(key) : result;
+    }, []);
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const filters = this._reduceFilters(nextProps.filters);
+
+    // If amount of props equal to filters, means it fits into search terms, so show the room
+    if(filters.length == Object.keys(nextProps.filters).length) {
+      this.setState({
+        shouldRoomBeShowed: true
+      })
+    } else {
+      this.setState({
+        shouldRoomBeShowed: false
+      })
+    }
+  }
+
   // TODO: Only on shouldComponentUpdate (because next state should be different)
   render() {
     const {
@@ -106,7 +139,7 @@ export default class Room extends React.Component {
     const boxClassName = `room__color-box ${color}`;
 
     return (
-      <StyledRoom className={className} width='calc(100% / 4)' href={url}>
+      <StyledRoom shouldRoomBeShowed={this.state.shouldRoomBeShowed} className={className} width='calc(100% / 4)' href={url}>
         <h2 className='room__name'>{name}</h2>
         <h3 className='room__meta'>{type}</h3>
         <h3 className='room__meta'>Max {capacity} person(s)</h3>
