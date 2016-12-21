@@ -35,8 +35,21 @@ const PageWrapper = styled.div`
 `;
 
 const ResetFilterButton = styled.div`
-  padding: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #787878;
+  text-transform: uppercase;
+  font-family: 'Questrial', sans-serif;
+  color: #787878;
+  padding: 10px;
+  font-size: 1.4em;
   cursor: pointer;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background-color: #787878;
+    color: rgb(240, 240, 240);
+  }
 `;
 
 //TODO: First animate, then load rooms
@@ -210,7 +223,8 @@ export default class RoomsOverview extends React.Component {
         <RoomDatePicker
           isToday={this.state.isToday}
           switchDay={this._switchDay}
-          currentDate={this.state.date.toGMTString().slice(0, -13)}/>
+          currentDate={this.state.date.toGMTString().slice(0, -13)}
+          reservations={this.state.futureReservations}/>
         {!_.isEmpty(Object.values(this.state.filters)) ? <ResetFilterButton onClick={() => {this._resetFilters()}}>Reset filters</ResetFilterButton> : null}
         <FilterBar filters={this.state.filters} filterRoomsByOption={this._filterRoomsByOption}/>
         <FlexWrapper direction='row' width='100%'>

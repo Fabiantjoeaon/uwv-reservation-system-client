@@ -8,7 +8,7 @@ import update from 'immutability-helper';
 const FilterBarWrapper = styled.div`
   width: 100%;
   display: block;
-  margin: 6em auto 3em auto;
+  margin: 7em auto 3em auto;
 `;
 
 const FilterBarForm = styled.div`

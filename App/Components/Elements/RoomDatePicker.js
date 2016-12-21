@@ -4,29 +4,67 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import styled from 'styled-components';
-import DateButton from './DateButton.js';
 
 const DatePickerWrapper = styled.div`
   font-size: 1.5em;
-  margin-bottom: 2em;
-  width: 100%;
-  justify-content: space-between;
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  width: 35%;
+  justify-content: center;
   font-weight: 900;
 `;
 
 const Day = styled.p`
-  display: block;
-  margin: 0 auto;
   text-align: center;
   font-family:sans-serif;
   font-weight: 100;
+  width: 70%;
   font-size: 1.6em;
   color: rgb(153, 153, 153);
   padding: 0em 1em;
 `;
 
-//TODO: Make circle and show other add day options like week? Check out tympanus / gooey effects
-// http://tympanus.net/codrops/2015/03/10/creative-gooey-effects/
+const StyledDateButton = styled.button`
+  cursor: pointer;
+  position: relative;
+  color: rgb(153, 153, 153);
+  border: none;
+  border-bottom: 2px solid rgb(153, 153, 153);
+  transition: all 0.2s ease-out;
+  height: 2.5em;
+  font-size: 1.3em;
+  margin-top: 1em;
+  padding: 5px 15px;
+  background-color: rgba(0,0,0,0);
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    border-color: #787878;
+    color: #787878;
+  }
+`;
+
+const TotalReservations = styled.p`
+  position: absolute;
+  bottom: -2.25em;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.2em;
+  font-weight: 100;
+  font-style: italic;
+  color: rgb(153, 153, 153);
+`;
+
+const DateButton = (props) => {
+  const {next, switchDay, children} = props;
+  const val = next ? 1 : -1;
+
+  return(
+    <StyledDateButton onClick={() => { switchDay(val) }} next={next}>{children}</StyledDateButton>
+  );
+}
+
 export default class RoomDatePicker extends React.Component {
   constructor() {
       super();
@@ -37,14 +75,15 @@ export default class RoomDatePicker extends React.Component {
 
     return(
       <DatePickerWrapper>
+        <TotalReservations>{!_.isEmpty(this.props.reservations) ? `- ${this.props.reservations.length} reservations today -` : '- No reservations today -'}</TotalReservations>
         {!this.props.isToday ?
         <DateButton
-          switchDay={this.props.switchDay}>-1
+          switchDay={this.props.switchDay}>&#60;
         </DateButton> : null}
         <Day>{date}</Day>
         <DateButton
           switchDay={this.props.switchDay}
-          next={true}>+1</DateButton>
+          next={true}>&#62;</DateButton>
       </DatePickerWrapper>
     );
   }

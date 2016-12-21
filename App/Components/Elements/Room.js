@@ -87,16 +87,25 @@ export default class Room extends React.Component {
       }
   }
 
-  _reduceFilters(nextFilters) {
+  /**
+   * _reduceFilters
+   * @param [propFilters] Filters given from props
+   * @description Finds similiraties between room properties and filters properties,
+   * and reduces the filters array to an array with the mathing keys
+   * @return [array]
+   */
+  _reduceFilters(propFilters) {
     const room = this.props.room;
-    const filters = nextFilters;
+    const filters = propFilters;
     const equals = []
 
     return _.reduce(filters, (result, value, key) => {
+        // Uppercase values don't match
         if(typeof room[key] == 'string') {
           return room[key].toLowerCase() == value ?
             result.concat(key) : result;
         }
+        // Minimal capacity shouldn't be equal, but check any room greater than
         if(key == 'capacity') {
           console.log('capacity')
           return room[key] >= value ?
@@ -108,12 +117,17 @@ export default class Room extends React.Component {
     }, []);
   }
 
+  /**
+   * _checkIfRoomIsFiltered
+   * @description Checks if amount of filters apply to a room, true means
+   * it meets the filter conditions, and the room should be displayed
+   * @returns [boolean]
+   */
   _checkIfRoomIsFiltered() {
     const filters = this._reduceFilters(this.props.filters);
     return filters.length == Object.keys(this.props.filters).length;
   }
 
-  // TODO: Only on shouldComponentUpdate (because next state should be different)
   render() {
     const {
       id,
