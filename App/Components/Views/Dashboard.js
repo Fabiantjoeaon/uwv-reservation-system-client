@@ -142,7 +142,7 @@ export default class Dashboard extends React.Component {
           <NavFlexWrapper direction='row' width='40%'>
             <NavLink href='#/'>Rooms</NavLink>
             <NavLink href='#/reservations'>My Reservations</NavLink>
-            <NavLink>My Clients</NavLink>
+            <NavLink href='#/clients'>My Clients</NavLink>
             <NavLink onClick={this._logout}>Logout</NavLink>
           </NavFlexWrapper>
         </Navigation>

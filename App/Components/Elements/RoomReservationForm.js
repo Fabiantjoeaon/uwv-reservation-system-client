@@ -126,6 +126,10 @@ export default class RoomReservationForm extends React.Component {
   }
 
   componentDidMount() {
+    this._getReservationToEdit();
+  }
+
+  _getReservationToEdit() {
     if(this.props.router.location.query.reservation) {
       const id = this.props.router.location.query.reservation;
       this.props.fetcher.getRequestWithToken(`/reservations/${id}`, this.props.token)

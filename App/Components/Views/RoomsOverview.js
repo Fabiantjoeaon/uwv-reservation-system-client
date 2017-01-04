@@ -38,11 +38,11 @@ const ResetFilterButton = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  border: 1px solid #787878;
+  border: 2px solid #787878;
   text-transform: uppercase;
   font-family: 'Questrial', sans-serif;
   color: #787878;
-  padding: 10px;
+  padding: 15px;
   font-size: 1.4em;
   cursor: pointer;
   transition: all 0.2s ease-out;
@@ -224,7 +224,7 @@ export default class RoomsOverview extends React.Component {
           isToday={this.state.isToday}
           switchDay={this._switchDay}
           currentDate={this.state.date.toGMTString().slice(0, -13)}
-          reservations={this.state.futureReservations}/>
+          reservationLength={this.state.futureReservations.length}/>
         {!_.isEmpty(Object.values(this.state.filters)) ? <ResetFilterButton onClick={() => {this._resetFilters()}}>Reset filters</ResetFilterButton> : null}
         <FilterBar filters={this.state.filters} filterRoomsByOption={this._filterRoomsByOption}/>
         <FlexWrapper direction='row' width='100%'>

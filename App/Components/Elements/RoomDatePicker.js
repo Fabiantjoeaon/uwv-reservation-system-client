@@ -26,6 +26,7 @@ const Day = styled.p`
 `;
 
 const StyledDateButton = styled.button`
+  visibility: ${props => props.isToday ? 'hidden' : 'visible'};
   cursor: pointer;
   position: relative;
   color: rgb(153, 153, 153);
@@ -61,7 +62,7 @@ const DateButton = (props) => {
   const val = next ? 1 : -1;
 
   return(
-    <StyledDateButton onClick={() => { switchDay(val) }} next={next}>{children}</StyledDateButton>
+    <StyledDateButton onClick={() => { switchDay(val) }}>{children}</StyledDateButton>
   );
 }
 
@@ -72,10 +73,13 @@ export default class RoomDatePicker extends React.Component {
 
   render() {
     const date = (this.props.currentDate == (new Date).toGMTString().slice(0, -13)) ? `Today: ${this.props.currentDate}` : this.props.currentDate;
-
+    const reservationLength = this.props.reservationLength;
+    const hasReservationsString = reservationLength == 1 ?
+      `- ${reservationLength} reservation today -` :
+      `- ${reservationLength} reservations today -`;
     return(
       <DatePickerWrapper>
-        <TotalReservations>{!_.isEmpty(this.props.reservations) ? `- ${this.props.reservations.length} reservations today -` : '- No reservations today -'}</TotalReservations>
+        <TotalReservations>{!this.props.reservationLength == 0 ? hasReservationsString : '- No reservations today -'}</TotalReservations>
         {!this.props.isToday ?
         <DateButton
           switchDay={this.props.switchDay}>&#60;

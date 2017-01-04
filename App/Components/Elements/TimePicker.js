@@ -7,6 +7,16 @@ import styled from 'styled-components';
 import resolveArrayLikeObject from '../../Utils/ResolveArrayLikeObject';
 import {makeHoursAndMinutes} from '../../Utils/DateUtils';
 
+Date.prototype.yyyymmdd = function() {
+  const mm = this.getMonth() + 1;
+  const dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+        ].join('-');
+};
+
 const dateFns = require('date-fns');
 const _ = require('lodash');
 
@@ -213,6 +223,17 @@ export default class TimePicker extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const today = new Date;
+    if(today.yyyymmdd() == this.props.date) {
+      this._setAvailableSlotsBasedOnCurrentTime(makeHoursAndMinutes(today));
+    }
+  }
+
+  _setAvailableSlotsBasedOnCurrentTime(currentTime) {
+    
+  }
+
   /**
    * Resets all relevant data
    */
@@ -290,6 +311,7 @@ export default class TimePicker extends React.Component {
 
   /**
    * Checks if current line timeslot falls between start and end times of reservations
+   * @returns [boolean]
    */
   _checkIfLineIsReserved(reservations, timeSlot) {
     if(!reservations || this.props.editReservationId) return;
