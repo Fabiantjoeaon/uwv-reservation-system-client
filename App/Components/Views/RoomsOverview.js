@@ -30,7 +30,7 @@ const _ = require('lodash');
 const io = require('socket.io-client');
 const https = require('https');
 
-const PageWrapper = styled.div`
+const PageWrapper = styled.section`
   position: relative;
 `;
 
@@ -141,6 +141,7 @@ export default class RoomsOverview extends React.Component {
       .then(res => res.json())
       .then((data) => {
         const rooms = [];
+        console.log(data);
         Object.keys(data).map((room) => {
           rooms.push(data[room]);
         });

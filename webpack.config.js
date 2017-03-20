@@ -19,7 +19,6 @@ let config = {
     ]
   },
   entry: {
-
     bundle: ['babel-polyfill', APP_DIR + '/index.js']
   },
   output: {

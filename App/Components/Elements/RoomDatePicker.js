@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import styled from 'styled-components';
 
-const DatePickerWrapper = styled.div`
+const DatePickerWrapper = styled.header`
   font-size: 1.5em;
   position: relative;
   display: flex;
@@ -15,7 +15,7 @@ const DatePickerWrapper = styled.div`
   font-weight: 900;
 `;
 
-const Day = styled.p`
+const Day = styled.time`
   text-align: center;
   font-family:sans-serif;
   font-weight: 100;

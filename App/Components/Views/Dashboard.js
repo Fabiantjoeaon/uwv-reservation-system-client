@@ -32,8 +32,13 @@ const ContentContainer = styled.div`
   background-color: rgb(240, 240, 240);
 `;
 
-const NavFlexWrapper = styled(FlexWrapper)`
+const NavFlexWrapper = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: ${props => props.direction};
+  ${props => props.space_between ? 'justify-content: space-between' : null};
   position: absolute;
+  width: ${props => props.width};
   justify-content: space-between;
   top: 5%;
   right: 5%;
@@ -62,7 +67,7 @@ const DashboardTitle = styled(Title)`
   margin-left: 5%;
 `;
 
-const DashboardPageTitle = styled.div`
+const DashboardPageTitle = styled.header`
   position: relative;
   font-size: 4em;
   padding: 0em 0em 0em 6em;
@@ -139,7 +144,7 @@ export default class Dashboard extends React.Component {
         <Navigation>
           <DashboardTitle color='#000' fontSize='4em' fontWeight='900'>Dashboard</DashboardTitle>
           <h2 className='dashboard__sub-title'>- Logged in as <span className='dashboard__username'>{username}</span> -</h2>
-          <NavFlexWrapper direction='row' width='40%'>
+          <NavFlexWrapper direction='row' space_between width='40%'>
             <NavLink href='#/'>Rooms</NavLink>
             <NavLink href='#/reservations'>My Reservations</NavLink>
             <NavLink href='#/clients'>My Clients</NavLink>

@@ -13,7 +13,7 @@ import Notice from './Notice.js';
 const TweenMax = require('gsap');
 const _ = require('lodash');
 
-const LoginFormWrapper = styled.div`
+const LoginFormWrapper = styled.section`
   padding-top: 5em;
   position: absolute;
   top:10%;

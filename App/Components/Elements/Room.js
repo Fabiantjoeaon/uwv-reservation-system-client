@@ -32,11 +32,6 @@ const StyledRoom = styled.a`
   }
 `;
 
-const RoomColorBox = styled.div`
-  width: 2em;
-  height: 2em;
-`;
-
 export default class Room extends React.Component {
   constructor() {
     super();

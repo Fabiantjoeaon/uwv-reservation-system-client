@@ -83,7 +83,6 @@ class ReservationClient extends React.Component {
   }
 
   render() {
-    // TODO: Check if props could be passed to just one child (login)
     const children = React.cloneElement(this.props.children, {
       key: this.props.location.pathname,
       login: this._login,
